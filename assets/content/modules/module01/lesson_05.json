@@ -1,0 +1,62 @@
+{
+    "lesson_id": "m01_l05",
+    "module_id": "module_01",
+    "lesson_number": 5,
+    "title": "Your First Mini-Program",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 5,
+    "concept": {
+        "heading": "Combining everything you know",
+        "body": "You have learned print(), variables, sequential execution, and comments. Now you will combine all four to write your first complete mini-program — a simple student introduction card. Real programs are just many small pieces like these, stacked together in the right order."
+    },
+    "analogy": {
+        "heading": "Think of it this way",
+        "body": "You now know four basic LEGO bricks. By themselves, each brick is simple. But when you connect them in a sequence, you can build something real. Your first mini-program is like your first small LEGO creation — it is not fancy, but it is entirely yours, and it works."
+    },
+    "code_example": {
+        "language": "python",
+        "code": "# Student Introduction Card\n# Module 1 - Final Lesson\n\n# Store student information\nfirst_name = \"Eden\"\nlast_name = \"Lincuna\"\ncourse = \"BSIT\"\nyear_level = 3\n\n# Display the introduction\nprint(\"=== Student Introduction ===\")\nprint(\"Name:\", first_name, last_name)\nprint(\"Course:\", course)\nprint(\"Year Level:\", year_level)\nprint(\"===========================\")",
+        "annotations": [
+            {
+                "line": 1,
+                "note": "File-level comment describing what this program does."
+            },
+            {
+                "line": 5,
+                "note": "We store all the data first — this is a good habit. Define your variables before you use them."
+            },
+            {
+                "line": 8,
+                "note": "year_level is a number (no quotes). We will use it differently than text variables in future modules."
+            },
+            {
+                "line": 11,
+                "note": "Printing a separator line using === makes the output look clean and organized."
+            },
+            {
+                "line": 12,
+                "note": "We pass three things to print(): the label text, and two variables. Python spaces them automatically."
+            },
+            {
+                "line": 15,
+                "note": "Closing separator — matches the opening line to frame the output like a card."
+            }
+        ]
+    },
+    "expected_output": "=== Student Introduction ===\nName: Eden Lincuna\nCourse: BSIT\nYear Level: 3\n===========================",
+    "key_rule": "Store your data in variables first, then display it. This pattern — store then show — is the foundation of almost every program you will ever write.",
+    "try_it_yourself": {
+        "prompt": "Build your own Student Introduction Card using your real information. It must include at least: your name, your course, and one other detail of your choice (favorite subject, hometown, or year level).",
+        "starter_code": "# Student Introduction Card\n\n# Store your information here\n\n\n# Display your introduction here\n",
+        "hint": "Follow the same pattern: define your variables at the top, then use print() to display them below. Add comments to explain each section.",
+        "validation_type": "code_structure",
+        "validation_rules": {
+            "min_variables": 3,
+            "min_print_calls": 4,
+            "min_comment_count": 1
+        }
+    },
+    "completion_xp": 20,
+    "is_bookmarkable": true,
+    "is_module_closer": true
+}

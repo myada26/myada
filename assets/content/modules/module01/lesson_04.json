@@ -1,0 +1,55 @@
+{
+    "lesson_id": "m01_l04",
+    "module_id": "module_01",
+    "lesson_number": 4,
+    "title": "Comments: Notes for Humans",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 3,
+    "concept": {
+        "heading": "What is a comment?",
+        "body": "A comment is a line in your code that Python completely ignores. It starts with a # symbol. Comments exist for you and other humans — they explain what your code does, why you made certain decisions, or leave notes for your future self. Professional developers write comments constantly. They are not optional extras; they are part of good code."
+    },
+    "analogy": {
+        "heading": "Think of it this way",
+        "body": "Imagine a recipe book where the chef wrote little notes in the margins: 'Use fresh garlic here — dried garlic ruins this dish.' Those notes are not ingredients and they are not instructions the recipe follows. They are just helpful reminders for whoever is cooking. Comments in Python work exactly the same way — they sit beside your code and explain the thinking behind it, but Python skips right over them."
+    },
+    "code_example": {
+        "language": "python",
+        "code": "# This program introduces a student\n# Written by: Carlos Castro\n\nstudent_name = \"Carlos\"  # Store the student's name\nage = 20                 # Store the student's age\n\n# Print the introduction\nprint(\"Hello! My name is\", student_name)\nprint(\"I am\", age, \"years old\")",
+        "annotations": [
+            {
+                "line": 1,
+                "note": "A full-line comment. Python skips this entirely — it produces no output."
+            },
+            {
+                "line": 2,
+                "note": "Another full-line comment. Use these to describe the purpose of a file or section."
+            },
+            {
+                "line": 4,
+                "note": "An inline comment — it follows real code on the same line. The # separates code from the note."
+            },
+            {
+                "line": 5,
+                "note": "Another inline comment. Good comments say WHY, not just WHAT."
+            },
+            {
+                "line": 8,
+                "note": "A section comment before a group of related lines. Helps organize longer programs."
+            }
+        ]
+    },
+    "expected_output": "Hello! My name is Carlos\nI am 20 years old",
+    "key_rule": "Comments start with #. Python ignores everything after # on that line. Use them freely — they never slow down your program and they make your code far easier to understand later.",
+    "try_it_yourself": {
+        "prompt": "Copy this code and add at least two comments: one explaining what the variable stores, and one explaining what the print line does.\n\nfavorite_subject = \"Programming\"\nprint(\"I love\", favorite_subject)",
+        "starter_code": "favorite_subject = \"Programming\"\nprint(\"I love\", favorite_subject)\n",
+        "hint": "Add a # comment above the variable line and another above the print() line. They won't change the output — Python ignores them!",
+        "validation_type": "code_contains",
+        "validation_rules": {
+            "min_comment_count": 2
+        }
+    },
+    "completion_xp": 10,
+    "is_bookmarkable": true
+}

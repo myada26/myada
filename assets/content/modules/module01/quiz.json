@@ -1,0 +1,70 @@
+{
+    "quiz_id": "m01_quiz",
+    "module_id": "module_01",
+    "title": "Module 1 Check",
+    "time_limit_seconds": 300,
+    "passing_score_percent": 70,
+    "questions": [
+        {
+            "id": "m01_q01",
+            "type": "multiple_choice",
+            "skill_tag": "Sequencing",
+            "difficulty": 1,
+            "prompt": "What will this code print?\n\nprint(\"Ada\")\nprint(10)",
+            "options": [
+                "Ada10",
+                "Ada\n10",
+                "10\nAda",
+                "Error"
+            ],
+            "correct_index": 1,
+            "explanation": "Each print() goes to a new line automatically. So 'Ada' prints first, then 10 on the next line."
+        },
+        {
+            "id": "m01_q02",
+            "type": "parsons",
+            "skill_tag": "Sequencing",
+            "difficulty": 1,
+            "prompt": "Drag the lines into the correct order to print your name then your age.",
+            "blocks": [
+                {
+                    "id": "b1",
+                    "code": "print(\"My age is 20\")"
+                },
+                {
+                    "id": "b2",
+                    "code": "print(\"My name is Ada\")"
+                }
+            ],
+            "correct_order": [
+                "b2",
+                "b1"
+            ],
+            "explanation": "The name should print first, then the age — top to bottom."
+        },
+        {
+            "id": "m01_q03",
+            "type": "fill_blank",
+            "skill_tag": "Syntax",
+            "difficulty": 1,
+            "prompt": "Complete the line to print the word Hello:\n\n_____(\"Hello\")",
+            "answer": "print",
+            "explanation": "print() is the function that displays output to the console."
+        }
+    ],
+    "adaptive_remediation": {
+        "on_fail": {
+            "action": "remediation_path",
+            "description": "If score < 70%, the user is NOT sent back through Module 1. Instead a short 3-lesson remediation mini-path is unlocked.",
+            "remediation_module_id": "module_01_remediation",
+            "retry_allowed": true,
+            "retry_after_remediation": true
+        },
+        "on_pass": {
+            "action": "unlock_next",
+            "next_module_id": "module_02",
+            "award_badge": "badge_genesis",
+            "xp_reward": 50
+        }
+    }
+}

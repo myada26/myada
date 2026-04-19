@@ -1,0 +1,56 @@
+{
+    "lesson_id": "m01_l02",
+    "module_id": "module_01",
+    "lesson_number": 2,
+    "title": "Variables: Giving Memory a Name",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 5,
+    "concept": {
+        "heading": "What is a variable?",
+        "body": "A variable is a named container in your computer's memory. Instead of typing the same value over and over, you store it once under a name — and Python remembers it for you. You create a variable using a single equals sign: the name on the left, the value on the right."
+    },
+    "analogy": {
+        "heading": "Think of it this way",
+        "body": "A variable is like a labeled storage box. Imagine writing 'Student Name' on the outside of a box, then putting the paper 'Carlos' inside. Whenever you need the name, you just open the box labeled 'Student Name' instead of searching everywhere. In Python, the label is your variable name and the paper inside is the value."
+    },
+    "code_example": {
+        "language": "python",
+        "code": "student_name = \"Carlos\"\nage = 20\nprint(student_name)\nprint(age)\nprint(\"Name:\", student_name)",
+        "annotations": [
+            {
+                "line": 1,
+                "note": "We create a variable called student_name and store the text \"Carlos\" inside it. Note: use underscores, not spaces, in variable names."
+            },
+            {
+                "line": 2,
+                "note": "We create another variable called age and store the number 20. No quotes — it's a number."
+            },
+            {
+                "line": 3,
+                "note": "print() retrieves whatever is stored in student_name and displays it. No quotes around the variable name!"
+            },
+            {
+                "line": 4,
+                "note": "Same for age — Python looks up the box labeled 'age' and prints what's inside: 20."
+            },
+            {
+                "line": 5,
+                "note": "You can mix text (in quotes) and variables inside print() by separating them with a comma."
+            }
+        ]
+    },
+    "expected_output": "Carlos\n20\nName: Carlos",
+    "key_rule": "The equals sign = in Python means 'store this value'. It is NOT checking if two things are equal — that uses double equals ==. We will cover that later.",
+    "try_it_yourself": {
+        "prompt": "Create a variable called city that stores the name of your hometown. Then print: 'I am from' followed by the variable.",
+        "starter_code": "# Create your variable here\ncity = \n\n# Print it here\n",
+        "hint": "Assign a string to city (remember the quotes!), then use print(\"I am from\", city)",
+        "validation_type": "output_contains",
+        "validation_rules": {
+            "must_contain": "I am from",
+            "must_use_variable": true
+        }
+    },
+    "completion_xp": 10,
+    "is_bookmarkable": true
+}

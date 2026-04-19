@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "357670403502",
+    "project_id": "myada-88789",
+    "storage_bucket": "myada-88789.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357670403502:android:a5cfea705d126f4ef95c3f",
+        "android_client_info": {
+          "package_name": "myada.android2026"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357670403502-android",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myada.android2026",
+            "certificate_hash": "672f3c4f4196b2d4e5c0b2409c76252246672645"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdPbyUZdKrQBCecCbzYRMhd9BeQ3BBO34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

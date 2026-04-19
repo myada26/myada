@@ -1,0 +1,47 @@
+{
+    "lesson_id": "m01_l01",
+    "module_id": "module_01",
+    "lesson_number": 1,
+    "title": "Your First Line of Code",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 4,
+    "concept": {
+        "heading": "What is print()?",
+        "body": "Every Python program communicates with you through the console. The print() function is how you make Python speak — it takes anything you give it and displays it on the screen."
+    },
+    "analogy": {
+        "heading": "Think of it this way",
+        "body": "print() is like texting someone. You type a message, hit send, and it appears on their screen. Python's console is just your screen — and print() is the send button."
+    },
+    "code_example": {
+        "language": "python",
+        "code": "print(\"Hello, world!\")\nprint(\"My name is Ada\")\nprint(42)",
+        "annotations": [
+            {
+                "line": 1,
+                "note": "print() displays text. Wrap text in quotes — these are called strings."
+            },
+            {
+                "line": 2,
+                "note": "You can print any text you want inside the quotes."
+            },
+            {
+                "line": 3,
+                "note": "Numbers don't need quotes. Python knows 42 is already a number."
+            }
+        ]
+    },
+    "expected_output": "Hello, world!\nMy name is Ada\n42",
+    "key_rule": "Always wrap text in quotes inside print(). Forgetting quotes is the #1 beginner mistake.",
+    "try_it_yourself": {
+        "prompt": "Print your name and your favorite number on two separate lines.",
+        "starter_code": "# Write your two print() lines below\n",
+        "hint": "Use print() twice — once for your name (in quotes), once for your number.",
+        "validation_type": "output_contains",
+        "validation_rules": {
+            "min_print_calls": 2
+        }
+    },
+    "completion_xp": 10,
+    "is_bookmarkable": true
+}

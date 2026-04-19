@@ -1,0 +1,37 @@
+[
+    {
+        "module_id": "module_01",
+        "number": 1,
+        "title": "The Genesis of Execution",
+        "subtitle": "Output and Memory",
+        "skill_tag": "Sequencing",
+        "icon": "play_circle_outline_rounded",
+        "lesson_count": 5,
+        "estimated_minutes": 20,
+        "prerequisite_module_id": null,
+        "unlock_condition": "diagnostic_complete OR module_00_passed",
+        "badge_id": "badge_genesis",
+        "cert_eligible": false
+    },
+    {
+        "module_id": "module_01_remediation",
+        "title": "Quick Boost: Output Basics",
+        "parent_module_id": "module_01",
+        "is_remediation": true,
+        "trigger_condition": "quiz_score < 70",
+        "failed_skill_tags": [
+            "Sequencing",
+            "Syntax"
+        ],
+        "lessons": [
+            "m01r_l01",
+            "m01r_l02",
+            "m01r_l03"
+        ],
+        "quiz_id": "m01_remediation_quiz",
+        "on_remediation_pass": {
+            "action": "unlock_next",
+            "next_module_id": "module_02"
+        }
+    }
+]

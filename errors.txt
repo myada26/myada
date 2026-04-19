@@ -1,0 +1,549 @@
+﻿
+  error - The method 'read' isn't defined for the type 'BuildContext' - 
+lib\features\auth\presentation\screens\forgot_password_screen.dart:36:26 - undefined_method
+  error - The getter 'textPrimary' isn't defined for the type 'AppColors' - 
+lib\features\auth\presentation\screens\forgot_password_screen.dart:81:46 - undefined_getter
+  error - The named parameter 'readOnly' isn't defined - 
+lib\features\auth\presentation\screens\register_screen.dart:152:19 - undefined_named_parameter
+  error - The named parameter 'onTap' isn't defined - 
+lib\features\auth\presentation\screens\register_screen.dart:153:19 - undefined_named_parameter
+  error - Undefined name 'IspoTheme' - lib\features\auth\presentation\screens\register_screen.dart:203:38 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\auth\presentation\screens\register_screen.dart:205:49 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\auth\presentation\screens\register_screen.dart:211:76 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\auth\presentation\screens\register_screen.dart:226:79 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:226:23 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:227:23 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:230:25 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:231:25 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:241:43 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:241:63 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\question_screen.dart:250:31 - 
+undefined_identifier
+  error - The named parameter 'onTap' isn't defined - 
+lib\features\diagnostic\presentation\screens\question_screen.dart:384:33 - undefined_named_parameter
+  error - Expected to find ')' - lib\features\diagnostic\presentation\screens\question_screen.dart:385:32 - 
+expected_token
+  error - Undefined name 'diagnosticModules' - lib\features\diagnostic\presentation\screens\result_screen.dart:133:18 
+- undefined_identifier
+  error - The getter 'skillIndex' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:227:42 - undefined_getter
+  error - The getter 'tag' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:232:13 - undefined_getter
+  error - The getter 'tag' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:235:20 - undefined_getter
+  error - The getter 'tag' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:238:20 - undefined_getter
+  error - The getter 'tag' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:241:20 - undefined_getter
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\result_screen.dart:252:18 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\result_screen.dart:253:37 - 
+undefined_identifier
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\result_screen.dart:263:24 - 
+undefined_identifier
+  error - The getter 'numId' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:273:39 - undefined_getter
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\result_screen.dart:277:34 - 
+undefined_identifier
+  error - The getter 'tag' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:291:31 - undefined_getter
+  error - The getter 'desc' isn't defined for the type 'LearningModule' - 
+lib\features\diagnostic\presentation\screens\result_screen.dart:332:28 - undefined_getter
+  error - Undefined name 'IspoTheme' - lib\features\diagnostic\presentation\screens\result_screen.dart:335:30 - 
+undefined_identifier
+  error - 4 positional arguments expected by 'fromLTRB', but 3 found - 
+lib\features\learn\presentation\screens\learn_screen.dart:115:20 - not_enough_positional_arguments
+  error - The getter 'displayMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:120:64 - undefined_getter
+  error - The getter 'bodyMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:124:44 - undefined_getter
+  error - The constructor being called isn't a const constructor - 
+lib\features\learn\presentation\screens\learn_screen.dart:133:22 - const_with_non_const
+  error - The constructor being called isn't a const constructor - 
+lib\features\learn\presentation\screens\learn_screen.dart:142:22 - const_with_non_const
+  error - Invalid constant value - lib\features\learn\presentation\screens\learn_screen.dart:152:31 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\learn\presentation\screens\learn_screen.dart:152:31 - 
+undefined_identifier
+  error - Too many positional arguments: 0 expected, but 1 found - 
+lib\features\learn\presentation\screens\learn_screen.dart:270:27 - extra_positional_arguments_could_be_named
+  error - The static method or constructor 'copyWith' isn't defined for the context type '_' - 
+lib\features\learn\presentation\screens\learn_screen.dart:270:28 - dot_shorthand_undefined_member
+  error - Too many positional arguments: 1 expected, but 3 found - 
+lib\features\learn\presentation\screens\learn_screen.dart:271:19 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\features\learn\presentation\screens\learn_screen.dart:276:17 - expected_token
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\learn\presentation\screens\learn_screen.dart:350:33 - undefined_getter
+  error - Invalid constant value - lib\features\learn\presentation\screens\learn_screen.dart:356:30 - invalid_constant
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\learn\presentation\screens\learn_screen.dart:356:40 - undefined_getter
+  error - The getter 'headingMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:360:46 - undefined_getter
+  error - Invalid constant value - lib\features\learn\presentation\screens\learn_screen.dart:366:35 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\learn\presentation\screens\learn_screen.dart:366:35 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:371:52 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:373:55 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\learn\presentation\screens\learn_screen.dart:383:31 - 
+undefined_identifier
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\learn\presentation\screens\learn_screen.dart:395:48 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\learn\presentation\screens\learn_screen.dart:405:62 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:19:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:19:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:22:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:22:38 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:45:44 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:45:44 - 
+undefined_identifier
+  error - The getter 'displayMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\profile\presentation\screens\profile_screen.dart:46:58 - undefined_getter
+  error - The getter 'bodyMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\profile\presentation\screens\profile_screen.dart:48:67 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:49:44 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:49:44 - 
+undefined_identifier
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:57:42 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:59:27 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:61:61 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:68:36 - 
+invalid_constant
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:68:46 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:83:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:83:38 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:94:40 - 
+invalid_constant
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:94:50 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:99:38 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:104:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:104:38 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:113:40 - 
+invalid_constant
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:113:50 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:118:40 - 
+invalid_constant
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:118:50 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:123:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:123:38 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:132:40 - 
+invalid_constant
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:132:50 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:140:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:140:38 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\profile\presentation\screens\profile_screen.dart:154:42 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:163:25 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:170:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:170:38 - 
+undefined_identifier
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\profile\presentation\screens\profile_screen.dart:172:69 - undefined_getter
+  error - Invalid constant value - lib\features\profile\presentation\screens\profile_screen.dart:173:38 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:173:38 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\profile\presentation\screens\profile_screen.dart:191:45 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:192:45 - undefined_getter
+  error - The getter 'textSecondary' isn't defined for the type 'AppColors' - 
+lib\features\profile\presentation\screens\profile_screen.dart:239:39 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:28:19 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:28:19 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:29:19 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:29:19 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:30:19 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:30:19 - 
+undefined_identifier
+  error - The getter 'displayMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:36:59 - undefined_getter
+  error - The getter 'bodyMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:40:44 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:48:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:48:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:54:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:54:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:60:33 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:60:33 - 
+undefined_identifier
+  error - The getter 'headingMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:62:42 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:66:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:66:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:70:31 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:70:31 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:73:44 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:73:44 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:87:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:87:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:93:33 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:93:33 - 
+undefined_identifier
+  error - The getter 'headingMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:95:58 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:99:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:99:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:103:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:103:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:109:33 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:109:33 - 
+undefined_identifier
+  error - The getter 'headingMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:114:46 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:115:44 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:115:44 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:121:29 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:122:61 - undefined_getter
+  error - The getter 'bodyMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:127:48 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:137:41 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:137:41 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:155:23 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:155:23 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:160:52 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:160:52 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:161:45 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:161:45 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:165:43 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:166:53 - undefined_getter
+  error - The getter 'headingLarge' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:171:44 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:174:54 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:201:37 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:201:37 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:204:45 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:205:45 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:217:33 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:217:33 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:224:54 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:226:54 - undefined_getter
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:234:48 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:259:23 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:259:23 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:263:51 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:263:51 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:264:43 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:264:43 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:268:41 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:269:51 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\progress\presentation\screens\progress_screen.dart:274:38 - undefined_getter
+  error - Invalid constant value - lib\features\progress\presentation\screens\progress_screen.dart:275:39 - 
+invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\progress\presentation\screens\progress_screen.dart:275:39 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:277:55 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\progress\presentation\screens\progress_screen.dart:280:42 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:41:17 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:41:17 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:42:17 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:42:17 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:43:17 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:43:17 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:44:17 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:44:17 - 
+undefined_identifier
+  error - The getter 'displayMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:46:63 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:52:31 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:52:31 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:56:43 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:63:45 - 
+undefined_identifier
+  error - The getter 'labelMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:67:43 - undefined_getter
+  error - The getter 'labelMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:69:53 - undefined_getter
+  error - The getter 'textSecondary' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:70:48 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:79:36 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:79:36 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:106:23 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:106:23 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:115:41 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:116:51 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:123:40 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:125:42 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:125:42 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:127:44 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:131:42 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:138:34 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:138:34 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:144:33 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:144:33 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:146:46 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:146:46 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:150:27 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:152:55 - undefined_getter
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:160:46 - undefined_getter
+  error - The getter 'labelMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:166:52 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:168:56 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:173:36 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:173:36 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:182:38 - invalid_constant
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:182:48 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:185:36 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:185:36 - 
+undefined_identifier
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:195:52 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:197:39 - 
+undefined_identifier
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:205:52 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:207:39 - 
+undefined_identifier
+  error - The getter 'surfaceElevated' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:217:46 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:219:33 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:225:34 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:225:34 - 
+undefined_identifier
+  error - Const variables must be initialized with a constant value - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:236:20 - const_initialized_with_non_constant_value
+  error - The fields in a const record literal must be constants - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:236:20 - non_constant_record_field
+  error - The values in a const list literal must be constants - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:236:20 - non_constant_list_element
+  error - The getter 'footprint' isn't defined for the type 'Icons' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:236:26 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:248:23 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:248:23 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:254:43 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:254:43 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:258:41 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:259:51 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:272:34 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:272:34 - 
+undefined_identifier
+  error - The getter 'headingSmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:273:51 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:274:34 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:274:34 - 
+undefined_identifier
+  error - Evaluation of this constant expression throws an exception - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:279:17 - const_eval_throws_exception
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:281:33 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:281:33 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:282:32 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:282:32 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:289:47 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:289:47 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:293:45 - 
+undefined_identifier
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:294:55 - undefined_getter
+  error - The getter 'locked' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:303:42 - undefined_getter
+  error - The getter 'textMuted' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:307:44 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:323:34 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:323:34 - 
+undefined_identifier
+  error - The getter 'headingLarge' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:339:42 - undefined_getter
+  error - The getter 'bodySmall' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:340:42 - undefined_getter
+  error - The getter 'navBorder' isn't defined for the type 'AppColors' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:352:24 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:364:39 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:364:39 - 
+undefined_identifier
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:374:43 - 
+undefined_identifier
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:382:36 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:382:36 - 
+undefined_identifier
+  error - The getter 'headingMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:384:38 - undefined_getter
+  error - Invalid constant value - lib\features\ranks\presentation\screens\ranks_screen.dart:385:36 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\features\ranks\presentation\screens\ranks_screen.dart:385:36 - 
+undefined_identifier
+  error - The getter 'bodyMedium' isn't defined for the type 'AppTextStyles' - 
+lib\features\ranks\presentation\screens\ranks_screen.dart:388:36 - undefined_getter
+  error - The getter 'primaryDark' isn't defined for the type 'AppColors' - 
+lib\shared\widgets\main_nav_shell.dart:78:49 - undefined_getter
+  error - Undefined name 'AppConstants' - lib\shared\widgets\offline_status_badge.dart:24:45 - undefined_identifier
+  error - Invalid constant value - lib\shared\widgets\offline_status_badge.dart:43:33 - invalid_constant
+  error - Undefined name 'AppConstants' - lib\shared\widgets\offline_status_badge.dart:43:33 - undefined_identifier
+  error - Methods can't be invoked in constant expressions - lib\views\learning_path_screen.dart:69:20 - 
+const_eval_method_invocation
+  error - The getter 'recommendedModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:86:35 - undefined_getter
+  error - The getter 'masteredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:87:32 - undefined_getter
+  error - The getter 'requiredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:120:20 - undefined_getter
+  error - The getter 'requiredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:123:38 - undefined_getter
+  error - The getter 'requiredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:123:77 - undefined_getter
+  error - The getter 'requiredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:125:29 - undefined_getter
+  error - The getter 'recommendedModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:133:48 - undefined_getter
+  error - The getter 'recommendedModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:133:90 - undefined_getter
+  error - The getter 'recommendedModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:135:29 - undefined_getter
+  error - The getter 'masteredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:144:38 - undefined_getter
+  error - The getter 'masteredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:144:77 - undefined_getter
+  error - The getter 'masteredModules' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:146:29 - undefined_getter
+  error - The getter 'startHereModule' isn't defined for the type 'DiagnosticResult' - 
+lib\views\learning_path_screen.dart:154:42 - undefined_getter
+  error - Expected to find ']' - lib\views\learning_path_screen.dart:590:27 - expected_token
+  error - Too many positional arguments: 0 expected, but 4 found - lib\views\learning_path_screen.dart:593:21 - 
+extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\views\learning_path_screen.dart:642:19 - expected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:658:13 - missing_identifier
+  error - Expected to find ')' - lib\views\learning_path_screen.dart:658:13 - expected_token
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:660:9 - expected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:660:10 - missing_identifier
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:660:10 - expected_token
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:660:10 - unexpected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:661:7 - missing_identifier
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:661:7 - expected_token
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:661:7 - unexpected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:661:8 - missing_identifier
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:661:8 - expected_token
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:661:8 - unexpected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:662:5 - missing_identifier
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:662:5 - unexpected_token
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:692:7 - expected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:692:8 - missing_identifier
+  error - Expected to find ';' - lib\views\learning_path_screen.dart:692:8 - expected_token
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:692:8 - unexpected_token
+  error - Expected an identifier - lib\views\learning_path_screen.dart:693:5 - missing_identifier
+  error - Unexpected text ';' - lib\views\learning_path_screen.dart:693:5 - unexpected_token
+  error - The name 'MyApp' isn't a class - test\widget_test.dart:16:35 - creation_with_non_type
+
+

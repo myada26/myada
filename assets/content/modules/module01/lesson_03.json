@@ -1,0 +1,59 @@
+{
+    "lesson_id": "m01_l03",
+    "module_id": "module_01",
+    "lesson_number": 3,
+    "title": "Sequential Execution: Python Reads Top to Bottom",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 4,
+    "concept": {
+        "heading": "How Python runs your code",
+        "body": "Python executes your code exactly the way you read a book — from the very first line, straight down to the last. It never skips, never jumps, and never reads the bottom before the top. This is called sequential execution. Understanding this is the single most important concept for tracing how a program behaves."
+    },
+    "analogy": {
+        "heading": "Think of it this way",
+        "body": "Imagine giving step-by-step cooking instructions to someone who follows them perfectly but literally. If step 1 says 'add salt' and step 2 says 'boil water', they will add salt first even if that makes no sense to you. Python is that perfect, literal follower. The order you write your code is the order it runs — no exceptions, no assumptions."
+    },
+    "code_example": {
+        "language": "python",
+        "code": "greeting = \"Good morning\"\nname = \"Eden\"\nprint(greeting)\nname = \"Christine\"\nprint(name)\nprint(greeting, name)",
+        "annotations": [
+            {
+                "line": 1,
+                "note": "Python stores 'Good morning' in the box called greeting."
+            },
+            {
+                "line": 2,
+                "note": "Python stores 'Eden' in the box called name."
+            },
+            {
+                "line": 3,
+                "note": "Python prints what is currently in greeting: 'Good morning'."
+            },
+            {
+                "line": 4,
+                "note": "The box called name is overwritten — 'Eden' is replaced with 'Christine'. The old value is gone."
+            },
+            {
+                "line": 5,
+                "note": "Python prints the current value in name: 'Christine', NOT 'Eden'. The overwrite already happened."
+            },
+            {
+                "line": 6,
+                "note": "Both variables are printed together on one line, separated by a space."
+            }
+        ]
+    },
+    "expected_output": "Good morning\nChristine\nGood morning Christine",
+    "key_rule": "Variables remember only their LATEST value. If you assign a variable twice, the second assignment wipes out the first. Order matters!",
+    "try_it_yourself": {
+        "prompt": "Predict the output: What will Python print if you run this?\n\nscore = 10\nprint(score)\nscore = 95\nprint(score)\n\nWrite the answer as two print() calls that produce the same output.",
+        "starter_code": "score = 10\nprint(score)\nscore = 95\nprint(score)\n",
+        "hint": "Run it and see! Remember — Python reads top to bottom. What is the value of score at line 2? What about at line 4?",
+        "validation_type": "exact_output",
+        "validation_rules": {
+            "expected_output": "10\n95"
+        }
+    },
+    "completion_xp": 10,
+    "is_bookmarkable": true
+}
