@@ -1,196 +1,115 @@
 // lib/features/learn/presentation/screens/learn_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../controllers/learning_path_controller.dart';
+import '../../../../core/data/local_database.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../shared/widgets/empty_state_widget.dart';
-import '../../../../components/cards/app_cards.dart'; // For BasicCard or similar
-import '../../../../components/buttons/app_button.dart'; // For AppButton
-import '../../../../main.dart'; // For AppRoutes
-import '../../../../core/data/local_database.dart'; // For resume logic
+import '../../../../features/learn/data/services/progress_service.dart';
+import '../../../../models/learning_path_model.dart';
+import '../../../../main.dart';
 
 class LearnScreen extends StatelessWidget {
   const LearnScreen({super.key});
 
-  // Module data structure — ready for real content
-  static const _modules = [
-    (
-      moduleId: 'module_01',
-      title: 'The Genesis of Execution',
-      subtitle: 'Output and Memory',
-      tag: 'Sequencing',
-      lessons: 5,
-      icon: Icons.play_circle_outline_rounded,
-    ),
-    (
-      moduleId: 'module_02',
-      title: 'The Data Blueprint',
-      subtitle: 'Types and Operations',
-      tag: 'Syntax',
-      lessons: 6,
-      icon: Icons.data_object_rounded,
-    ),
-    (
-      moduleId: 'module_03',
-      title: 'Branching Realities',
-      subtitle: 'Conditional Logic',
-      tag: 'Logic Flow',
-      lessons: 7,
-      icon: Icons.account_tree_rounded,
-    ),
-    (
-      moduleId: 'module_04',
-      title: 'Cycles and Simulations',
-      subtitle: 'Iteration and Loops',
-      tag: 'Logic Flow',
-      lessons: 8,
-      icon: Icons.loop_rounded,
-    ),
-    (
-      moduleId: 'module_05',
-      title: 'Architects of Abstraction',
-      subtitle: 'Functions and Scope',
-      tag: 'Comp. Thinking',
-      lessons: 8,
-      icon: Icons.functions_rounded,
-    ),
-    (
-      moduleId: 'module_06',
-      title: 'Textual Forensics',
-      subtitle: 'Advanced String Manipulation',
-      tag: 'Syntax',
-      lessons: 6,
-      icon: Icons.text_fields_rounded,
-    ),
-    (
-      moduleId: 'module_07',
-      title: 'The Data Arsenal',
-      subtitle: 'Lists and Tuples',
-      tag: 'Sequencing',
-      lessons: 8,
-      icon: Icons.list_alt_rounded,
-    ),
-    (
-      moduleId: 'module_08',
-      title: 'Associative Architecture',
-      subtitle: 'Dictionaries and Sets',
-      tag: 'Comp. Thinking',
-      lessons: 7,
-      icon: Icons.key_rounded,
-    ),
-    (
-      moduleId: 'module_09',
-      title: 'Resilience and Resolution',
-      subtitle: 'Error Handling',
-      tag: 'Debugging',
-      lessons: 6,
-      icon: Icons.bug_report_rounded,
-    ),
-    (
-      moduleId: 'module_10',
-      title: "The Giant's Shoulders",
-      subtitle: 'Modules and Libraries',
-      tag: 'Comp. Thinking',
-      lessons: 5,
-      icon: Icons.extension_rounded,
-    ),
-    (
-      moduleId: 'module_11',
-      title: 'Persistent Memory',
-      subtitle: 'File Input and Output',
-      tag: 'Sequencing',
-      lessons: 6,
-      icon: Icons.save_rounded,
-    ),
-    (
-      moduleId: 'module_12',
-      title: 'Paradigms of Objects',
-      subtitle: 'Introduction to OOP',
-      tag: 'Comp. Thinking',
-      lessons: 8,
-      icon: Icons.category_rounded,
-    ),
-  ];
+  void _onDiagnosticTap(BuildContext context) {
+    // Use the canonical working diagnostic flow (PreassessScreen → BriefScreen
+    // → QuestionScreen → ResultScreen) instead of the legacy local screens.
+    Navigator.of(context).pushNamed(AppRoutes.diagnostic);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // Header
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.md,
-                  AppSpacing.md,
-                  AppSpacing.md,
-                  0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Learning Path', style: AppTextStyles.displayMedium),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Complete your diagnostic to unlock personalized modules',
-                      style: AppTextStyles.bodyMedium,
+
+    return Consumer<LearningPathController>(
+      builder: (context, controller, child) {
+        if (controller.isBuilding) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final learningPath = controller.result?.learningPath ?? [];
+
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      AppSpacing.md,
+                      AppSpacing.md,
+                      AppSpacing.sm,
                     ),
-                  ],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Learning Path',
+                          style: AppTextStyles.displayMedium,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          controller.hasResult
+                              ? 'Your personalized learning modules'
+                              : 'Complete your diagnostic to unlock personalized modules',
+                          style: AppTextStyles.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
+                SliverToBoxAdapter(child: _FilterChips()),
+                if (!controller.hasResult)
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: AppSpacing.md),
+                      child: _DiagnosticBanner(
+                        onTap: () => _onDiagnosticTap(context),
+                      ),
+                    ),
+                  ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.md),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                  ),
+                  sliver: SliverList.separated(
+                    separatorBuilder: (_, __) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemCount: learningPath.length,
+                    itemBuilder: (context, i) {
+                      final module = learningPath[i];
+                      final isUnlocked = module.status != ModuleStatus.locked;
 
-            // Filter chips
-            SliverToBoxAdapter(
-              child: _FilterChips(),
+                      return _ModuleCard(
+                        number: module.number,
+                        moduleId: module.moduleId,
+                        title: module.name,
+                        subtitle: module.description,
+                        tag: module.tagLabel,
+                        lessons: module.estimatedLessons,
+                        icon: Icons.article_rounded,
+                        isLocked: !isUnlocked,
+                        isFirst: module.isStartHere,
+                      );
+                    },
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.xl4),
+                ),
+              ],
             ),
-
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.md),
-            ),
-
-            // Diagnostic CTA banner
-            SliverToBoxAdapter(
-              child: _DiagnosticBanner(),
-            ),
-
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.md),
-            ),
-
-            // Module list
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md),
-              sliver: SliverList.separated(
-                separatorBuilder: (_, __) =>
-                    const SizedBox(height: AppSpacing.sm),
-                itemCount: _modules.length,
-                itemBuilder: (context, i) {
-                  final m = _modules[i];
-                  return _ModuleCard(
-                    number: i + 1,
-                    moduleId: m.moduleId,
-                    title: m.title,
-                    subtitle: m.subtitle,
-                    tag: m.tag,
-                    lessons: m.lessons,
-                    icon: m.icon,
-                    isLocked: true, // All locked until diagnostic done
-                    isFirst: i == 0,
-                  );
-                },
-              ),
-            ),
-
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.xl4),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -217,10 +136,13 @@ class _FilterChipsState extends State<_FilterChips> {
       height: 44,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: 4),
+          horizontal: AppSpacing.md,
+          vertical: 4,
+        ),
         scrollDirection: Axis.horizontal,
         itemCount: filters.length,
-        separatorBuilder: (context, index) => const SizedBox(width: AppSpacing.sm),
+        separatorBuilder: (context, index) =>
+            const SizedBox(width: AppSpacing.sm),
         itemBuilder: (context, i) {
           final selected = _selected == i;
           return GestureDetector(
@@ -228,23 +150,16 @@ class _FilterChipsState extends State<_FilterChips> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
-                color: selected
-                    ? AppColors.primary
-                    : AppColors.surface,
-                borderRadius:
-                    BorderRadius.circular(AppRadius.full),
+                color: selected ? AppColors.primary : AppColors.surface,
+                borderRadius: BorderRadius.circular(AppRadius.full),
                 border: Border.all(
-                  color: selected
-                      ? AppColors.primary
-                      : AppColors.border,
+                  color: selected ? AppColors.primary : AppColors.border,
                 ),
               ),
               child: Text(
                 filters[i], // Using default text style, can be customized
                 style: AppTextStyles.label.copyWith(
-                  color: selected
-                      ? Colors.white
-                      : AppColors.mutedForeground,
+                  color: selected ? Colors.white : AppColors.mutedForeground,
                 ),
               ),
             ),
@@ -256,45 +171,52 @@ class _FilterChipsState extends State<_FilterChips> {
 }
 
 class _DiagnosticBanner extends StatelessWidget {
+  final VoidCallback onTap;
+  const _DiagnosticBanner({required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, AppRoutes.diagnostic);
-        },
+        onTap: onTap,
         child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.accent.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          border: Border.all(color: AppColors.accent.withOpacity(0.3)),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.psychology_rounded,
-                color: AppColors.accent, size: 28),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Take the diagnostic first',
-                      style: AppTextStyles.label.copyWith(color: AppColors.accent)),
-                  const SizedBox(height: 2),
-                  Text(
-                    'Your path adapts to your skill level',
-                    style: AppTextStyles.bodySm,
-                  ),
-                ],
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: AppColors.accent.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(color: AppColors.accent.withOpacity(0.3)),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.psychology_rounded, color: AppColors.accent, size: 28),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Take the diagnostic first',
+                      style: AppTextStyles.label.copyWith(
+                        color: AppColors.accent,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Your path adapts to your skill level',
+                      style: AppTextStyles.bodySm,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Icon(Icons.arrow_forward_ios_rounded,
-                color: AppColors.accent, size: 14),
-          ],
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: AppColors.accent,
+                size: 14,
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -323,22 +245,19 @@ class _ModuleCard extends StatelessWidget {
     this.isFirst = false,
   });
 
-  /// Builds the lessonId and lessonNumber from a resume point or defaults to l01.
-  void _openLesson(BuildContext context) {
-    final db = LocalDatabase();
-    final savedLessonId = db.getLastViewedLesson(moduleId);
+  /// Opens the module, resuming at the last-viewed lesson (sqflite-backed).
+  Future<void> _openLesson(BuildContext context) async {
+    // Prefer sqflite ProgressService; fall back to Hive LocalDatabase
+    String? savedLessonId = await ProgressService.instance.getLastViewedLesson(
+      moduleId,
+    );
+    savedLessonId ??= LocalDatabase().getLastViewedLesson(moduleId);
 
-    // Derive a safe default: moduleId 'module_01' → 'module_01_l01'
-    final defaultLessonId = '${moduleId}_l01';
-    final lessonId = savedLessonId ?? defaultLessonId;
-
-    // Parse lesson number from id: 'module_01_l03' → 3
-    int lessonNumber = 1;
+    final lessonId = savedLessonId ?? '${moduleId}_l01';
     final parts = lessonId.split('_l');
-    if (parts.length == 2) {
-      lessonNumber = int.tryParse(parts[1]) ?? 1;
-    }
+    final lessonNumber = parts.length == 2 ? (int.tryParse(parts[1]) ?? 1) : 1;
 
+    if (!context.mounted) return;
     Navigator.of(context).pushNamed(
       AppRoutes.lesson,
       arguments: {
@@ -370,7 +289,7 @@ class _ModuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: isLocked && !isFirst ? 0.5 : 1.0,
+      opacity: isLocked ? 0.5 : 1.0,
       child: GestureDetector(
         onTap: isFirst ? () => _openLesson(context) : null,
         child: Container(
@@ -391,14 +310,17 @@ class _ModuleCard extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: isLocked && !isFirst
+                  color: isLocked
                       ? AppColors.surfaceElevated
                       : AppColors.primary.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: isLocked && !isFirst
-                    ? const Icon(Icons.lock_rounded,
-                        color: AppColors.textMuted, size: 18)
+                child: isLocked
+                    ? const Icon(
+                        Icons.lock_rounded,
+                        color: AppColors.textMuted,
+                        size: 18,
+                      )
                     : Center(
                         child: Text(
                           number.toString().padLeft(2, '0'),
@@ -421,11 +343,12 @@ class _ModuleCard extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: _tagColor.withOpacity(0.12),
-                            borderRadius: BorderRadius.circular(
-                                AppRadius.full),
+                            borderRadius: BorderRadius.circular(AppRadius.full),
                           ),
                           child: Text(
                             tag,
@@ -436,8 +359,10 @@ class _ModuleCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Text('$lessons lessons',
-                            style: AppTextStyles.bodySmall),
+                        Text(
+                          '$lessons lessons',
+                          style: AppTextStyles.bodySmall,
+                        ),
                       ],
                     ),
                   ],

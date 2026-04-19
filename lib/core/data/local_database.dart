@@ -83,14 +83,24 @@ class LocalDatabase {
   // ── Diagnostic Progress ───────────────────────────────────────────────────
 
   Future<void> saveDiagnosticProgress(Map<int, double> scores, List<int> skips) async {
+    // Hive converts Map keys to strings on persist, so we do it explicitly
+    // to guarantee round-trip correctness.
     await _diagnostic.put(_k('results'), {
-      'scores': scores,
-      'skips': skips,
+      'scores': scores.map((k, v) => MapEntry(k.toString(), v)),
+      'skips': skips.map((s) => s.toString()).toList(),
     });
   }
 
-  Map? getDiagnosticProgress() {
-    return _diagnostic.get(_k('results'));
+  /// Returns scores as Map<int,double> and skips as List<int>, or null.
+  Map<String, dynamic>? getDiagnosticProgress() {
+    final raw = _diagnostic.get(_k('results'));
+    if (raw == null) return null;
+    final scoresRaw = (raw['scores'] as Map? ?? {});
+    final skipsRaw  = (raw['skips']  as List? ?? []);
+    return {
+      'scores': scoresRaw.map((k, v) => MapEntry(int.parse(k.toString()), (v as num).toDouble())),
+      'skips': skipsRaw.map((s) => int.parse(s.toString())).toList(),
+    };
   }
 
   // ── Lesson progress ────────────────────────────────────────────────────────

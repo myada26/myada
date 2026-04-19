@@ -11,6 +11,7 @@ import 'controllers/diagnostic_controller.dart';
 import 'controllers/learning_path_controller.dart';
 import 'services/hive_service.dart';
 import 'core/data/local_database.dart';
+import 'core/database/app_database.dart';
 import 'firebase_options.dart';
 
 import 'features/auth/presentation/screens/splash_screen.dart';
@@ -40,6 +41,7 @@ void main() async {
 
   // Local storage
   await HiveService.init();
+  await AppDatabase.instance.database;
   await LocalDatabase.init();
 
   // Force portrait
@@ -125,12 +127,19 @@ class MyAdaApp extends StatelessWidget {
 }
 
 /// Smart gate — reads AuthController and routes accordingly.
-class AuthGate extends StatelessWidget {
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
+  @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
+  bool _pathLoaded = false;
 
   @override
   Widget build(BuildContext context) {
-    final auth = context.watch<AuthController>();
+    final auth     = context.watch<AuthController>();
+    final pathCtrl = context.watch<LearningPathController>();
 
     switch (auth.status) {
       // ── App still initialising — show branded splash ───────────────────────
@@ -141,8 +150,8 @@ class AuthGate extends StatelessWidget {
       // ── No valid session ───────────────────────────────────────────────────
       case AuthStatus.unauthenticated:
       case AuthStatus.error:
-        // Returning user who logged out → go straight to login.
-        // Brand-new user who has never logged in → show onboarding entry.
+        // Reset path-loaded flag so it reloads on next login.
+        if (_pathLoaded) _pathLoaded = false;
         return auth.hasEverLoggedIn
             ? const LoginScreen()
             : const EntryPointScreen();
@@ -154,9 +163,9 @@ class AuthGate extends StatelessWidget {
           return const PreassessScreen();
         }
 
-        // Ensure learning path is loaded for returning users
-        final pathCtrl = context.read<LearningPathController>();
-        if (!pathCtrl.hasResult) {
+        // Load persisted diagnostic exactly once per authenticated session.
+        if (!_pathLoaded && !pathCtrl.hasResult && !pathCtrl.isBuilding) {
+          _pathLoaded = true;
           Future.microtask(() => pathCtrl.loadResultFromDb());
         }
 

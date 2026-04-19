@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../models/diagnostic_models.dart';
+import '../core/engine/diagnostic_engine.dart';
 
 /// DiagnosticController
 ///
@@ -49,6 +50,9 @@ class DiagnosticController extends ChangeNotifier {
   /// Prevents duplicate injection if the controller state is reused.
   final Set<int> _tier2Injected = {};
 
+  /// Responses recorded for the DiagnosticEngine.
+  final List<DiagnosticResponse> _responses = [];
+
   /// The user's current answer for the active question.
   ///   MCQ        → int  (selected option index)
   ///   Parsons    → List<String>  (items in user-arranged order)
@@ -93,6 +97,7 @@ class DiagnosticController extends ChangeNotifier {
     _scores.updateAll((_, __) => 0.0);
     _skips.clear();
     _tier2Injected.clear();
+    _responses.clear();
     _currentIndex = 0;
     _isComplete = false;
     _questionOrder = [];
@@ -248,6 +253,13 @@ class DiagnosticController extends ChangeNotifier {
     final double pts = isCorrect ? (q.tier == 2 ? 2.0 : 1.0) : 0.0;
     _scores[q.skillIndex] = (_scores[q.skillIndex] ?? 0.0) + pts;
 
+    _responses.add(DiagnosticResponse(
+      skillTag: SkillTag.values[q.skillIndex],
+      tier: q.tier,
+      isCorrect: isCorrect,
+      wasSkipped: false,
+    ));
+
     // Adaptively inject the follow-up Tier 2 question if this was Tier 1
     if (q.tier == 1) {
       _injectTier2IfNeeded(skillIndex: q.skillIndex, wasCorrect: isCorrect);
@@ -267,6 +279,8 @@ class DiagnosticController extends ChangeNotifier {
     // Apply skip penalty (floor at −1 to avoid extreme negative outliers)
     final current = _scores[q.skillIndex] ?? 0.0;
     _scores[q.skillIndex] = (current - 0.5).clamp(-1.0, double.infinity);
+
+    _responses.add(DiagnosticResponse.skipped(SkillTag.values[q.skillIndex], q.tier));
 
     // Treat skip as wrong for adaptive routing
     if (q.tier == 1) {
@@ -318,33 +332,24 @@ class DiagnosticController extends ChangeNotifier {
   // ─────────────────────────────────────────────────────
 
   /// Returns the skill level label for a given skill index.
-  ///   Score ≤ 1.0  → 'Developing'
-  ///   Score ≤ 2.0  → 'Building'
-  ///   Score  > 2.0 → 'Confident'
+  /// Uses DiagnosticEngine to evaluate responses.
   String getSkillLevel(int skillIndex) {
-    final score = (_scores[skillIndex] ?? 0.0).clamp(0.0, double.infinity);
-    if (score <= 1.0) return 'Developing';
-    if (score <= 2.0) return 'Building';
-    return 'Confident';
+    if (_responses.isEmpty) return 'Developing';
+    final result = DiagnosticEngine.calculate(_responses);
+    final tag = SkillTag.values[skillIndex];
+    final score = result.skillScores.firstWhere((s) => s.skillTag == tag);
+    if (score.level == SkillLevel.confident) return 'Confident';
+    if (score.level == SkillLevel.building) return 'Building';
+    return 'Developing';
   }
 
   /// Returns the aggregate learner profile across all 5 skills.
-  ///   ≥ 3 Confident                   → 'Intermediate'
-  ///   ≥ 1 Confident AND ≤ 2 Developing → 'Novice'
-  ///   Otherwise                        → 'Beginner'
+  /// Uses DiagnosticEngine to evaluate responses.
   String getOverallLevel() {
-    int confCount = 0;
-    int devCount  = 0;
-
-    for (int i = 0; i < 5; i++) {
-      final level = getSkillLevel(i);
-      if (level == 'Confident')  confCount++;
-      if (level == 'Developing') devCount++;
-    }
-
-    if (confCount >= 3)                     return 'Intermediate';
-    if (confCount >= 1 && devCount <= 2)    return 'Novice';
-    return 'Beginner';
+    if (_responses.isEmpty) return 'Beginner';
+    final result = DiagnosticEngine.calculate(_responses);
+    final level = result.overallLevel;
+    return level.isNotEmpty ? level[0].toUpperCase() + level.substring(1) : 'Beginner';
   }
 
   /// Returns true if the skill at [skillIndex] was skipped at least once.

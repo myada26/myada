@@ -85,20 +85,22 @@ class LearningPathController extends ChangeNotifier {
   }
 
   /// Attempts to load and build the result from persisted data.
+  /// Call this after the UID is set (i.e. after AuthController.init completes).
   void loadResultFromDb() {
     final data = LocalDatabase().getDiagnosticProgress();
-    if (data != null) {
-      try {
-        final scoresMap = data['scores'] as Map;
-        final skipsList = data['skips'] as List;
-
-        final scores = scoresMap.map((k, v) => MapEntry(k as int, v as double));
-        final skips = skipsList.cast<int>();
-
-        buildResult(scores: scores, skips: skips, saveToDb: false);
-      } catch (e) {
-        debugPrint('Failed to load diagnostic data: $e');
-      }
+    if (data == null) {
+      debugPrint('LearningPathController: no saved diagnostic data found.');
+      return;
+    }
+    try {
+      // getDiagnosticProgress already parses keys to int/double for us.
+      final scores = Map<int, double>.from(data['scores'] as Map);
+      final skips  = List<int>.from(data['skips']  as List);
+      debugPrint('LearningPathController: restoring diagnostic — '
+          'scores=$scores skips=$skips');
+      buildResult(scores: scores, skips: skips, saveToDb: false);
+    } catch (e, st) {
+      debugPrint('LearningPathController: failed to restore diagnostic: $e\n$st');
     }
   }
 
@@ -206,6 +208,7 @@ class LearningPathController extends ChangeNotifier {
     // Order is intentional: follows the pedagogical sequence defined in the doc.
     final rawModules = [
       _module(
+        'module_01',
         1,
         'The genesis of execution',
         'Output, variables, sequential execution, memory states',
@@ -215,6 +218,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.sequencing),
       ),
       _module(
+        'module_02',
         2,
         'The data blueprint',
         'Data types, arithmetic operators, user input, type casting',
@@ -224,6 +228,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.syntax),
       ),
       _module(
+        'module_03',
         3,
         'Branching realities',
         'Conditionals, relational & logical operators, if/elif/else',
@@ -233,6 +238,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.logicFlow),
       ),
       _module(
+        'module_04',
         4,
         'Cycles and simulations',
         'For loops, while loops, range(), break, continue, pass',
@@ -242,6 +248,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.logicFlow),
       ),
       _module(
+        'module_05',
         5,
         'Architects of abstraction',
         'Functions, parameters, return values, local vs global scope',
@@ -251,6 +258,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.computationalThinking),
       ),
       _module(
+        'module_06',
         6,
         'Textual forensics',
         'String methods, indexing, slicing, immutability, escape chars',
@@ -260,6 +268,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.syntax),
       ),
       _module(
+        'module_07',
         7,
         'The data arsenal',
         'Lists, tuples, indexing, list methods, iteration',
@@ -269,6 +278,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.sequencing),
       ),
       _module(
+        'module_08',
         8,
         'Associative architecture',
         'Dictionaries, sets, key-value pairs, .keys()/.values()/.items()',
@@ -278,6 +288,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.computationalThinking),
       ),
       _module(
+        'module_09',
         9,
         'Resilience and resolution',
         'try/except/else/finally, error types, reading tracebacks',
@@ -287,6 +298,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.debugging),
       ),
       _module(
+        'module_10',
         10,
         'The giant\'s shoulders',
         'import, math/random/datetime modules, reading documentation',
@@ -296,6 +308,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.computationalThinking),
       ),
       _module(
+        'module_11',
         11,
         'Persistent memory',
         'File I/O, open(), read/write/append, context managers (with)',
@@ -305,6 +318,7 @@ class LearningPathController extends ChangeNotifier {
         statusFor(SkillCategory.sequencing),
       ),
       _module(
+        'module_12',
         12,
         'Paradigms of objects',
         'Classes, __init__, instance attributes, methods, instantiation',
@@ -338,6 +352,7 @@ class LearningPathController extends ChangeNotifier {
 
   /// Factory shorthand for building a [LearningModule].
   LearningModule _module(
+    String moduleId,
     int number,
     String name,
     String description,
@@ -347,6 +362,7 @@ class LearningPathController extends ChangeNotifier {
     ModuleStatus status,
   ) {
     return LearningModule(
+      moduleId: moduleId,
       number: number,
       name: name,
       description: description,
@@ -361,6 +377,7 @@ class LearningPathController extends ChangeNotifier {
   /// LearningModule is const so we rebuild it manually.
   LearningModule _copyWithStartHere(LearningModule module) {
     return LearningModule(
+      moduleId: module.moduleId,
       number: module.number,
       name: module.name,
       description: module.description,

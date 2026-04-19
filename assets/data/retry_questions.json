@@ -1,0 +1,18 @@
+[
+  {
+    "id": "m01_qr01",
+    "module_id": "module_01",
+    "question_type": "multiple_choice",
+    "skill_tag": "sequencing",
+    "difficulty_tier": 1,
+    "prompt_text": "Which function is used to display text on the screen?",
+    "content": {
+      "options": ["display()", "show()", "print()", "echo()"],
+      "correct_index": 2
+    },
+    "correct_answer": "2",
+    "explanation": "The print() function sends data to standard output.",
+    "point_weight": 1.0,
+    "is_retry_eligible": true
+  }
+]

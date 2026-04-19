@@ -6,6 +6,7 @@ import '../models/local_user.dart';
 import '../services/hive_service.dart';
 import '../core/data/local_database.dart';
 import '../core/services/connectivity_service.dart';
+import '../features/learn/data/services/progress_service.dart';
 
 // ── Auth state ────────────────────────────────────────────────────────────────
 
@@ -85,6 +86,7 @@ class AuthController extends ChangeNotifier {
 
     // UID is known — scope all local DB reads/writes to this user.
     LocalDatabase.setUserId(cachedUid);
+    ProgressService.instance.setUserId(cachedUid);
 
     // Try silent Firebase token refresh.
     try {
@@ -166,6 +168,7 @@ class AuthController extends ChangeNotifier {
 
       // Scope DB to this user immediately.
       LocalDatabase.setUserId(fbUser.uid);
+      ProgressService.instance.setUserId(fbUser.uid);
 
       _currentUser = localUser;
       _setStatus(AuthStatus.authenticated);
@@ -273,6 +276,7 @@ class AuthController extends ChangeNotifier {
 
       // Scope all local DB reads/writes to this user.
       LocalDatabase.setUserId(fbUser.uid);
+      ProgressService.instance.setUserId(fbUser.uid);
 
       _currentUser = localUser;
       _setStatus(AuthStatus.authenticated);
@@ -312,6 +316,7 @@ class AuthController extends ChangeNotifier {
     _currentUser = null;
     _hasEverLoggedIn = true;
     LocalDatabase.setUserId('anonymous');
+    ProgressService.instance.setUserId('anonymous');
     _setStatus(AuthStatus.unauthenticated);
   }
 

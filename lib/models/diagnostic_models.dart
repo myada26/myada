@@ -1,4 +1,5 @@
 export 'learning_path_model.dart';
+import 'learning_path_model.dart';
 
 enum QuestionType { mcq, parsons, dropdown }
 
@@ -237,3 +238,78 @@ final List<DiagnosticQuestion> diagnosticQuestions = [
     correctSequence: [1, 2, 0],
   ),
 ];
+
+enum SkillTag {
+  sequencing,
+  logicFlow,
+  debugging,
+  syntax,
+  computationalThinking;
+
+  String get dbValue => switch (this) {
+    SkillTag.sequencing            => 'sequencing',
+    SkillTag.logicFlow             => 'logic_flow',
+    SkillTag.debugging             => 'debugging',
+    SkillTag.syntax                => 'syntax',
+    SkillTag.computationalThinking => 'computational_thinking',
+  };
+
+  static SkillTag fromString(String s) => switch (s) {
+    'sequencing'             => SkillTag.sequencing,
+    'logic_flow'             => SkillTag.logicFlow,
+    'debugging'              => SkillTag.debugging,
+    'syntax'                 => SkillTag.syntax,
+    'computational_thinking' => SkillTag.computationalThinking,
+    _                        => SkillTag.sequencing,
+  };
+}
+
+extension SkillLevelExt on SkillLevel {
+  static SkillLevel fromString(String s) => switch (s) {
+    'building'  => SkillLevel.building,
+    'confident' => SkillLevel.confident,
+    _           => SkillLevel.developing,
+  };
+}
+
+class DiagnosticResponse {
+  final SkillTag skillTag;
+  final int tier;
+  final bool isCorrect;
+  final bool wasSkipped;
+
+  const DiagnosticResponse({
+    required this.skillTag,
+    required this.tier,
+    required this.isCorrect,
+    required this.wasSkipped,
+  });
+
+  factory DiagnosticResponse.skipped(SkillTag tag, int tier) =>
+      DiagnosticResponse(
+          skillTag: tag, tier: tier, isCorrect: false, wasSkipped: true);
+}
+
+class SkillScore {
+  final SkillTag skillTag;
+  final double rawScore;
+  final SkillLevel level;
+  const SkillScore(
+      {required this.skillTag,
+      required this.rawScore,
+      required this.level});
+}
+
+class EngineDiagnosticResult {
+  final List<SkillScore> skillScores;
+  final String overallLevel; // 'beginner' | 'novice' | 'intermediate'
+  final List<String> modulesToSkip;
+  final List<String> modulesRequired;
+
+  const EngineDiagnosticResult({
+    required this.skillScores,
+    required this.overallLevel,
+    required this.modulesToSkip,
+    required this.modulesRequired,
+  });
+}

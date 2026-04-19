@@ -485,6 +485,12 @@ class _ModuleCard extends StatelessWidget {
         return AppColors.primary;
       case ModuleStatus.mastered:
         return Colors.transparent;
+      case ModuleStatus.inProgress:
+        return AppColors.warning;
+      case ModuleStatus.locked:
+        return AppColors.border;
+      case ModuleStatus.completed:
+        return AppColors.success;
     }
   }
 
@@ -511,6 +517,12 @@ class _ModuleCard extends StatelessWidget {
       case ModuleStatus.recommended:
         return '~';
       case ModuleStatus.mastered:
+        return '✓';
+      case ModuleStatus.inProgress:
+        return '…';
+      case ModuleStatus.locked:
+        return '🔒';
+      case ModuleStatus.completed:
         return '✓';
     }
   }

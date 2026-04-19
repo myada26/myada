@@ -65,11 +65,17 @@ enum ModuleStatus {
 
   /// User's skill for this module is Confident — mastered, can skip.
   mastered,
+
+  inProgress,  // Currently active
+  completed,   // Quiz passed
+  locked,      // Not yet unlocked
 }
 
 /// A single curriculum module in the learning path.
 /// Based on the 12-module architecture from the ADA Python curriculum document.
 class LearningModule {
+  /// Canonical string ID, e.g. "module_01". Used for navigation and DB lookups.
+  final String moduleId;
   final int number;
   final String name;
   final String description;
@@ -82,6 +88,7 @@ class LearningModule {
   final bool isStartHere;
 
   const LearningModule({
+    required this.moduleId,
     required this.number,
     required this.name,
     required this.description,
@@ -124,4 +131,84 @@ class DiagnosticResult {
     required this.profile,
     required this.learningPath,
   });
+}
+
+class ModulePath {
+  final String moduleId;
+  final ModuleStatus status;
+  final String? unlockedAt;
+  final String? unlockReason;
+  final SkillLevel? currentSkillLevel;
+
+  const ModulePath({
+    required this.moduleId,
+    required this.status,
+    this.unlockedAt,
+    this.unlockReason,
+    this.currentSkillLevel,
+  });
+
+  ModulePath copyWith({ModuleStatus? status, SkillLevel? currentSkillLevel}) =>
+      ModulePath(
+        moduleId: moduleId,
+        status: status ?? this.status,
+        unlockedAt: unlockedAt,
+        unlockReason: unlockReason,
+        currentSkillLevel: currentSkillLevel ?? this.currentSkillLevel,
+      );
+}
+
+class QuizAttemptModel {
+  final String id;
+  final String learnerId;
+  final String moduleId;
+  final String attemptType; // 'module_quiz' | 'retry_quiz'
+  final int attemptNumber;
+  final int timeLimitSeconds;
+  final int? timeUsedSeconds;
+  final int accuracyScore;
+  final int timeBonus;
+  final int firstAttemptBonus;
+  final int streakBonus;
+  final int totalScore;
+  final bool? passed;
+  final double? accuracyPct;
+  final String? skillLevelAchieved;
+
+  const QuizAttemptModel({
+    required this.id,
+    required this.learnerId,
+    required this.moduleId,
+    required this.attemptType,
+    required this.attemptNumber,
+    required this.timeLimitSeconds,
+    this.timeUsedSeconds,
+    this.accuracyScore = 0,
+    this.timeBonus = 0,
+    this.firstAttemptBonus = 0,
+    this.streakBonus = 0,
+    this.totalScore = 0,
+    this.passed,
+    this.accuracyPct,
+    this.skillLevelAchieved,
+  });
+
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'learner_id': learnerId,
+    'module_id': moduleId,
+    'attempt_type': attemptType,
+    'attempt_number': attemptNumber,
+    'time_limit_seconds': timeLimitSeconds,
+    'time_used_seconds': timeUsedSeconds,
+    'accuracy_score': accuracyScore,
+    'time_bonus': timeBonus,
+    'first_attempt_bonus': firstAttemptBonus,
+    'streak_bonus': streakBonus,
+    'total_score': totalScore,
+    'passed': passed == null ? null : (passed! ? 1 : 0),
+    'accuracy_pct': accuracyPct,
+    'skill_level_achieved': skillLevelAchieved,
+    'started_at': DateTime.now().toIso8601String(),
+  };
 }

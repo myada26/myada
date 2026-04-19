@@ -1,0 +1,127 @@
+[
+  {
+    "id": "dq_seq_t1",
+    "skill_tag": "sequencing",
+    "tier": 1,
+    "question_type": "parsons",
+    "prompt_text": "Arrange these lines in the correct order to print 'Hello Ada'.",
+    "content": {
+      "lines": ["print('Hello Ada')", "name = 'Ada'", "greeting = 'Hello '"],
+      "correct_order": [1, 2, 0]
+    },
+    "correct_answer": "1,2,0"
+  },
+  {
+    "id": "dq_seq_t2",
+    "skill_tag": "sequencing",
+    "tier": 2,
+    "question_type": "parsons",
+    "prompt_text": "Arrange these lines to compute and print the sum of 1 to 5.",
+    "content": {
+      "lines": ["print(total)", "total = 0", "for i in range(1, 6):", "    total += i"],
+      "correct_order": [1, 2, 3, 0]
+    },
+    "correct_answer": "1,2,3,0"
+  },
+  {
+    "id": "dq_logic_t1",
+    "skill_tag": "logic_flow",
+    "tier": 1,
+    "question_type": "multiple_choice",
+    "prompt_text": "What does this print?\nx = 10\nif x > 5:\n    print('big')\nelse:\n    print('small')",
+    "content": {
+      "options": ["small", "big", "10", "Error"],
+      "correct_index": 1
+    },
+    "correct_answer": "1"
+  },
+  {
+    "id": "dq_logic_t2",
+    "skill_tag": "logic_flow",
+    "tier": 2,
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the output?\nfor i in range(3):\n    if i == 1:\n        continue\n    print(i)",
+    "content": {
+      "options": ["0 1 2", "0 2", "1 2", "0 1"],
+      "correct_index": 1
+    },
+    "correct_answer": "1"
+  },
+  {
+    "id": "dq_debug_t1",
+    "skill_tag": "debugging",
+    "tier": 1,
+    "question_type": "spot_bug",
+    "prompt_text": "Find the bug in this code.",
+    "content": {
+      "buggy_code": "for i in range(5)\n    print(i)",
+      "bug_description": "Missing colon after range(5)"
+    },
+    "correct_answer": "Missing colon after range(5)"
+  },
+  {
+    "id": "dq_debug_t2",
+    "skill_tag": "debugging",
+    "tier": 2,
+    "question_type": "spot_bug",
+    "prompt_text": "What is wrong with this function?",
+    "content": {
+      "buggy_code": "def add(a, b):\n    result = a + b\nprint(result)",
+      "bug_description": "print(result) is outside the function and result is not in scope"
+    },
+    "correct_answer": "print(result) is outside the function"
+  },
+  {
+    "id": "dq_syntax_t1",
+    "skill_tag": "syntax",
+    "tier": 1,
+    "question_type": "fill_in_blank",
+    "prompt_text": "Complete the line to convert user input to an integer.",
+    "content": {
+      "code_with_blank": "age = _____(input('Enter age: '))",
+      "hint": "Type conversion function"
+    },
+    "correct_answer": "int"
+  },
+  {
+    "id": "dq_syntax_t2",
+    "skill_tag": "syntax",
+    "tier": 2,
+    "question_type": "fill_in_blank",
+    "prompt_text": "Complete the f-string.",
+    "content": {
+      "code_with_blank": "name = 'Ada'\nprint(_____'Hello {name}!')",
+      "hint": "f-string prefix character"
+    },
+    "correct_answer": "f"
+  },
+  {
+    "id": "dq_ct_t1",
+    "skill_tag": "computational_thinking",
+    "tier": 1,
+    "question_type": "multiple_choice",
+    "prompt_text": "You need to do the same task 100 times. What is the best approach?",
+    "content": {
+      "options": [
+        "Write the code 100 times",
+        "Use a loop",
+        "Use 100 variables",
+        "Use 100 functions"
+      ],
+      "correct_index": 1
+    },
+    "correct_answer": "1"
+  },
+  {
+    "id": "dq_ct_t2",
+    "skill_tag": "computational_thinking",
+    "tier": 2,
+    "question_type": "multiple_choice",
+    "prompt_text": "A function that calls itself is called a _____ function.",
+    "content": {
+      "options": ["iterative", "recursive", "sequential", "parallel"],
+      "correct_index": 1
+    },
+    "correct_answer": "1"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "m01_q01",
+    "module_id": "module_01",
+    "question_type": "multiple_choice",
+    "skill_tag": "sequencing",
+    "difficulty_tier": 1,
+    "prompt_text": "What will this print?\nprint('Hello, World!')",
+    "content": {
+      "options": ["Hello, World!", "print", "Hello", "Error"],
+      "correct_index": 0
+    },
+    "correct_answer": "0",
+    "explanation": "print() outputs whatever is inside the parentheses as text.",
+    "point_weight": 1.0,
+    "is_retry_eligible": false
+  },
+  {
+    "id": "m02_q01",
+    "module_id": "module_02",
+    "question_type": "multiple_choice",
+    "skill_tag": "syntax",
+    "difficulty_tier": 1,
+    "prompt_text": "Which of these is a valid variable name in Python?",
+    "content": {
+      "options": ["1st_name", "first name", "first_name", "first-name"],
+      "correct_index": 2
+    },
+    "correct_answer": "2",
+    "explanation": "Variables cannot start with numbers, contain spaces, or use dashes.",
+    "point_weight": 1.0,
+    "is_retry_eligible": false
+  }
+]
