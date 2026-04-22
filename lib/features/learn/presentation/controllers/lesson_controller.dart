@@ -56,6 +56,11 @@ class LessonController extends ChangeNotifier {
   bool get hasNextLesson     => _currentLessonNumber < _totalLessons;
   bool get isLastLesson      => _currentLessonNumber >= _totalLessons;
 
+  /// True when the loaded lesson's JSON contains "is_module_closer": true.
+  /// Used by LessonScreen and TryItYourselfCta to trigger quiz navigation
+  /// instead of attempting to load a non-existent next lesson file.
+  bool get isModuleCloser => _lessonData?.isModuleCloser ?? false;
+
   String get previousLessonId {
     final prev = _currentLessonNumber - 1;
     return '${_currentModuleId}_l${prev.toString().padLeft(2, '0')}';
@@ -178,11 +183,22 @@ class LessonController extends ChangeNotifier {
         canonicalLessonId,
       );
 
-      return await _completionService.completeLesson(
+      final result = await _completionService.completeLesson(
         canonicalModuleId,
         canonicalLessonId,
         totalLessons: _totalLessons,
       );
+
+      // ── Bug 3 fix: honour the is_module_closer JSON flag ───────────────────
+      // If this lesson declares itself the last in the module, always direct
+      // the user to the quiz — regardless of what the DB completion count
+      // returns. This makes end-of-module detection authoritatively data-driven
+      // and immune to UID scope mismatches in the sqflite progress table.
+      if (_lessonData?.isModuleCloser == true) {
+        return LessonCompletionResult.triggerQuiz;
+      }
+
+      return result;
     } else {
       if (_error == null) _error = 'Validation failed. Please check the hint.';
       _isSuccess = false;

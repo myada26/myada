@@ -6,6 +6,10 @@ import '../models/local_user.dart';
 import '../services/hive_service.dart';
 import '../core/data/local_database.dart';
 import '../core/services/connectivity_service.dart';
+import '../core/services/points_service.dart';
+import '../core/services/streak_service.dart';
+import '../core/engine/badge_engine.dart';
+import '../features/learn/data/services/module_unlock_service.dart';
 import '../features/learn/data/services/progress_service.dart';
 
 // ── Auth state ────────────────────────────────────────────────────────────────
@@ -87,6 +91,10 @@ class AuthController extends ChangeNotifier {
     // UID is known — scope all local DB reads/writes to this user.
     LocalDatabase.setUserId(cachedUid);
     ProgressService.instance.setUserId(cachedUid);
+    PointsService.instance.setUserId(cachedUid);
+    StreakService.instance.setUserId(cachedUid);
+    BadgeEngine.instance.setUserId(cachedUid);
+    ModuleUnlockService.instance.setUserId(cachedUid);
 
     // Try silent Firebase token refresh.
     try {
@@ -165,6 +173,7 @@ class AuthController extends ChangeNotifier {
       await _cacheToken(fbUser.uid, idToken!);
       // Flag that this device has completed first login.
       await _secureStorage.write(key: _kHasLoggedIn, value: 'true');
+      _hasEverLoggedIn = true;
 
       // Scope DB to this user immediately.
       LocalDatabase.setUserId(fbUser.uid);
@@ -230,6 +239,7 @@ class AuthController extends ChangeNotifier {
           await _secureStorage.delete(key: _kIsLoggedOut);
           LocalDatabase.setUserId(cachedUid);
           _currentUser = localUser;
+          _hasEverLoggedIn = true;
           _setStatus(AuthStatus.authenticated);
           debugPrint('AuthController: Offline re-login accepted (cached session).');
           return true;
@@ -279,6 +289,9 @@ class AuthController extends ChangeNotifier {
       ProgressService.instance.setUserId(fbUser.uid);
 
       _currentUser = localUser;
+      // Sync the in-memory flag with what we just wrote to secure storage so
+      // AuthGate correctly routes without requiring an app restart.
+      _hasEverLoggedIn = true;
       _setStatus(AuthStatus.authenticated);
       debugPrint('AuthController: Online login successful.');
       return true;
@@ -317,6 +330,10 @@ class AuthController extends ChangeNotifier {
     _hasEverLoggedIn = true;
     LocalDatabase.setUserId('anonymous');
     ProgressService.instance.setUserId('anonymous');
+    PointsService.instance.setUserId('anonymous');
+    StreakService.instance.setUserId('anonymous');
+    BadgeEngine.instance.setUserId('anonymous');
+    ModuleUnlockService.instance.setUserId('anonymous');
     _setStatus(AuthStatus.unauthenticated);
   }
 
@@ -338,6 +355,43 @@ class AuthController extends ChangeNotifier {
     if (_currentUser == null) return;
     _currentUser!.hasCompletedDiagnostic = true;
     _currentUser!.startingLevel = startingLevel;
+    await _hiveService.saveUser(_currentUser!);
+
+    // Seed the first unlocked module into sqflite so LearnScreen can read it.
+    // startingLevel maps to the first module of the learning path.
+    // The canonical first module is always module_01 for Beginner/Novice;
+    // advanced users start at module_02 or module_03 per learning path logic.
+    final firstModuleId = _firstModuleForLevel(startingLevel);
+    await ModuleUnlockService.instance.unlockModule(
+      firstModuleId,
+      reason: 'diagnostic_completed',
+    );
+
+    // Award points and badges for completing the diagnostic
+    await PointsService.instance.addPoints(
+      PointsService.diagnosticCompleted, 'diagnostic_completed',
+    );
+    await BadgeEngine.instance.checkAndAward('diagnostic_completed');
+    await BadgeEngine.instance.checkAndAward('learning_path_generated');
+
+    notifyListeners();
+  }
+
+  /// Maps a starting skill level to its first module ID.
+  String _firstModuleForLevel(String level) {
+    switch (level) {
+      case 'Intermediate': return 'module_03';
+      case 'Novice':       return 'module_02';
+      default:             return 'module_01'; // Beginner
+    }
+  }
+
+  // ── Profile Updates ───────────────────────────────────────────────────────
+
+  Future<void> updateProfile(String firstName, String lastName) async {
+    if (_currentUser == null) return;
+    _currentUser!.firstName = firstName;
+    _currentUser!.lastName = lastName;
     await _hiveService.saveUser(_currentUser!);
     notifyListeners();
   }

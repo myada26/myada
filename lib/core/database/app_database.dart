@@ -23,7 +23,7 @@ class AppDatabase {
     final dbPath = join(await getDatabasesPath(), 'myada.db');
     return openDatabase(
       dbPath,
-      version: 2,
+      version: 3,
       onCreate: _createSchema,
       onUpgrade: _onUpgrade,
       onOpen: (db) async => await _seedIfNeeded(db),
@@ -33,6 +33,9 @@ class AppDatabase {
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       await _addLessonProgressTable(db);
+    }
+    if (oldVersion < 3) {
+      await _addPointHistoryTable(db);
     }
   }
 
@@ -167,6 +170,18 @@ class AppDatabase {
       FOREIGN KEY (learner_id) REFERENCES learners(id)
     )''');
 
+    batch.execute('''CREATE TABLE IF NOT EXISTS timed_challenges (
+      id TEXT PRIMARY KEY,
+      learner_id TEXT NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      progress_pct REAL NOT NULL DEFAULT 0.0,
+      points_reward INTEGER NOT NULL,
+      created_at TEXT NOT NULL,
+      FOREIGN KEY (learner_id) REFERENCES learners(id)
+    )''');
+
     batch.execute('''CREATE TABLE IF NOT EXISTS leaderboard_scores (
       id TEXT PRIMARY KEY,
       learner_id TEXT NOT NULL UNIQUE,
@@ -221,10 +236,17 @@ class AppDatabase {
     // lesson_progress table (used by ProgressService)
     await _addLessonProgressTable(db);
 
-    await db.insert('app_meta', {'key': 'schema_version', 'value': '2'},
-        conflictAlgorithm: ConflictAlgorithm.ignore);
-    await db.insert('app_meta', {'key': 'seed_loaded', 'value': '0'},
-        conflictAlgorithm: ConflictAlgorithm.ignore);
+    // point_history table (used by PointsService)
+    await _addPointHistoryTable(db);
+
+    await db.insert('app_meta', {
+      'key': 'schema_version',
+      'value': '3',
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    await db.insert('app_meta', {
+      'key': 'seed_loaded',
+      'value': '0',
+    }, conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   Future<void> _addLessonProgressTable(Database db) async {
@@ -241,33 +263,60 @@ class AppDatabase {
     ''');
   }
 
+  Future<void> _addPointHistoryTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS point_history (
+        id         TEXT PRIMARY KEY,
+        learner_id TEXT NOT NULL,
+        points     INTEGER NOT NULL,
+        reason     TEXT NOT NULL,
+        earned_at  TEXT NOT NULL
+      )
+    ''');
+  }
+
   Future<void> _seedIfNeeded(Database db) async {
-    final meta = await db.query('app_meta',
-        where: 'key = ?', whereArgs: ['seed_loaded']);
+    final meta = await db.query(
+      'app_meta',
+      where: 'key = ?',
+      whereArgs: ['seed_loaded'],
+    );
     if (meta.isNotEmpty && meta.first['value'] == '1') return;
 
     await _loadJsonAsset(db, 'assets/data/modules.json', 'modules');
-    await _loadJsonAsset(db, 'assets/data/quiz_questions.json', 'quiz_questions',
-        transform: (m) => {
-          ...m,
-          'content_json': jsonEncode(m['content']),
-          'is_retry_eligible': (m['is_retry_eligible'] as bool) ? 1 : 0,
-        });
-    await _loadJsonAsset(db, 'assets/data/retry_questions.json', 'quiz_questions',
-        transform: (m) => {
-          ...m,
-          'content_json': jsonEncode(m['content']),
-          'is_retry_eligible': 1,
-        });
-    await _loadJsonAsset(db, 'assets/data/diagnostic_questions.json',
-        'diagnostic_questions',
-        transform: (m) => {
-          ...m,
-          'content_json': jsonEncode(m['content']),
-        });
+    await _loadJsonAsset(
+      db,
+      'assets/data/quiz_questions.json',
+      'quiz_questions',
+      transform: (m) => {
+        ...m,
+        'content_json': jsonEncode(m['content']),
+        'is_retry_eligible': (m['is_retry_eligible'] as bool) ? 1 : 0,
+      },
+    );
+    await _loadJsonAsset(
+      db,
+      'assets/data/retry_questions.json',
+      'quiz_questions',
+      transform: (m) => {
+        ...m,
+        'content_json': jsonEncode(m['content']),
+        'is_retry_eligible': 1,
+      },
+    );
+    await _loadJsonAsset(
+      db,
+      'assets/data/diagnostic_questions.json',
+      'diagnostic_questions',
+      transform: (m) => {...m, 'content_json': jsonEncode(m['content'])},
+    );
 
-    await db.update('app_meta', {'value': '1'},
-        where: 'key = ?', whereArgs: ['seed_loaded']);
+    await db.update(
+      'app_meta',
+      {'value': '1'},
+      where: 'key = ?',
+      whereArgs: ['seed_loaded'],
+    );
   }
 
   Future<void> _loadJsonAsset(
@@ -284,8 +333,7 @@ class AppDatabase {
       final row = transform != null ? transform(map) : map;
       // Remove keys not in table schema
       row.remove('content');
-      batch.insert(tableName, row,
-          conflictAlgorithm: ConflictAlgorithm.ignore);
+      batch.insert(tableName, row, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
     await batch.commit(noResult: true);
   }

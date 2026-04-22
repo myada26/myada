@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../components/buttons/app_button.dart';
+import '../../../../core/services/points_service.dart';
+import '../../../../core/engine/badge_engine.dart';
 import '../../../../main.dart';
 import '../controllers/lesson_controller.dart';
 import '../../data/models/lesson_data.dart';
@@ -52,6 +54,7 @@ class _TryItYourselfCtaState extends State<TryItYourselfCta> {
     // Load quiz questions from the module's quiz.json asset
     final folderName = widget.moduleId.replaceAll('_', '');
     List<Map<String, dynamic>> questions = [];
+    String nextModuleId = '';
 
     try {
       final raw = await rootBundle.loadString(
@@ -61,16 +64,22 @@ class _TryItYourselfCtaState extends State<TryItYourselfCta> {
       questions = rawQuestions
           .map<Map<String, dynamic>>((q) {
             final m = Map<String, dynamic>.from(q as Map);
-            // Normalise field names to match ModuleQuizScreen expectations
             return {
-              'prompt_text':     m['prompt'] ?? m['prompt_text'] ?? '',
-              'question_type':   m['type']   ?? m['question_type'] ?? 'multiple_choice',
-              'content':         m,          // raw map for rendering
-              'correct_answer':  m['correct_index']?.toString() ?? m['answer'] ?? '',
-              'explanation':     m['explanation'] ?? '',
+              'id':            m['id'] ?? '',
+              'prompt_text':   m['prompt'] ?? m['prompt_text'] ?? '',
+              'question_type': m['type']   ?? m['question_type'] ?? 'multiple_choice',
+              'content':       m,
+              'correct_answer': m['correct_index']?.toString() ?? m['answer'] ?? '',
+              'explanation':   m['explanation'] ?? '',
             };
           })
           .toList();
+
+      // Parse nextModuleId for the post-quiz unlock
+      final remediation =
+          decoded['adaptive_remediation'] as Map<String, dynamic>? ?? {};
+      final onPass = remediation['on_pass'] as Map<String, dynamic>? ?? {};
+      nextModuleId = onPass['next_module_id'] as String? ?? '';
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -90,6 +99,7 @@ class _TryItYourselfCtaState extends State<TryItYourselfCta> {
           questions:      questions,
           isFirstAttempt: true,
           hasStreak:      false,
+          nextModuleId:   nextModuleId,
         ),
       ),
     );
@@ -107,6 +117,23 @@ class _TryItYourselfCtaState extends State<TryItYourselfCta> {
       // Validation failed — error shown in UI, stay on screen
       return;
     }
+
+    // Award exercise completion points
+    await PointsService.instance.addPoints(
+      PointsService.exerciseComplete, 'exercise_complete',
+    );
+
+    // Check for exercise-related badges
+    await BadgeEngine.instance.checkAndAward(
+      'exercise_completed',
+      context: {
+        'isFirstTry': true,  // TODO: track actual first-try status
+        'hintsUsed': 0,      // TODO: track actual hints used
+        'isDebug': false,
+        'isTimed': false,
+        'completedInTime': false,
+      },
+    );
 
     if (result.isQuiz) {
       // All lessons complete — navigate to the module quiz

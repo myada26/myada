@@ -52,11 +52,11 @@ class LearningPathController extends ChangeNotifier {
   ///     scores: diagnosticController.scores,
   ///     skips:  diagnosticController.skips,
   ///   );
-  void buildResult({
+  Future<void> buildResult({
     required Map<int, double> scores,
     required List<int> skips,
     bool saveToDb = true,
-  }) {
+  }) async {
     _isBuilding = true;
     notifyListeners();
 
@@ -77,7 +77,9 @@ class LearningPathController extends ChangeNotifier {
     );
 
     if (saveToDb) {
-      LocalDatabase().saveDiagnosticProgress(scores, skips);
+      // IMPORTANT: await the write so data is not lost if the app closes
+      // immediately after the diagnostic result screen is shown.
+      await LocalDatabase().saveDiagnosticProgress(scores, skips);
     }
 
     _isBuilding = false;
@@ -86,7 +88,7 @@ class LearningPathController extends ChangeNotifier {
 
   /// Attempts to load and build the result from persisted data.
   /// Call this after the UID is set (i.e. after AuthController.init completes).
-  void loadResultFromDb() {
+  Future<void> loadResultFromDb() async {
     final data = LocalDatabase().getDiagnosticProgress();
     if (data == null) {
       debugPrint('LearningPathController: no saved diagnostic data found.');
@@ -98,7 +100,8 @@ class LearningPathController extends ChangeNotifier {
       final skips  = List<int>.from(data['skips']  as List);
       debugPrint('LearningPathController: restoring diagnostic — '
           'scores=$scores skips=$skips');
-      buildResult(scores: scores, skips: skips, saveToDb: false);
+      // await so we know the result is fully built before the UI reads it.
+      await buildResult(scores: scores, skips: skips, saveToDb: false);
     } catch (e, st) {
       debugPrint('LearningPathController: failed to restore diagnostic: $e\n$st');
     }

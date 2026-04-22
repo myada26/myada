@@ -1,0 +1,151 @@
+# Challenge Center — Implementation Plan
+
+## Overview
+
+Redesign the existing **Progress** tab into a **Challenge Center** screen, faithfully translating the `myada_challenge_center_wireframe.html` into Flutter widgets. This plan covers all six objectives: screen refactor, pixel-perfect translation, theme integration, componentization, mock data layer, and navigation update.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> The wireframe's bottom nav shows **4 tabs**: Home, Modules, Challenges, Profile. The current `MainNavShell` has **5 slots**: Home, Ranks (index 1), Learn (FAB at index 2), Progress (index 3), Profile (index 4). We cannot remove the Ranks or Learn screens without breaking navigation.
+>
+> **Recommended approach:** Keep the existing 5-slot layout. Only update slot #3 (currently "Progress") to "Challenges" with a trophy/star icon. The Ranks tab remains as "Ranks", which is not in the wireframe's 4-tab nav. Confirm this is acceptable, or specify if Ranks should be renamed/removed.
+
+> [!WARNING]
+> The wireframe uses several colors not in the current `AppColors` palette — amber `#854f0b`, coral `#993c1d`, purple `#3c3489`, and light variants for icon/pill backgrounds. Per the task rules, strictly new colors will be **added to `app_colors.dart`** under a new `// Challenge Center` section rather than hardcoded in the UI.
+
+---
+
+## Color Mapping Analysis
+
+| Wireframe Color         | Hex       | Closest `AppColors`      | Action              |
+|------------------------|-----------|--------------------------|---------------------|
+| Amber text/icon         | `#854f0b` | —                        | **ADD** `challengeAmber` |
+| Amber bg (icon/pill)    | `#faeeda` | `AppColors.accentSubtle` | **REUSE** `accentSubtle` |
+| Coral text/icon         | `#993c1d` | —                        | **ADD** `challengeCoral` |
+| Coral bg (icon/pill)    | `#faece7` | —                        | **ADD** `challengeCoralLight` |
+| Purple text/icon        | `#3c3489` | `AppColors.primary` ≈    | **ADD** `challengePurple` |
+| Purple bg (icon/pill)   | `#eeedfe` | —                        | **ADD** `challengePurpleLight` |
+| Teal text/icon          | `#0f6e56` | `AppColors.success` ≈    | **ADD** `challengeTeal` |
+| Teal bg (icon/pill)     | `#e1f5ee` | `AppColors.successLight` | **REUSE** `successLight` |
+| Teal (next exam card bg)| `#1d9e75` | `AppColors.success`      | **REUSE** `success` |
+| Green pill bg           | `#eaf3de` | —                        | **ADD** `challengeGreenLight` |
+| Green pill text         | `#27500a` | —                        | **ADD** `challengeGreen` |
+| Bar fill amber          | `#ef9f27` | `AppColors.warning`      | **REUSE** `warning` |
+| Bar fill purple         | `#7f77dd` | —                        | **ADD** `challengePurpleFill` |
+| Retake button text      | `#3c3489` | → `challengePurple`      | REUSE new token |
+| Failed score text       | `#e24b4a` | `AppColors.error`        | **REUSE** `error` |
+
+---
+
+## Proposed Changes
+
+### Component 1: Theme — New Color Tokens
+
+#### [MODIFY] [app_colors.dart](file:///c:/Flutter_Projects/my_ada/my_ada/lib/core/theme/app_colors.dart)
+
+Add a new `// Challenge Center` section at the bottom with:
+- `challengeAmber`, `challengeAmberLight`
+- `challengeCoral`, `challengeCoralLight`
+- `challengePurple`, `challengePurpleLight`, `challengePurpleFill`
+- `challengeTeal` (alias for success), `challengeGreenLight`, `challengeGreen`
+
+---
+
+### Component 2: Nav Shell Update
+
+#### [MODIFY] [main_nav_shell.dart](file:///c:/Flutter_Projects/my_ada/my_ada/lib/shared/widgets/main_nav_shell.dart)
+
+- Change the label for `_items[3]` from `'Progress'` → `'Challenges'`
+- Change `icon` from `Icons.assignment_rounded` → `Icons.emoji_events_rounded` (trophy)
+- Change `outlinedIcon` from `Icons.assignment_outlined` → `Icons.emoji_events_outlined`
+
+---
+
+### Component 3: Challenge Center Screen
+
+#### [MODIFY] [progress_screen.dart](file:///c:/Flutter_Projects/my_ada/my_ada/lib/features/progress/presentation/screens/progress_screen.dart)
+
+**Full replacement** of file contents. The `ProgressScreen` class is kept (name preserved) but completely rebuilt.
+
+#### Data Models (at the top of the file)
+
+```dart
+// Mock data models — ready to be wired to AppDatabase/ScoringEngine
+class _ChallengeData { title, subtitle, progress (0.0–1.0), status, accentColor, iconBg, iconFg, pillBg, pillFg, pointsLabel }
+class _RetakeData    { title, score, scoreColor, reason, buttonLabel }
+class _NextExamData  { comingUpLabel, title, subtitle, readinessPercent, ctaLabel }
+```
+
+Mock instances placed as `static const` lists in the `ProgressScreen` class.
+
+#### Widget Tree Structure
+
+```
+ProgressScreen (StatelessWidget)
+└── Scaffold
+    └── SafeArea
+        └── CustomScrollView
+            ├── SliverToBoxAdapter → _ChallengeHeader
+            ├── SliverToBoxAdapter → _StatsRow
+            └── SliverList content (padded)
+                ├── _SectionHeader("Timed challenges", "3 pending")
+                ├── _ChallengeCard × 3  (Functions, Logic Flow, Debugging)
+                ├── _Divider
+                ├── _SectionHeader("Retake suggestions", "2 quizzes")
+                ├── _RetakeCard × 2  (Conditionals, Variables)
+                ├── _Divider
+                ├── _SectionHeader("Next exam", "Module 3")
+                └── _NextExamCard
+```
+
+#### Private Widget Components
+
+| Widget | Description |
+|--------|-------------|
+| `_ChallengeHeader` | Title + subtitle, mirrors learn_screen.dart header |
+| `_StatsRow` | 3-column `Row` of `_StatBox` widgets, white bg with border-bottom |
+| `_StatBox` | Label, colored value, sub-label — no fixed widths, uses `Expanded` |
+| `_SectionHeader` | Bold section title + gray count label in a `Row` |
+| `_ChallengeCard` | Icon circle + body (title, sub, progress bar) + right (pill + pts) |
+| `_StatusPill` | Rounded pill with themed bg/text colors |
+| `_ProgressBar` | Thin 3px bar with colored fill (no `LinearProgressIndicator` — custom for exact height) |
+| `_RetakeCard` | Title + score row, reason text, full-width action button |
+| `_NextExamCard` | Green card with readiness bar and "Start early" button |
+| `_HorizontalDivider` | Thin `Divider` matching wireframe's `0.5px #eee` |
+
+---
+
+## Verification Plan
+
+### Automated
+```bash
+flutter analyze lib/features/progress/presentation/screens/progress_screen.dart
+flutter analyze lib/shared/widgets/main_nav_shell.dart
+flutter analyze lib/core/theme/app_colors.dart
+```
+All three must return zero errors/warnings.
+
+### Build Check
+```bash
+flutter build apk --debug
+```
+
+### Manual Visual Verification
+1. Launch the app and tap the **Challenges** tab (index 3).
+2. Verify the stats row shows 3 columns with amber, coral, and purple numbers.
+3. Scroll through all challenge cards — confirm icon backgrounds, progress bars, and pill colors match the wireframe color sections.
+4. Confirm retake cards render with action buttons.
+5. Confirm the teal Next Exam card renders at the bottom with the white CTA button.
+6. On a small screen (e.g. Pixel 4a), verify no overflow warnings.
+
+---
+
+## Execution Sequence
+
+1. `app_colors.dart` — add Challenge Center color tokens
+2. `main_nav_shell.dart` — update 3rd tab label + icon
+3. `progress_screen.dart` — full rebuild with all components
+4. `flutter analyze` — verify zero issues

@@ -1,76 +1,88 @@
 import 'package:flutter/material.dart';
 
-/// MyADA Color System
-/// Source: App.jsx + theme.css (Warm cream + Navy + Gold palette)
+/// MyADA Strict UI Color System
 class AppColors {
   AppColors._();
 
   // ---------------------------------------------------------------------------
-  // Backgrounds
+  // Base Strict Palette (No magic hex codes outside these 10)
+  // Deep Blue    — #0A5DE8 (Primary)
+  // Bright Blue  — #1E63D2 (Primary Hover)
+  // Sky Blue     — #5EB9E1 (Primary Light)
+  // Orange       — #FF6A1A (Accent)
+  // Coral/Peach  — #FF8A5B (Error)
+  // Pink         — #F48FB1 (Tertiary)
+  // Yellow       — #FFD233 (Success)
+  // White        — #FFFFFF (Surface)
+  // Light Gray   — #F5F5F5 (Background)
+  // Dark Gray    — #333333 (Foreground)
   // ---------------------------------------------------------------------------
-  static const Color background = Color(0xFFF4EFEA); // scaffold bg
-  static const Color surface = Color(0xFFFAF8F5); // card surface
-  static const Color surfaceVariant = Color(0xFFECECF0); // muted surface
-  static const Color popover = Color(0xFFFFFFFF); // modals / sheets
 
-  // ---------------------------------------------------------------------------
-  // Foreground / Text
-  // ---------------------------------------------------------------------------
-  static const Color foreground = Color(0xFF1F2937);
-  static const Color mutedForeground = Color(0xFF717182);
-  static const Color subtleForeground = Color(0xFF9CA3AF);
-
-  // ---------------------------------------------------------------------------
-  // Primary — Navy Blue  (#1E3A8A from App.jsx)
-  // ---------------------------------------------------------------------------
-  static const Color primary = Color(0xFF1E3A8A);
-  static const Color primaryHover = Color(0xFF152A65);
-  static const Color primaryLight = Color(0xFFDBE4FF);
+  // Primary
+  static const Color primary = Color(0xFF0A5DE8);
+  static const Color primaryHover = Color(0xFF1E63D2);
+  static const Color primaryLight = Color(0xFF5EB9E1);
+  static const Color primaryDark = Color(0xFF1E63D2);
   static const Color primaryForeground = Color(0xFFFFFFFF);
 
-  // ---------------------------------------------------------------------------
-  // Accent — Gold  (#E89C1E from App.jsx)
-  // ---------------------------------------------------------------------------
-  static const Color accent = Color(0xFFE89C1E);
-  static const Color accentLight = Color(0xFFFAC775); // badge tint
-  static const Color accentSubtle = Color(0xFFFAEEDA); // bg pill
-  static const Color accentForeground = Color(0xFF1F2937);
+  // Backgrounds & Surfaces
+  static const Color background = Color(0xFFF5F5F5);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceVariant = Color(0xFFF5F5F5);
+  static const Color popover = Color(0xFFFFFFFF);
+  static const Color surfaceElevated = Color(0xFFFFFFFF);
 
-  // ---------------------------------------------------------------------------
-  // Semantic
-  // ---------------------------------------------------------------------------
-  static const Color error = Color(0xFFCA2B2C); // from App.jsx
-  static const Color errorLight = Color(0xFFFCEBEB);
-  static const Color success = Color(0xFF1D9E75);
-  static const Color successLight = Color(0xFFE1F5EE);
-  static const Color warning = Color(0xFFEF9F27);
-  static const Color warningLight = Color(0xFFFAEEDA);
+  // Text
+  static const Color foreground = Color(0xFF333333);
+  static const Color textPrimary = Color(0xFF333333);
+  // Using alpha for muted effects while keeping the base color exact.
+  static const Color mutedForeground = Color(0x99333333); // 60% black
+  static const Color subtleForeground = Color(0x66333333); // 40% black
+  static const Color textMuted = Color(0x99333333);
+  static const Color textSecondary = Color(0x66333333);
+  static const Color muted = Color(0x99333333);
 
-  // ---------------------------------------------------------------------------
-  // Borders  (rgba(0,0,0,0.1) from theme.css → soft)
-  // ---------------------------------------------------------------------------
-  static const Color border = Color(0x1A2D2D2D); // 10% opacity
-  static const Color borderStrong = Color(0x4D2D2D2D); // 30% — hover/focus
-  static const Color borderHeavy = Color(0xFF2D2D2D); // full — App.jsx nav bar
+  // Semantics & Accents
+  static const Color accent = Color(0xFFFF6A1A);
+  static const Color accentLight = Color(0xFFFF6A1A); // using base accent
+  static const Color accentSubtle = Color(0x33FF6A1A); 
+  static const Color accentForeground = Color(0xFF333333);
+  
+  static const Color error = Color(0xFFFF8A5B); // Coral
+  static const Color errorLight = Color(0x33FF8A5B);
+  
+  static const Color success = Color(0xFFFFD233); // Yellow
+  static const Color successLight = Color(0x33FFD233);
+  
+  static const Color warning = Color(0xFFFF6A1A); // Orange
+  static const Color warningLight = Color(0x33FF6A1A);
 
-  // ---------------------------------------------------------------------------
+  // Borders
+  static const Color border = Color(0x1A333333); // 10% dark
+  static const Color borderStrong = Color(0x4D333333); // 30% dark
+  static const Color borderHeavy = Color(0xFF333333); 
+  static const Color navBorder = Color(0xFF333333);
+
   // Input
-  // ---------------------------------------------------------------------------
-  static const Color inputBackground = Color(0xFFF3F3F5);
-  static const Color switchBackground = Color(0xFFCBCED4);
+  static const Color inputBackground = Color(0xFFFFFFFF);
+  static const Color switchBackground = Color(0x4D333333);
+  static const Color locked = Color(0x4D333333);
 
-  // ---------------------------------------------------------------------------
-  // XP / Gamification badge colors (from App.jsx XP chip)
-  // ---------------------------------------------------------------------------
-  static const Color xpBackground = Color(0x1AE89C1E); // accent/10
-  static const Color xpBorder = Color(0x4DE89C1E);
+  // Gamification
+  static const Color xpBackground = Color(0x1AFF6A1A);
+  static const Color xpBorder = Color(0x4DFF6A1A);
 
-  static const Color muted = mutedForeground;
-  static const Color textPrimary = foreground;
-  static const Color surfaceElevated = surface;
-  static const Color textMuted = mutedForeground;
-  static const Color navBorder = borderHeavy;
-  static const Color textSecondary = subtleForeground;
-  static const Color locked = switchBackground;
-  static const Color primaryDark = primaryHover;
+  // Legacy mappings for Progress Screen / Challenge Center
+  // Previously utilized a disjointed color palette; now alias to strict system
+  static const Color challengeAmber       = Color(0xFFFFD233); // Yellow
+  static const Color challengeAmberLight  = Color(0x33FFD233);
+  static const Color challengeCoral       = Color(0xFFFF8A5B); // Coral
+  static const Color challengeCoralLight  = Color(0x33FF8A5B);
+  static const Color challengePurple      = Color(0xFF0A5DE8); // Deep Blue
+  static const Color challengePurpleLight = Color(0x330A5DE8);
+  static const Color challengePurpleFill  = Color(0xFF5EB9E1); // Sky Blue
+  static const Color challengeTeal        = Color(0xFF0A5DE8); // Fallback to primary
+  static const Color challengeTealLight   = Color(0x330A5DE8); 
+  static const Color challengeGreenLight  = Color(0x33FFD233); // Yellow light
+  static const Color challengeGreen       = Color(0xFFFFD233); // Yellow
 }

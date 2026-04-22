@@ -6,32 +6,33 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  // Scale
-  static const double _xs = 10.0;
-  static const double _sm = 12.0;
-  static const double _base = 14.0;
+  // Scale — 6-tier system
+  static const double _xs      = 10.0;  // Tier 6: Micro
+  static const double _sm      = 12.0;  // Tier 5: Label / Caption
+  static const double _base    = 14.0;  // Tier 4: Body
+  static const double _lg      = 18.0;  // Tier 3: Title / Subheading
+  static const double _heading = 22.0;  // Tier 2: Heading
+  static const double _display = 32.0;  // Tier 1: Display / Hero
+
+  // Used only for input/button sizing (not display tiers)
   static const double _md = 16.0;
-  static const double _lg = 18.0;
-  static const double _xl = 20.0;
-  static const double _2xl = 24.0;
-  static const double _3xl = 30.0;
 
   // ---------------------------------------------------------------------------
   // Display / Headings
   // ---------------------------------------------------------------------------
   static const TextStyle h1 = TextStyle(
-    fontSize: _2xl,
+    fontSize: _display,
     fontWeight: FontWeight.w700,
     color: AppColors.foreground,
-    height: 1.3,
+    height: 1.2,
     letterSpacing: -0.5,
   );
 
   static const TextStyle h2 = TextStyle(
-    fontSize: _xl,
+    fontSize: _heading,
     fontWeight: FontWeight.w700,
     color: AppColors.foreground,
-    height: 1.4,
+    height: 1.3,
     letterSpacing: -0.3,
   );
 
@@ -43,7 +44,7 @@ class AppTextStyles {
   );
 
   static const TextStyle h4 = TextStyle(
-    fontSize: _md,
+    fontSize: _base,
     fontWeight: FontWeight.w600,
     color: AppColors.foreground,
     height: 1.5,
@@ -53,7 +54,7 @@ class AppTextStyles {
   // Body
   // ---------------------------------------------------------------------------
   static const TextStyle bodyLg = TextStyle(
-    fontSize: _md,
+    fontSize: _base,
     fontWeight: FontWeight.w400,
     color: AppColors.foreground,
     height: 1.6,
@@ -84,7 +85,7 @@ class AppTextStyles {
   // Labels / UI text
   // ---------------------------------------------------------------------------
   static const TextStyle label = TextStyle(
-    fontSize: _base,
+    fontSize: _sm,
     fontWeight: FontWeight.w500,
     color: AppColors.foreground,
     height: 1.5,

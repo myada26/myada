@@ -1,0 +1,224 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.phone{background:#e4e4e4;border-radius:36px;padding:12px;width:320px;margin:0 auto;border:2px solid #ccc}
+.screen{background:#f8f9fc;border-radius:26px;overflow:hidden}
+.topbar{background:#fff;padding:14px 16px 12px;border-bottom:0.5px solid #eee}
+.topbar-title{font-size:15px;font-weight:700;color:#1a1a18}
+.topbar-sub{font-size:10px;color:#aaa;margin-top:1px}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 14px;background:#fff;border-bottom:0.5px solid #eee}
+.s-box{background:#f8f9fc;border-radius:10px;padding:8px 8px 6px;border:0.5px solid #eee;text-align:center}
+.s-lbl{font-size:9px;color:#aaa;font-weight:500;margin-bottom:3px}
+.s-val{font-size:16px;font-weight:700;line-height:1}
+.s-sub{font-size:9px;color:#bbb;margin-top:2px}
+.v-amber{color:#854f0b}
+.v-coral{color:#993c1d}
+.v-purple{color:#3c3489}
+.v-teal{color:#0f6e56}
+.scroll-area{padding:12px 14px;display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sec-title{font-size:11px;font-weight:700;color:#1a1a18;letter-spacing:.04em}
+.sec-count{font-size:10px;color:#aaa}
+.challenge-card{background:#fff;border:0.5px solid #e8e6e0;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.challenge-card:last-child{margin-bottom:0}
+.c-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-amber{background:#faeeda}
+.ci-coral{background:#faece7}
+.ci-purple{background:#eeedfe}
+.ci-teal{background:#e1f5ee}
+.ci-blue{background:#e6f1fb}
+.c-body{flex:1;min-width:0}
+.c-title{font-size:12px;font-weight:600;color:#1a1a18;margin-bottom:2px}
+.c-sub{font-size:10px;color:#aaa;line-height:1.4}
+.c-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.c-pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px}
+.pill-amber{background:#faeeda;color:#633806}
+.pill-coral{background:#faece7;color:#712b13}
+.pill-purple{background:#eeedfe;color:#3c3489}
+.pill-teal{background:#e1f5ee;color:#085041}
+.pill-gray{background:#f1efe8;color:#5f5e5a}
+.pill-green{background:#eaf3de;color:#27500a}
+.c-pts{font-size:10px;color:#0f6e56;font-weight:600}
+.c-pts-neg{font-size:10px;color:#993c1d;font-weight:600}
+.bar-wrap{height:3px;background:#f0ede6;border-radius:999px;margin-top:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px}
+.retake-card{background:#fff;border:0.5px solid #e8e6e0;border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.retake-card:last-child{margin-bottom:0}
+.retake-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.retake-title{font-size:12px;font-weight:600;color:#1a1a18}
+.retake-score{font-size:11px;font-weight:700}
+.retake-reason{font-size:10px;color:#aaa;margin-bottom:8px;line-height:1.4}
+.retake-btn{width:100%;background:#f8f9fc;border:0.5px solid #ddd;border-radius:8px;padding:7px 0;font-size:11px;font-weight:600;color:#3c3489;cursor:pointer;text-align:center}
+.next-exam-card{background:#1d9e75;border-radius:14px;padding:14px;margin-bottom:8px}
+.ne-label{font-size:10px;color:#9fe1cb;font-weight:600;margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
+.ne-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ne-sub{font-size:10px;color:#9fe1cb;margin-bottom:10px}
+.ne-row{display:flex;align-items:center;justify-content:space-between}
+.ne-ready{font-size:11px;color:#e1f5ee;font-weight:500}
+.ne-pct{font-size:18px;font-weight:700;color:#fff}
+.ne-bar-wrap{height:4px;background:#085041;border-radius:999px;margin-top:6px;overflow:hidden}
+.ne-bar-fill{height:100%;border-radius:999px;background:#9fe1cb}
+.ne-start-btn{background:#fff;color:#085041;font-size:11px;font-weight:700;padding:6px 14px;border-radius:8px;border:none;cursor:pointer}
+.nav-bar{background:#fff;border-top:0.5px solid #eee;display:flex;justify-content:space-around;padding:10px 0 8px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:#bbb;font-weight:500}
+.nav-item.active{color:#1d9e75}
+.nav-dot{width:16px;height:3px;border-radius:999px;background:#1d9e75;margin-top:2px}
+.divider{height:0.5px;background:#eee;margin:0 14px}
+</style>
+
+<div style="padding:1rem 0">
+<div class="phone">
+ <div class="screen">
+
+  <div class="topbar">
+   <div class="topbar-title">Challenge center</div>
+   <div class="topbar-sub">Your active tasks, retakes, and upcoming exams</div>
+  </div>
+
+  <div class="stat-row">
+   <div class="s-box">
+    <div class="s-lbl">Active</div>
+    <div class="s-val v-amber">3</div>
+    <div class="s-sub">challenges</div>
+   </div>
+   <div class="s-box">
+    <div class="s-lbl">Retakes</div>
+    <div class="s-val v-coral">2</div>
+    <div class="s-sub">suggested</div>
+   </div>
+   <div class="s-box">
+    <div class="s-lbl">Next exam</div>
+    <div class="s-val v-purple">3</div>
+    <div class="s-sub">days away</div>
+   </div>
+  </div>
+
+  <div class="scroll-area">
+
+   <div>
+    <div class="sec-head">
+     <span class="sec-title">Timed challenges</span>
+     <span class="sec-count">3 pending</span>
+    </div>
+
+    <div class="challenge-card">
+     <div class="c-icon ci-amber">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#854f0b" stroke-width="1.2"/><path d="M9 5.5V9l2.5 2" stroke="#854f0b" stroke-width="1.2" stroke-linecap="round"/></svg>
+     </div>
+     <div class="c-body">
+      <div class="c-title">Functions — speed run</div>
+      <div class="c-sub">Finish 5 exercises · 90 sec each</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:0%;background:#ef9f27"></div></div>
+     </div>
+     <div class="c-right">
+      <span class="c-pill pill-amber">New</span>
+      <span class="c-pts">+8 pts</span>
+     </div>
+    </div>
+
+    <div class="challenge-card">
+     <div class="c-icon ci-purple">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="3" width="12" height="12" rx="3" stroke="#3c3489" stroke-width="1.2"/><path d="M6 9h6M6 6.5h4M6 11.5h3" stroke="#3c3489" stroke-width="1" stroke-linecap="round"/></svg>
+     </div>
+     <div class="c-body">
+      <div class="c-title">Logic flow — rapid quiz</div>
+      <div class="c-sub">10 questions · 2 min limit</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:40%;background:#7f77dd"></div></div>
+     </div>
+     <div class="c-right">
+      <span class="c-pill pill-purple">In progress</span>
+      <span class="c-pts">+8 pts</span>
+     </div>
+    </div>
+
+    <div class="challenge-card">
+     <div class="c-icon ci-teal">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 14l3-4 3 2 4-6" stroke="#0f6e56" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+     </div>
+     <div class="c-body">
+      <div class="c-title">Debugging — find the bug</div>
+      <div class="c-sub">3 broken snippets · 60 sec each</div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#1d9e75"></div></div>
+     </div>
+     <div class="c-right">
+      <span class="c-pill pill-green">Done</span>
+      <span class="c-pts">+8 pts</span>
+     </div>
+    </div>
+   </div>
+
+   <div class="divider"></div>
+
+   <div>
+    <div class="sec-head">
+     <span class="sec-title">Retake suggestions</span>
+     <span class="sec-count">2 quizzes</span>
+    </div>
+
+    <div class="retake-card">
+     <div class="retake-top">
+      <span class="retake-title">Conditionals quiz</span>
+      <span class="retake-score" style="color:#e24b4a">42% — Failed</span>
+     </div>
+     <div class="retake-reason">You scored below 50%. Retake to earn points and unlock the Comeback badge.</div>
+     <div class="retake-btn">Retake now · +3 pts if improved</div>
+    </div>
+
+    <div class="retake-card">
+     <div class="retake-top">
+      <span class="retake-title">Variables quiz</span>
+      <span class="retake-score" style="color:#854f0b">61% — Passed</span>
+     </div>
+     <div class="retake-reason">You passed but your Logic flow score dropped. A retake could improve your assessment readiness.</div>
+     <div class="retake-btn">Retake to improve · +3 pts</div>
+    </div>
+   </div>
+
+   <div class="divider"></div>
+
+   <div>
+    <div class="sec-head">
+     <span class="sec-title">Next exam</span>
+     <span class="sec-count">Module 3</span>
+    </div>
+
+    <div class="next-exam-card">
+     <div class="ne-label">Coming up in 3 days</div>
+     <div class="ne-title">Module 3 — Functions &amp; scope</div>
+     <div class="ne-sub">10 questions · timed · affects your rank</div>
+     <div class="ne-row">
+      <div>
+       <div class="ne-ready">Assessment readiness</div>
+       <div class="ne-pct">81%</div>
+       <div class="ne-bar-wrap"><div class="ne-bar-fill" style="width:81%"></div></div>
+      </div>
+      <button class="ne-start-btn">Start early</button>
+     </div>
+    </div>
+   </div>
+
+  </div>
+
+  <div class="nav-bar">
+   <div class="nav-item">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="8" width="5" height="6" rx="1.5" fill="#bbb"/><rect x="9" y="2" width="5" height="12" rx="1.5" fill="#bbb" opacity=".4"/></svg>
+    Home
+   </div>
+   <div class="nav-item">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="#bbb" stroke-width="1.2"/><path d="M5 8h6M5 5.5h4M5 10.5h3" stroke="#bbb" stroke-width="1" stroke-linecap="round"/></svg>
+    Modules
+   </div>
+   <div class="nav-item active">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.8 3.6L14 6.3l-3 2.9.7 4.1L8 11.2l-3.7 2.1.7-4.1-3-2.9 4.2-.7z" stroke="#1d9e75" stroke-width="1.2" fill="none"/></svg>
+    Challenges
+    <div class="nav-dot"></div>
+   </div>
+   <div class="nav-item">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="#bbb" stroke-width="1.2"/><path d="M3 14c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#bbb" stroke-width="1.2" stroke-linecap="round"/></svg>
+    Profile
+   </div>
+  </div>
+
+ </div>
+</div>
+</div>

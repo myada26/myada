@@ -1,11 +1,9 @@
 // lib/features/profile/presentation/screens/profile_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../components/buttons/app_button.dart';
 import '../../../../controllers/auth_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -17,9 +15,9 @@ class ProfileScreen extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.xl),
         ),
-        title: Text('Log out?', style: AppTextStyles.h2),
+        title: Text('Log out?', style: AppTextStyles.headingSmall),
         content: Text(
           'Your progress is saved locally and will still be here when you log back in.',
           style: AppTextStyles.body.copyWith(color: AppColors.subtleForeground),
@@ -27,14 +25,17 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('Cancel',
-                style: AppTextStyles.label
-                    .copyWith(color: AppColors.mutedForeground)),
+            child: Text(
+              'Cancel',
+              style: AppTextStyles.label.copyWith(color: AppColors.mutedForeground),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Log out',
-                style: AppTextStyles.label.copyWith(color: AppColors.error)),
+            child: Text(
+              'Log out',
+              style: AppTextStyles.label.copyWith(color: AppColors.error),
+            ),
           ),
         ],
       ),
@@ -42,8 +43,49 @@ class ProfileScreen extends StatelessWidget {
 
     if (confirmed == true && context.mounted) {
       await context.read<AuthController>().logout();
-      // AuthGate will rebuild and push the Login screen automatically.
     }
+  }
+
+  Future<void> _showEditDialog(BuildContext context, dynamic user) async {
+    final firstCtrl = TextEditingController(text: user?.firstName);
+    final lastCtrl = TextEditingController(text: user?.lastName);
+
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text('Edit Profile', style: AppTextStyles.headingSmall),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: firstCtrl, 
+              decoration: const InputDecoration(labelText: 'First Name'),
+              style: AppTextStyles.body,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            TextField(
+              controller: lastCtrl, 
+              decoration: const InputDecoration(labelText: 'Last Name'),
+              style: AppTextStyles.body,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx), 
+            child: Text('Cancel', style: AppTextStyles.label.copyWith(color: AppColors.mutedForeground)),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AuthController>().updateProfile(firstCtrl.text, lastCtrl.text);
+              Navigator.pop(ctx);
+            },
+            child: Text('Save', style: AppTextStyles.label.copyWith(color: AppColors.primary)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -63,10 +105,10 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(AppConstants.spacingMD),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: Column(
             children: [
-              const SizedBox(height: AppConstants.spacingMD),
+              const SizedBox(height: AppSpacing.md),
 
               // Avatar + name
               Center(
@@ -76,10 +118,10 @@ class ProfileScreen extends StatelessWidget {
                       width: 88,
                       height: 88,
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.15),
+                        color: AppColors.primary.withAlpha(38),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppColors.primary.withOpacity(0.4),
+                          color: AppColors.primary.withAlpha(102),
                           width: 2,
                         ),
                       ),
@@ -89,21 +131,29 @@ class ProfileScreen extends StatelessWidget {
                         size: 44,
                       ),
                     ),
-                    const SizedBox(height: AppConstants.spacingMD),
-                    Text(displayName, style: AppTextStyles.displayMedium),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.md),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(displayName, style: AppTextStyles.displayMedium),
+                        IconButton(
+                          icon: const Icon(Icons.edit_rounded, size: 20, color: AppColors.primary),
+                          onPressed: () => _showEditDialog(context, user),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(email, style: AppTextStyles.bodyMedium),
-                    const SizedBox(height: AppConstants.spacingSM),
+                    const SizedBox(height: AppSpacing.sm),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 6,
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.xs,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceElevated,
-                        borderRadius: BorderRadius.circular(
-                            AppConstants.radiusFull),
-                        border: Border.all(color: AppColors.navBorder),
+                        color: AppColors.surface,
+                        borderRadius: BorderRadius.circular(AppRadius.full),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -114,10 +164,10 @@ class ProfileScreen extends StatelessWidget {
                                 : Icons.star_border_rounded,
                             color: user?.startingLevel != null
                                 ? AppColors.primary
-                                : AppColors.textMuted,
+                                : AppColors.mutedForeground,
                             size: 14,
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: AppSpacing.xs),
                           Text(level, style: AppTextStyles.labelSmall),
                         ],
                       ),
@@ -126,7 +176,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: AppConstants.spacingXL),
+              const SizedBox(height: AppSpacing.xl),
 
               // Offline storage status
               _SectionCard(
@@ -137,19 +187,19 @@ class ProfileScreen extends StatelessWidget {
                     value: '0 MB used',
                     color: AppColors.accent,
                   ),
-                  const Divider(color: AppColors.navBorder, height: 1),
+                  const Divider(color: AppColors.border, height: 1),
                   _InfoRow(
                     icon: Icons.sync_rounded,
                     label: 'Last Sync',
                     value: user?.lastSeenAt != null
                         ? _formatDate(user!.lastSeenAt)
                         : 'Never',
-                    color: AppColors.textMuted,
+                    color: AppColors.mutedForeground,
                   ),
                 ],
               ),
 
-              const SizedBox(height: AppConstants.spacingMD),
+              const SizedBox(height: AppSpacing.md),
 
               // Settings section
               _SectionCard(
@@ -158,17 +208,17 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.notifications_outlined,
                     label: 'Notifications',
                   ),
-                  const Divider(color: AppColors.navBorder, height: 1),
+                  const Divider(color: AppColors.border, height: 1),
                   _SettingsRow(
                     icon: Icons.text_increase_rounded,
                     label: 'Text Size',
                   ),
-                  const Divider(color: AppColors.navBorder, height: 1),
+                  const Divider(color: AppColors.border, height: 1),
                   _SettingsRow(icon: Icons.language_rounded, label: 'Language'),
                 ],
               ),
 
-              const SizedBox(height: AppConstants.spacingMD),
+              const SizedBox(height: AppSpacing.md),
 
               // About section
               _SectionCard(
@@ -177,7 +227,7 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.info_outline_rounded,
                     label: 'About MyADA',
                   ),
-                  const Divider(color: AppColors.navBorder, height: 1),
+                  const Divider(color: AppColors.border, height: 1),
                   _SettingsRow(
                     icon: Icons.privacy_tip_outlined,
                     label: 'Privacy Policy',
@@ -185,7 +235,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: AppConstants.spacingMD),
+              const SizedBox(height: AppSpacing.md),
 
               // Logout button
               SizedBox(
@@ -199,23 +249,23 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   label: Text(
                     'Log Out',
-                    style: AppTextStyles.headingSmall
-                        .copyWith(color: AppColors.error),
+                    style: AppTextStyles.headingSmall.copyWith(
+                      color: AppColors.error,
+                    ),
                   ),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: AppColors.error),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppConstants.radiusFull),
+                      borderRadius: BorderRadius.circular(AppRadius.full),
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: AppConstants.spacingXL),
+              const SizedBox(height: AppSpacing.xl),
               Text('MyADA v1.0.0 — Prototype', style: AppTextStyles.bodySmall),
-              const SizedBox(height: AppConstants.spacingXXL),
+              const SizedBox(height: AppSpacing.xl2),
             ],
           ),
         ),
@@ -228,7 +278,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-// ── Supporting widgets (unchanged) ───────────────────────────────────────────
+// ── Supporting widgets ────────────────────────────────────────────────────────
 
 class _SectionCard extends StatelessWidget {
   final List<Widget> children;
@@ -239,8 +289,8 @@ class _SectionCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(AppConstants.radiusLG),
-        border: Border.all(color: AppColors.navBorder),
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        border: Border.all(color: AppColors.border, width: 1.0),
       ),
       child: Column(children: children),
     );
@@ -287,7 +337,7 @@ class _SettingsRow extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.textSecondary, size: 20),
+          Icon(icon, color: AppColors.subtleForeground, size: 20),
           const SizedBox(width: AppSpacing.md),
           Expanded(child: Text(label, style: AppTextStyles.bodyLg)),
           const Icon(

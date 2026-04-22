@@ -17,7 +17,7 @@ class MainNavShell extends StatefulWidget {
 }
 
 class _MainNavShellState extends State<MainNavShell> {
-  // 0=Home, 1=Ranks, 2=Learn(FAB), 3=Progress, 4=Profile
+  // 0=Home, 1=Ranks, 2=Learn(FAB), 3=Challenges, 4=Profile
   int _currentIndex = 0;
 
   // Pages — FAB (index 2) opens the Learn screen
@@ -82,14 +82,14 @@ class _MyAdaFab extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.45),
+              color: AppColors.primary.withValues(alpha: 0.45),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
           ],
           border: Border.all(
             color: isActive
-                ? AppColors.primaryLight.withOpacity(0.6)
+                ? AppColors.primaryLight.withValues(alpha: 0.6)
                 : Colors.transparent,
             width: 2,
           ),
@@ -125,9 +125,9 @@ class _MyAdaBottomNav extends StatelessWidget {
     ),
     null, // FAB placeholder
     _NavItem(
-      icon: Icons.assignment_rounded,
-      outlinedIcon: Icons.assignment_outlined,
-      label: 'Progress',
+      icon: Icons.emoji_events_rounded,
+      outlinedIcon: Icons.emoji_events_outlined,
+      label: 'Challenges',
     ),
     _NavItem(
       icon: Icons.person_rounded,

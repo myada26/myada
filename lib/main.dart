@@ -12,6 +12,9 @@ import 'controllers/learning_path_controller.dart';
 import 'services/hive_service.dart';
 import 'core/data/local_database.dart';
 import 'core/database/app_database.dart';
+import 'core/services/points_service.dart';
+import 'core/services/streak_service.dart';
+import 'core/services/leaderboard_service.dart';
 import 'firebase_options.dart';
 
 import 'features/auth/presentation/screens/splash_screen.dart';
@@ -43,6 +46,10 @@ void main() async {
   await HiveService.init();
   await AppDatabase.instance.database;
   await LocalDatabase.init();
+  await StreakService.instance.init();
+
+  // Seed demo leaderboard data for prototype evaluation
+  await LeaderboardService.instance.seedTestData();
 
   // Force portrait
   SystemChrome.setPreferredOrientations([
@@ -68,6 +75,8 @@ void main() async {
         // LearningPathController must be global — ResultScreen accesses it
         // from any navigation path, including post-logout re-login.
         ChangeNotifierProvider(create: (_) => LearningPathController()),
+        ChangeNotifierProvider.value(value: PointsService.instance),
+        ChangeNotifierProvider.value(value: StreakService.instance),
       ],
       child: const MyAdaApp(),
     ),
@@ -144,14 +153,19 @@ class _AuthGateState extends State<AuthGate> {
     switch (auth.status) {
       // ── App still initialising — show branded splash ───────────────────────
       case AuthStatus.unknown:
-      case AuthStatus.loading:
         return const SplashScreen();
 
-      // ── No valid session ───────────────────────────────────────────────────
+      // ── No valid session (or in-progress auth operation) ──────────────────
+      // loading is grouped here so the auth screens stay alive during login/
+      // register — preserving mounted state and the Consumer loading indicator.
+      case AuthStatus.loading:
       case AuthStatus.unauthenticated:
       case AuthStatus.error:
         // Reset path-loaded flag so it reloads on next login.
         if (_pathLoaded) _pathLoaded = false;
+        // Clear any in-memory learning path from a previous user so that a
+        // new user logging in on the same device never sees stale data.
+        if (pathCtrl.hasResult) Future.microtask(() => pathCtrl.reset());
         return auth.hasEverLoggedIn
             ? const LoginScreen()
             : const EntryPointScreen();
@@ -167,6 +181,11 @@ class _AuthGateState extends State<AuthGate> {
         if (!_pathLoaded && !pathCtrl.hasResult && !pathCtrl.isBuilding) {
           _pathLoaded = true;
           Future.microtask(() => pathCtrl.loadResultFromDb());
+          // Load cached point total and trigger daily streak check-in
+          Future.microtask(() async {
+            await PointsService.instance.loadTotal();
+            await StreakService.instance.checkIn();
+          });
         }
 
         return const MainNavShell();

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../components/navigation/app_top_bar.dart';
-import '../../../../core/data/local_database.dart';
 import '../../../../main.dart';
 import '../controllers/lesson_controller.dart';
 import '../../data/services/lesson_completion_service.dart';
@@ -34,15 +33,13 @@ class LessonScreen extends StatefulWidget {
 }
 
 class _LessonScreenState extends State<LessonScreen> {
-  late final LocalDatabase           _db;
   late final LessonCompletionService _completionService;
   late final LessonController        _controller;
 
   @override
   void initState() {
     super.initState();
-    _db                = LocalDatabase();
-    _completionService = LessonCompletionService(_db);
+    _completionService = LessonCompletionService();
     _controller        = LessonController(_completionService);
     _controller.loadLesson(widget.moduleId, widget.lessonId);
 

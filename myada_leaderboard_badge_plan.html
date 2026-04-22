@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyADA — Leaderboard & Badge Implementation Plan</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f7f4; color: #1a1a18; line-height: 1.6; }
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 15px; color: #5f5e5a; margin-bottom: 2rem; }
+  .nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+  .nav-btn { font-size: 13px; padding: 6px 16px; border-radius: 999px; border: 1px solid #ccc; background: transparent; color: #5f5e5a; cursor: pointer; }
+  .nav-btn.on { background: #1a56a0; color: #fff; border-color: #1a56a0; }
+  .pane { display: none; }
+  .pane.on { display: block; }
+  .section { margin-bottom: 2rem; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+  .card { background: #fff; border: 1px solid #e8e6e0; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .card-head { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .card-body { font-size: 13px; color: #5f5e5a; line-height: 1.6; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; margin: 2px 3px 2px 0; }
+  .p-teal { background: #e1f5ee; color: #085041; }
+  .p-purple { background: #eeedfe; color: #3c3489; }
+  .p-amber { background: #faeeda; color: #633806; }
+  .p-coral { background: #faece7; color: #712b13; }
+  .p-blue { background: #e6f1fb; color: #0c447c; }
+  .p-green { background: #eaf3de; color: #27500a; }
+  .p-gray { background: #f1efe8; color: #444441; }
+  .flow-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .flow-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+  .fc-teal { background: #e1f5ee; color: #085041; border: 1px solid #9fe1cb; }
+  .fc-purple { background: #eeedfe; color: #3c3489; border: 1px solid #cecbf6; }
+  .fc-amber { background: #faeeda; color: #633806; border: 1px solid #fac775; }
+  .fc-gray { background: #f1efe8; color: #444441; border: 1px solid #d3d1c7; }
+  .flow-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .flow-desc { font-size: 13px; color: #5f5e5a; line-height: 1.55; }
+  .connector { width: 1px; height: 14px; background: #ddd; margin-left: 13px; margin-bottom: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 540px) { .grid2 { grid-template-columns: 1fr; } }
+  .score-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0ede6; font-size: 13px; }
+  .score-row:last-child { border-bottom: none; }
+  .score-action { color: #5f5e5a; }
+  .score-pts { font-weight: 600; color: #27500a; }
+  .score-pts.neg { color: #a32d2d; }
+  .score-pts.neu { color: #5f5e5a; }
+  .badge-card { background: #fff; border: 1px solid #e8e6e0; border-radius: 12px; padding: .875rem 1rem; margin-bottom: 8px; }
+  .badge-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .badge-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .badge-name { font-size: 14px; font-weight: 600; }
+  .badge-cat { font-size: 11px; color: #888; margin-top: 2px; }
+  .badge-rule { font-size: 13px; color: #3d3d3a; line-height: 1.5; margin-bottom: 6px; }
+  .badge-why { font-size: 12px; color: #888; line-height: 1.4; font-style: italic; }
+  .highlight-box { background: #fef9ec; border: 1px solid #fac775; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #633806; margin-bottom: 10px; line-height: 1.5; }
+  .info-box { background: #e6f1fb; border: 1px solid #b5d4f4; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #0c447c; margin-bottom: 10px; line-height: 1.5; }
+  .success-box { background: #eaf3de; border: 1px solid #c0dd97; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #27500a; margin-bottom: 10px; line-height: 1.5; }
+  .page { padding: 1.5rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Leaderboard + Badge Implementation Plan</h1>
+  <p class="subtitle">MyADA — a shared reference for the whole team. No code, just logic and flow.</p>
+
+  <div class="nav">
+    <button class="nav-btn on" onclick="go(this,'overview')">Overview</button>
+    <button class="nav-btn" onclick="go(this,'scoring')">How points work</button>
+    <button class="nav-btn" onclick="go(this,'leaderboard')">Leaderboard screen</button>
+    <button class="nav-btn" onclick="go(this,'badges')">Badge system</button>
+    <button class="nav-btn" onclick="go(this,'order')">What to build first</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="pane-overview" class="pane on">
+    <div class="section">
+      <div class="section-label">What this plan covers</div>
+      <div class="card">
+        <div class="card-head">Purpose</div>
+        <div class="card-body">This document defines how the Leaderboard and Badge features in MyADA should work — from a student's perspective, from an instructor's perspective, and from a logic perspective. It covers what triggers a point, what triggers a badge, how the leaderboard rank is decided, and what the student sees on screen. It does not describe code.</div>
+      </div>
+      <div class="card">
+        <div class="card-head">Two features, one goal</div>
+        <div class="card-body">Both the Leaderboard and Badges exist for the same reason: to recognize effort and keep students motivated, especially in a low-connectivity environment where they are often learning alone. A student who earns a badge should feel that their hard work was noticed. A student who climbs the leaderboard should feel that consistent practice pays off — not just raw talent.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">The two screens at a glance</div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head">Leaderboard (Ranks tab)</div>
+          <div class="card-body">Shows a ranked list of all students in the class by their total accumulated points. The student can see their own rank pinned at the top, and scroll through the rest of the class below.</div>
+        </div>
+        <div class="card">
+          <div class="card-head">Badges tab</div>
+          <div class="card-body">Shows all badges — earned and locked. Earned badges display when the student got them. Locked badges show a progress bar so the student can see how close they are.</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Key design principles</div>
+      <div class="info-box"><strong>Effort, not just talent.</strong> A student who logs in every day and finishes modules step by step should rank higher than someone who aces one quiz and disappears. The point system is designed to reward consistency.</div>
+      <div class="success-box"><strong>Offline-first.</strong> A student earns points and badges even without internet. The app tracks everything locally and updates the leaderboard the next time the device connects.</div>
+      <div class="highlight-box"><strong>Prototype scope.</strong> For the capstone evaluation, a small group of testers with seeded data is enough to demonstrate the leaderboard and badges working. Full live multi-user syncing is a future version concern.</div>
+    </div>
+  </div>
+
+  <!-- SCORING -->
+  <div id="pane-scoring" class="pane">
+    <div class="section">
+      <div class="section-label">What points are and why they matter</div>
+      <div class="card">
+        <div class="card-body">Points are the currency of the leaderboard. Every meaningful action a student takes in MyADA adds points to their total score. The total score decides their rank. Points never go away — they accumulate forever. The leaderboard always shows the all-time total.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Group 1 — Daily login and consistency</div>
+      <div class="card">
+        <div class="card-head">Daily login</div>
+        <div class="card-body" style="margin-bottom:10px">Every day a student opens the app counts as an active day. The app checks whether they opened it yesterday. If they did, the streak grows. If they missed a day, the streak resets to 1.</div>
+        <div class="score-row"><span class="score-action">Opens app on any given day</span><span class="score-pts">+2 points</span></div>
+        <div class="score-row"><span class="score-action">Maintains a 7-day streak</span><span class="score-pts">+15 points (one-time bonus)</span></div>
+        <div class="score-row"><span class="score-action">Maintains a 30-day streak</span><span class="score-pts">+50 points (one-time bonus)</span></div>
+        <div class="score-row"><span class="score-action">Misses a day — streak resets</span><span class="score-pts neu">No penalty, streak restarts at 1</span></div>
+      </div>
+      <div class="highlight-box"><strong>Not yet implemented.</strong> On every app open, compare today's date to the last recorded active date. If it is a new day, award 2 points and update the active date. If it is the same day, do nothing.</div>
+    </div>
+    <div class="section">
+      <div class="section-label">Group 2 — Quiz completion</div>
+      <div class="card">
+        <div class="card-head">Taking and finishing a quiz</div>
+        <div class="card-body" style="margin-bottom:10px">Points from quizzes come in two parts: a base reward for finishing, plus bonus points depending on how well the student did.</div>
+        <div class="score-row"><span class="score-action">Submits a quiz (score 50% or above)</span><span class="score-pts">+10 points</span></div>
+        <div class="score-row"><span class="score-action">Scores between 70% and 89%</span><span class="score-pts">+5 points bonus</span></div>
+        <div class="score-row"><span class="score-action">Scores between 90% and 99%</span><span class="score-pts">+10 points bonus</span></div>
+        <div class="score-row"><span class="score-action">Scores 100% (perfect)</span><span class="score-pts">+15 points bonus</span></div>
+        <div class="score-row"><span class="score-action">Retakes a quiz and improves their score</span><span class="score-pts">+3 points</span></div>
+        <div class="score-row"><span class="score-action">Retakes a quiz but does not improve</span><span class="score-pts neu">+0 points</span></div>
+        <div class="score-row"><span class="score-action">Scores below 50% — quiz not credited</span><span class="score-pts neu">+0 points, retake encouraged</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Group 3 — Coding exercises (IDE)</div>
+      <div class="card">
+        <div class="card-head">Completing exercises in the code editor</div>
+        <div class="card-body" style="margin-bottom:10px">Every exercise completed earns a base reward. Extra points come from how the student completed it — whether they needed hints, how fast they finished, and whether they got it right the first time.</div>
+        <div class="score-row"><span class="score-action">Completes any coding exercise</span><span class="score-pts">+5 points</span></div>
+        <div class="score-row"><span class="score-action">First-try correct — no hints, first submission passes</span><span class="score-pts">+5 points bonus</span></div>
+        <div class="score-row"><span class="score-action">Completes a timed challenge within the time limit</span><span class="score-pts">+8 points</span></div>
+        <div class="score-row"><span class="score-action">Uses a hint during an exercise</span><span class="score-pts neg">−1 point per hint used</span></div>
+        <div class="score-row"><span class="score-action">Skips an exercise</span><span class="score-pts neg">−1 point</span></div>
+      </div>
+      <div class="highlight-box"><strong>Not yet implemented.</strong> The exercise screen needs to track: (1) how many hints were used per attempt, (2) whether the first submission was correct, and (3) for timed challenges, whether it was completed within the time window. These are passed to the scoring logic at the moment the student submits.</div>
+    </div>
+    <div class="section">
+      <div class="section-label">Group 4 — Module and milestone completion</div>
+      <div class="card">
+        <div class="card-head">Finishing a full module or major milestone</div>
+        <div class="card-body" style="margin-bottom:10px">A module is complete when the student has finished all lessons inside it and submitted the final quiz.</div>
+        <div class="score-row"><span class="score-action">Completes a full module (all lessons + quiz done)</span><span class="score-pts">+20 points</span></div>
+        <div class="score-row"><span class="score-action">Earns any badge</span><span class="score-pts">+10 points</span></div>
+        <div class="score-row"><span class="score-action">Earns a certificate for a completed module</span><span class="score-pts">+30 points</span></div>
+        <div class="score-row"><span class="score-action">Completes the diagnostic assessment (one-time only)</span><span class="score-pts">+5 points</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">How total score is calculated</div>
+      <div class="card">
+        <div class="card-body">A student's total score is the sum of all points they have ever earned across all groups. There is no decay, no expiry, and no reset. Every action is added on top of what came before. When the leaderboard is shown, students are ranked by this total, highest to lowest.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD SCREEN -->
+  <div id="pane-leaderboard" class="pane">
+    <div class="section">
+      <div class="section-label">What the leaderboard screen shows</div>
+      <div class="card">
+        <div class="card-body">The leaderboard lives in the same screen as Badges and Certificates — it is the first tab. It ranks all students in the class by their total points. The goal of the screen is to give each student a sense of where they stand and motivate them to keep going.</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">The five parts of the ranks tab</div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">1</div>
+        <div>
+          <div class="flow-title">Filter chips — All time / This week</div>
+          <div class="flow-desc">Two buttons at the top. "All time" shows the student's full accumulated score. "This week" shows only points earned in the last 7 days. This lets students who started late still feel competitive within a shorter window.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">2</div>
+        <div>
+          <div class="flow-title">Your card — pinned at the top</div>
+          <div class="flow-desc">The logged-in student's own rank is always pinned at the top of the screen so they never have to scroll to find themselves. It shows their name, avatar initials, current rank number, total score, and how many points separate them from the person directly above them — for example, "48 points behind rank 3."</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">3</div>
+        <div>
+          <div class="flow-title">Top 3 podium</div>
+          <div class="flow-desc">The top three students are shown in a visual podium format: rank 1 in the center and slightly elevated, rank 2 on the left, rank 3 on the right. Each shows the student's name, avatar initials, and total score.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">4</div>
+        <div>
+          <div class="flow-title">Scrollable list — rank 4 and below</div>
+          <div class="flow-desc">Each row shows: rank number, avatar initials, student name, total score, and a small indicator showing whether their rank went up, went down, or stayed the same since the last sync. This helps students see that ranks are actively changing.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-gray">5</div>
+        <div>
+          <div class="flow-title">Last updated notice</div>
+          <div class="flow-desc">A small note at the bottom shows when the leaderboard data was last synced. If the student is offline, this reminds them that rankings reflect the last available data. Points earned while offline are saved locally and reflected after the next sync.</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">How ranking works offline</div>
+      <div class="card">
+        <div class="card-head">What happens when there is no internet</div>
+        <div class="card-body">Points are still earned and saved on the student's device. However, the student's position among classmates cannot update without knowing everyone else's current scores. While offline, the student sees their last known rank and their own running point total. When the app reconnects, locally saved points are sent to the server, ranks are recalculated, and the leaderboard updates on next open.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div id="pane-badges" class="pane">
+    <div class="section">
+      <div class="section-label">What badges are and how they work</div>
+      <div class="card">
+        <div class="card-body">Badges are permanent awards given when a student meets a specific condition. Once earned, a badge is never taken away. Each badge checks one rule: either a count (do something X times), a quality (do something at a certain standard), or a milestone (reach a specific point in the learning path). The badge check runs automatically every time a relevant action is completed.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Category 1 — Getting started</div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e1f5ee">◈</div>
+          <div><div class="badge-name">First step</div><div class="badge-cat"><span class="pill p-teal">Beginner</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes the diagnostic assessment for the first time.</div>
+        <div class="badge-why">Every student starts somewhere. This badge acknowledges the courage it takes to begin, and ensures every new user earns something on their very first day.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e1f5ee">◈</div>
+          <div><div class="badge-name">Path found</div><div class="badge-cat"><span class="pill p-teal">Beginner</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student's personalized learning path is generated (immediately after the diagnostic).</div>
+        <div class="badge-why">Reinforces that the app has understood the student and created something just for them.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Category 2 — Consistency and streaks</div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#faeeda">▲</div>
+          <div><div class="badge-name">Showing up</div><div class="badge-cat"><span class="pill p-amber">Streak</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student logs in on 3 consecutive days.</div>
+        <div class="badge-why">The hardest habit to build is simply returning. Three days is the first real signal that a student is forming a routine.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#faeeda">▲</div>
+          <div><div class="badge-name">Week warrior</div><div class="badge-cat"><span class="pill p-amber">Streak</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student logs in on 7 consecutive days.</div>
+        <div class="badge-why">A full week of engagement is a strong predictor of course completion.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#faeeda">▲</div>
+          <div><div class="badge-name">Unstoppable</div><div class="badge-cat"><span class="pill p-amber">Streak</span><span class="pill p-coral">Rare</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student logs in on 30 consecutive days.</div>
+        <div class="badge-why">The rarest streak badge. Very few students will earn it, which makes those who do stand out on the leaderboard.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Category 3 — Quiz performance</div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eeedfe">◆</div>
+          <div><div class="badge-name">Quiz taker</div><div class="badge-cat"><span class="pill p-purple">Quiz</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student submits their very first quiz.</div>
+        <div class="badge-why">Quizzes can feel intimidating. This badge lowers the barrier by rewarding the act of trying, regardless of the result.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eeedfe">◆</div>
+          <div><div class="badge-name">Perfect score</div><div class="badge-cat"><span class="pill p-purple">Quiz</span><span class="pill p-coral">Rare</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student scores 100% on any quiz for the first time.</div>
+        <div class="badge-why">Marks genuine mastery of a topic. A student who earns this has demonstrated full understanding — not just passing.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eeedfe">◆</div>
+          <div><div class="badge-name">Quiz streak</div><div class="badge-cat"><span class="pill p-purple">Quiz</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student scores 70% or above on 5 quizzes in a row (not necessarily on the same day).</div>
+        <div class="badge-why">Rewards consistent quality, not just one-off good performances.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eeedfe">◆</div>
+          <div><div class="badge-name">Comeback</div><div class="badge-cat"><span class="pill p-purple">Quiz</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student retakes a quiz they previously failed (below 50%) and passes it this time (50% or above).</div>
+        <div class="badge-why">Specifically encourages resilience. Failing and retrying is exactly the behavior we want to reward.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Category 4 — Coding exercises</div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e6f1fb">●</div>
+          <div><div class="badge-name">First code</div><div class="badge-cat"><span class="pill p-blue">Coding</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes their very first coding exercise in the IDE.</div>
+        <div class="badge-why">Writing and running actual code for the first time is a significant moment. This badge marks it.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e6f1fb">●</div>
+          <div><div class="badge-name">Clean shot</div><div class="badge-cat"><span class="pill p-blue">Coding</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes a coding exercise correctly on the very first submission, with no hints used.</div>
+        <div class="badge-why">Rewards confidence and preparation. A student who gets it right on the first try without help has truly understood the concept.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e6f1fb">●</div>
+          <div><div class="badge-name">Bug hunter</div><div class="badge-cat"><span class="pill p-blue">Coding</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes 5 debugging exercises (exercises tagged as debug-type) in total.</div>
+        <div class="badge-why">Debugging is one of the most important and underrated programming skills. Calling it out with its own badge signals its importance.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#e6f1fb">●</div>
+          <div><div class="badge-name">Speed coder</div><div class="badge-cat"><span class="pill p-blue">Coding</span><span class="pill p-coral">Rare</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes a timed challenge and submits a correct answer before the timer runs out.</div>
+        <div class="badge-why">Working under time pressure is a real skill. This badge rewards students who have become fast and confident enough to perform on demand.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Category 5 — Module and learning path progress</div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eaf3de">■</div>
+          <div><div class="badge-name">Module 1 complete</div><div class="badge-cat"><span class="pill p-green">Progress</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student finishes all lessons and the quiz inside Module 1. One badge exists per module, awarded in sequence.</div>
+        <div class="badge-why">Marks a completed chapter. These are the most predictable badges — every student who progresses will earn them, ensuring even slower learners feel rewarded.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eaf3de">■</div>
+          <div><div class="badge-name">Halfway there</div><div class="badge-cat"><span class="pill p-green">Progress</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes 50% of their total assigned learning path (by module count).</div>
+        <div class="badge-why">The middle of a learning journey is where most students drop off. This badge creates a visible milestone to push through the slump.</div>
+      </div>
+      <div class="badge-card">
+        <div class="badge-top">
+          <div class="badge-icon" style="background:#eaf3de">■</div>
+          <div><div class="badge-name">Path completed</div><div class="badge-cat"><span class="pill p-green">Progress</span><span class="pill p-coral">Rare</span></div></div>
+        </div>
+        <div class="badge-rule"><strong>Awarded when:</strong> the student completes all modules in their assigned learning path.</div>
+        <div class="badge-why">The highest achievement badge. A student who earns this has finished the entire course.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">How the badge check works (plain logic)</div>
+      <div class="card">
+        <div class="card-head">The badge check runs after every action</div>
+        <div class="card-body">Whenever a student completes an exercise, finishes a quiz, logs in, or reaches a milestone, the app checks whether any badge condition has now been met. If it has — and the student does not already have that badge — the badge is awarded immediately. The student sees a badge reveal on the results screen. Ten points are added to their total score automatically. The badge is marked as earned with today's date.</div>
+      </div>
+      <div class="card">
+        <div class="card-head">Locked badges show progress, not just a lock</div>
+        <div class="card-body">For badges that require doing something multiple times (e.g., 5 debugging exercises), the app tracks the student's current count and displays it as a progress bar. For example: "Bug hunter — 3 of 5 debugging exercises done." This turns a locked badge from a wall into a goal.</div>
+      </div>
+      <div class="highlight-box"><strong>Note for the team:</strong> The badges for "Clean shot" (first-try correct) and "Speed coder" (timed challenge) require tracking that does not yet exist in the exercise screen. When those features are built, they need to pass the result to the badge check after submission.</div>
+    </div>
+  </div>
+
+  <!-- BUILD ORDER -->
+  <div id="pane-order" class="pane">
+    <div class="section">
+      <div class="section-label">The guiding principle</div>
+      <div class="info-box">The leaderboard and badge screens are display layers. They can only show data that already exists. This means the scoring and tracking logic must be in place before the screens are built. <strong>Build the engine first, then the dashboard.</strong></div>
+    </div>
+    <div class="section">
+      <div class="section-label">Recommended build order</div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">1</div>
+        <div>
+          <div class="flow-title">Quiz submission scoring <span class="pill p-teal">start here</span></div>
+          <div class="flow-desc">When a student submits a quiz, the result (score percentage) must trigger a point calculation. The base points plus any accuracy bonus are recorded. This is the most foundational piece — quizzes are already in the app, they just need a scoring hook at the moment of submission.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">2</div>
+        <div>
+          <div class="flow-title">Module completion detection</div>
+          <div class="flow-desc">The app needs to know when a student has finished everything inside a module — all lessons read and the quiz submitted. When that condition is met, 20 points are awarded, a module badge is checked, and a certificate is generated.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-teal">3</div>
+        <div>
+          <div class="flow-title">Daily login and streak tracking</div>
+          <div class="flow-desc">On every app open, the app compares today's date to the last recorded active date. If it is a new day: add 2 points, increment the streak counter, update the last active date. If the streak reaches 7 or 30, fire the streak bonus and check the streak badges. This logic belongs in the app startup flow.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-purple">4</div>
+        <div>
+          <div class="flow-title">Exercise tracking additions <span class="pill p-purple">requires new screen logic</span></div>
+          <div class="flow-desc">The exercise screen needs three new tracking behaviors: (1) count how many hints the student used, (2) record whether the first submission was correct, and (3) for timed challenges, record whether submission happened before the timer hit zero. These values are passed to scoring only at the moment the student submits.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-purple">5</div>
+        <div>
+          <div class="flow-title">Badge check engine</div>
+          <div class="flow-desc">After every scoring event, the badge engine checks whether any badge condition has now been satisfied for this student. If yes, the badge is awarded, 10 points are added, and the badge reveal is queued. This runs silently in the background — the student only sees the result, not the check.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-amber">6</div>
+        <div>
+          <div class="flow-title">Badge screen and progress bars <span class="pill p-amber">UI layer</span></div>
+          <div class="flow-desc">Once the badge engine is running, the Badges tab can be built. It reads the list of all badges, checks which ones the student has earned, and for locked badges with partial progress (like "Bug hunter"), displays a progress bar. The student can tap any badge to see its rule, category, and earned date.</div>
+        </div>
+      </div>
+      <div class="connector"></div>
+      <div class="flow-row">
+        <div class="flow-circle fc-amber">7</div>
+        <div>
+          <div class="flow-title">Leaderboard screen <span class="pill p-amber">build last</span></div>
+          <div class="flow-desc">The Ranks tab is the final piece. By this point, every student has a total score built from quizzes, exercises, logins, and milestones. The leaderboard sorts students by that number, renders the podium for the top 3, shows the scrollable list below, and pins the current student's card at the top.</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">For the prototype evaluation</div>
+      <div class="card">
+        <div class="card-head">What is enough for the SUS usability test</div>
+        <div class="card-body">The usability test does not need live multi-user data. Seed the evaluation group with a small set of test accounts that have different point totals — enough to populate the podium and a short list below. The badge system should work live: evaluators should be able to complete a quiz or exercise during the test and see a badge trigger in real time.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function go(btn, id) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('pane-' + id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>

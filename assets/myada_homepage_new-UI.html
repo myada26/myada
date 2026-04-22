@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MyADA Home</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#f0f2f5;display:flex;justify-content:center;padding:32px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  .phone{width:375px;background:#fff;border-radius:40px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12);border:1px solid #e0e0e0;}
+  .status-bar{background:#fff;padding:12px 24px 0;display:flex;justify-content:space-between;align-items:center;}
+  .status-time{font-size:13px;font-weight:600;color:#111;}
+  .status-icons{display:flex;gap:5px;align-items:center;}
+  .status-icons span{font-size:11px;color:#444;}
+  .scroll-area{padding:16px 20px 32px;overflow-y:auto;max-height:780px;}
+
+  /* SECTION 1 – Header */
+  .header{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+  .avatar{width:40px;height:40px;border-radius:50%;background:#d1f0e4;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#085041;flex-shrink:0;}
+  .header-info{flex:1;}
+  .header-name{font-size:15px;font-weight:600;color:#111;line-height:1.2;}
+  .header-sub{font-size:11px;color:#888;margin-top:1px;}
+  .sync-btn{width:34px;height:34px;border-radius:50%;border:1px solid #e0e0e0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+
+  /* SECTION 2 – Streak */
+  .section-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#aaa;margin-bottom:8px;}
+  .streak-strip{display:flex;gap:6px;margin-bottom:20px;}
+  .streak-tile{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .streak-sq{width:100%;aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;}
+  .streak-sq.done{background:#1D9E75;color:#fff;}
+  .streak-sq.today{background:#085041;color:#fff;}
+  .streak-sq.empty{background:#f2f2f2;color:#bbb;}
+  .streak-dot{width:4px;height:4px;border-radius:50%;}
+  .streak-dot.done{background:#1D9E75;}
+  .streak-dot.today{background:#085041;}
+  .streak-dot.empty{background:#e0e0e0;}
+
+  /* SECTION 3 – Hero card */
+  .hero{background:#0F6E56;border-radius:20px;padding:18px;margin-bottom:16px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+  .hero-tag{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.6);}
+  .hero-badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:3px 9px;font-size:10px;color:rgba(255,255,255,0.9);font-weight:500;}
+  .hero-title{font-size:17px;font-weight:600;color:#fff;line-height:1.35;margin-bottom:14px;}
+  .hero-progress-labels{display:flex;justify-content:space-between;margin-bottom:5px;}
+  .hero-progress-labels span{font-size:10px;color:rgba(255,255,255,0.6);}
+  .hero-bar-bg{height:5px;border-radius:99px;background:rgba(255,255,255,0.2);margin-bottom:14px;}
+  .hero-bar-fill{height:5px;border-radius:99px;background:rgba(255,255,255,0.85);}
+  .hero-btn{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:11px;padding:10px;text-align:center;font-size:13px;font-weight:500;color:#fff;cursor:pointer;}
+
+  /* SECTION 4 – Snapshot grid */
+  .snapshot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+  .snap-card{background:#f7f8f9;border-radius:14px;padding:12px 14px;}
+  .snap-label{font-size:10px;color:#999;margin-bottom:4px;}
+  .snap-value{font-size:26px;font-weight:700;color:#111;line-height:1;}
+  .snap-sub{font-size:10px;color:#aaa;margin-top:3px;}
+
+  /* SECTION 5 – Skill bars */
+  .skills{margin-bottom:20px;display:flex;flex-direction:column;gap:8px;}
+  .skill-row{display:flex;align-items:center;gap:8px;}
+  .skill-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .skill-name{font-size:11px;color:#666;width:90px;flex-shrink:0;}
+  .skill-bar-bg{flex:1;height:5px;border-radius:99px;background:#f0f0f0;}
+  .skill-bar-fill{height:5px;border-radius:99px;}
+  .skill-pct{font-size:10px;color:#aaa;width:26px;text-align:right;flex-shrink:0;}
+
+  /* SECTION 6 – Today's tasks */
+  .tasks{display:flex;flex-direction:column;gap:8px;}
+  .task-card{border:1px solid #f0f0f0;border-radius:14px;padding:11px 12px;display:flex;align-items:center;gap:10px;}
+  .task-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .task-body{flex:1;}
+  .task-title{font-size:12px;font-weight:600;color:#111;}
+  .task-sub{font-size:10px;color:#999;margin-top:2px;}
+  .task-badge{border-radius:6px;padding:3px 8px;font-size:10px;font-weight:600;}
+  .chevron{font-size:16px;color:#ccc;}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-time">9:41</div>
+    <div class="status-icons">
+      <span>●●●</span>
+      <span>WiFi</span>
+      <span>🔋</span>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- SECTION 1: Header -->
+    <div class="header">
+      <div class="avatar">EG</div>
+      <div class="header-info">
+        <div class="header-name">Eden Grace Lincuna</div>
+        <div class="header-sub">BSIT 3A · MyADA</div>
+      </div>
+      <div class="sync-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2.5 8a5.5 5.5 0 0 1 9.9-3.3" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M13.5 8a5.5 5.5 0 0 1-9.9 3.3" stroke="#888" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M12 4.5l1.5.2.2-1.5" stroke="#888" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 11.5l-1.5-.2-.2 1.5" stroke="#888" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Streak strip -->
+    <div class="section-label">this week · 4 day streak</div>
+    <div class="streak-strip">
+      <div class="streak-tile"><div class="streak-sq done">M</div><div class="streak-dot done"></div></div>
+      <div class="streak-tile"><div class="streak-sq done">T</div><div class="streak-dot done"></div></div>
+      <div class="streak-tile"><div class="streak-sq done">W</div><div class="streak-dot done"></div></div>
+      <div class="streak-tile"><div class="streak-sq today">T</div><div class="streak-dot today"></div></div>
+      <div class="streak-tile"><div class="streak-sq empty">F</div><div class="streak-dot empty"></div></div>
+      <div class="streak-tile"><div class="streak-sq empty">S</div><div class="streak-dot empty"></div></div>
+      <div class="streak-tile"><div class="streak-sq empty">S</div><div class="streak-dot empty"></div></div>
+    </div>
+
+    <!-- SECTION 3: Hero module card -->
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-tag">Module 3 · Logic Flow</div>
+        <div class="hero-badge">In Progress</div>
+      </div>
+      <div class="hero-title">Branching Realities:<br>Conditional Logic</div>
+      <div class="hero-progress-labels">
+        <span>Lesson 4 of 7</span>
+        <span>42%</span>
+      </div>
+      <div class="hero-bar-bg">
+        <div class="hero-bar-fill" style="width:42%;"></div>
+      </div>
+      <div class="hero-btn">Resume lesson 4 →</div>
+    </div>
+
+    <!-- SECTION 4: Snapshot 2x2 -->
+    <div class="section-label">snapshot</div>
+    <div class="snapshot-grid">
+      <div class="snap-card">
+        <div class="snap-label">rank</div>
+        <div class="snap-value">#12</div>
+        <div class="snap-sub">of 38 students</div>
+      </div>
+      <div class="snap-card">
+        <div class="snap-label">points</div>
+        <div class="snap-value">1,240</div>
+        <div class="snap-sub">40 pts from #11</div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Skill bars -->
+    <div class="section-label">skill breakdown</div>
+    <div class="skills">
+      <div class="skill-row">
+        <div class="skill-dot" style="background:#1D9E75;"></div>
+        <div class="skill-name">Sequencing</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:78%;background:#1D9E75;"></div></div>
+        <div class="skill-pct">78%</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-dot" style="background:#7F77DD;"></div>
+        <div class="skill-name">Logic Flow</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:45%;background:#7F77DD;"></div></div>
+        <div class="skill-pct">45%</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-dot" style="background:#D85A30;"></div>
+        <div class="skill-name">Debugging</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:30%;background:#D85A30;"></div></div>
+        <div class="skill-pct">30%</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-dot" style="background:#378ADD;"></div>
+        <div class="skill-name">Syntax</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:60%;background:#378ADD;"></div></div>
+        <div class="skill-pct">60%</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-dot" style="background:#BA7517;"></div>
+        <div class="skill-name">Comp. Thinking</div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:52%;background:#BA7517;"></div></div>
+        <div class="skill-pct">52%</div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Today's tasks -->
+    <div class="section-label">today's tasks</div>
+    <div class="tasks">
+
+      <div class="task-card">
+        <div class="task-icon" style="background:#e8f8f1;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="2" width="12" height="12" rx="2.5" stroke="#1D9E75" stroke-width="1.4"/>
+            <path d="M5 8h6M5 5.5h3.5" stroke="#1D9E75" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="task-body">
+          <div class="task-title">Daily challenge</div>
+          <div class="task-sub">Predict the output · 5 min</div>
+        </div>
+        <div class="task-badge" style="background:#e8f8f1;color:#085041;">+20 pts</div>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon" style="background:#eeedfd;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <polygon points="8,1.5 10,5.5 14.5,6.2 11.2,9.3 12,14 8,11.8 4,14 4.8,9.3 1.5,6.2 6,5.5" stroke="#7F77DD" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="task-body">
+          <div class="task-title">Leaderboard gap</div>
+          <div class="task-sub">40 pts from rank #11</div>
+        </div>
+        <div class="chevron">›</div>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon" style="background:#fef3e2;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 13V5l5-3 5 3v8" stroke="#BA7517" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="5.5" y="8.5" width="5" height="4.5" rx="0.8" stroke="#BA7517" stroke-width="1.3"/>
+          </svg>
+        </div>
+        <div class="task-body">
+          <div class="task-title">Review: Variables</div>
+          <div class="task-sub">Low score · recommended</div>
+        </div>
+        <div class="chevron">›</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
