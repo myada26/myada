@@ -16,6 +16,8 @@
 import 'package:flutter/foundation.dart';
 import '../models/diagnostic_models.dart';
 import '../core/data/local_database.dart';
+import '../core/database/app_database.dart';
+import '../features/learn/data/services/module_unlock_service.dart';
 
 class LearningPathController extends ChangeNotifier {
   // ─────────────────────────────────────────────────────
@@ -75,6 +77,17 @@ class LearningPathController extends ChangeNotifier {
       profile: profile,
       learningPath: learningPath,
     );
+
+    // ── Step 5: Auto-unlock recommended & mastered modules in DB ─────────────
+    for (final module in learningPath) {
+      if (module.status == ModuleStatus.mastered ||
+          module.status == ModuleStatus.recommended) {
+        await ModuleUnlockService.instance.unlockModule(
+          module.moduleId,
+          reason: 'diagnostic_${module.status.name}',
+        );
+      }
+    }
 
     if (saveToDb) {
       // IMPORTANT: await the write so data is not lost if the app closes
@@ -147,14 +160,14 @@ class LearningPathController extends ChangeNotifier {
   }
 
   /// Resolves a raw score to a SkillLevel.
-  ///   ≤ 1.0  → Developing
-  ///   ≤ 2.0  → Building
-  ///   > 2.0  → Confident
+  ///   < 1.5  → Developing  (0.0–1.4)
+  ///   < 2.5  → Building    (1.5–2.4)
+  ///   ≥ 2.5  → Confident   (2.5–3.0)
+  /// Matches DiagnosticEngine thresholds (_buildingMin=1.5, _confidentMin=2.5).
   SkillLevel _resolveSkillLevel(double raw) {
-    final clamped = raw.clamp(0.0, double.infinity);
-    if (clamped <= 1.0) return SkillLevel.developing;
-    if (clamped <= 2.0) return SkillLevel.building;
-    return SkillLevel.confident;
+    if (raw >= 2.5) return SkillLevel.confident;
+    if (raw >= 1.5) return SkillLevel.building;
+    return SkillLevel.developing;
   }
 
   // ─────────────────────────────────────────────────────
@@ -435,5 +448,54 @@ class LearningPathController extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  // ── Veto: Reset to beginner path ─────────────────────────────────────────
+
+  /// Clears all auto-unlocked modules (except module_01) so the user
+  /// starts from Day 1. Called when user taps "No, I'd like to review" on
+  /// the DiagnosticResultsReviewScreen.
+  Future<void> resetToBeginnerPath() async {
+    final uid = ModuleUnlockService.instance.currentUserId;
+    if (uid == 'anonymous') return;
+
+    final db = await AppDatabase.instance.database;
+
+    // Remove all auto-unlocked entries (keep any manually unlocked via quiz_pass)
+    await db.delete(
+      'module_unlocks',
+      where: 'learner_id = ? AND unlock_reason != ?',
+      whereArgs: [uid, 'quiz_passed'],
+    );
+
+    // Ensure module_01 is unlocked as the entry point
+    await ModuleUnlockService.instance.unlockModule(
+      'module_01',
+      reason: 'beginner_reset',
+    );
+
+    // Update the in-memory result to reflect beginner profile
+      final updatedPath = _result!.learningPath.map((m) {
+        final isFirst = m.moduleId == 'module_01';
+        return LearningModule(
+          moduleId: m.moduleId,
+          number: m.number,
+          name: m.name,
+          description: m.description,
+          tagLabel: m.tagLabel,
+          skill: m.skill,
+          estimatedLessons: m.estimatedLessons,
+          status: isFirst ? ModuleStatus.required : ModuleStatus.locked,
+          isStartHere: isFirst,
+        );
+      }).toList();
+      _result = DiagnosticResult(
+        profile: LearnerProfile.beginner,
+        learningPath: updatedPath,
+        skillResults: _result!.skillResults,
+      );
+
+    notifyListeners();
+    debugPrint('LearningPathController: Reset to beginner path');
   }
 }

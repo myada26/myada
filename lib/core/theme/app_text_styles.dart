@@ -147,12 +147,6 @@ class AppTextStyles {
     letterSpacing: 0.04,
   );
 
-  static const TextStyle xpChip = TextStyle(
-    fontSize: _sm,
-    fontWeight: FontWeight.w700,
-    color: AppColors.accent,
-  );
-
   static const TextStyle labelSmall = labelSm;
   static const TextStyle displayMedium = h1;
   static const TextStyle headingLarge = h1;

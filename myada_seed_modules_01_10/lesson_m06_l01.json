@@ -1,0 +1,93 @@
+{
+  "lesson_id": "m06_l01",
+  "module_id": "module_06",
+  "order_index": 1,
+  "title": "Why Loops Matter",
+  "skill_tag": "Logic Flow",
+  "estimated_duration_min": 6,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m06_l01_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Why Loops Matter",
+      "body": "Why Loops Matter is part of Indefinite Iteration. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m06_l01_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Why Loops Matter",
+      "body": "Loops repeat instructions. Indefinite iteration uses a condition to decide when the repetition should stop."
+    },
+    {
+      "slide_id": "m06_l01_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A loop is like washing dishes until the sink is empty. You may not know the exact number at the start, but the condition tells you when to stop."
+    },
+    {
+      "slide_id": "m06_l01_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Why Loops Matter",
+      "code": "count = 1\nwhile count <= 3:\n    print(count)\n    count += 1",
+      "language": "python",
+      "expected_output": "1\n2\n3",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line starts a loop that continues while the condition remains true."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 4,
+          "note": "This line stores or updates a value using a variable."
+        }
+      ]
+    },
+    {
+      "slide_id": "m06_l01_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Every while loop needs a condition that can eventually become False, unless you intentionally stop it with break."
+    },
+    {
+      "slide_id": "m06_l01_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use a while loop to print 1, 2, and 3.",
+      "starter_code": "count = 1\n",
+      "hint": "The condition can be count <= 3. Remember to increase count.",
+      "expected_output_contains": "3",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "while"
+        ]
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m06_l01_cc",
+    "lesson_id": "m06_l01",
+    "prompt_text": "Write a while loop that prints 1 to 4.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "1\n2\n3\n4",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

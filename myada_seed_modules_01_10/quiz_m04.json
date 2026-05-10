@@ -1,0 +1,194 @@
+{
+  "quiz_id": "quiz_m04",
+  "module_id": "module_04",
+  "ac_type": "lesson_quiz",
+  "title": "Module 4 Quiz",
+  "description": "Test your understanding of boolean expressions, comparisons, and logical operators across all lessons in Module 4.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m04_q01",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 4: Boolean Logic and Comparisons?",
+      "options_json": [
+        "To evaluate True or False conditions using comparison and logical operators",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to evaluate True or False conditions using comparison and logical operators.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q02",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the comparison for at least 75:",
+      "content": {
+        "code_with_blank": "passed = score ___ 75",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": ">=",
+      "explanation": ">= means greater than or equal to.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q03",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this comparison:",
+      "content": {
+        "buggy_code": "if score = 75:\n    print(\"Passed\")",
+        "bug_description": "Use == or >= for comparison, not ="
+      },
+      "correct_answer": "Use == or >= for comparison, not =",
+      "explanation": "= assigns a value and cannot be used as the condition shown.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q04",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to check if score is in the passing range.",
+      "content": {
+        "lines": [
+          "print(score >= 75 and score <= 100)",
+          "score = 88"
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q05",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "Which operator checks equality in Python?",
+      "options_json": [
+        "==",
+        "=",
+        "!=",
+        "=>"
+      ],
+      "correct_answer": "0",
+      "explanation": "== compares values, while = assigns values.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q06",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the logical expression:",
+      "content": {
+        "code_with_blank": "can_enter = has_id ___ paid_fee",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "and",
+      "explanation": "and requires both conditions to be True.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q07",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\nprint(5 > 3 and 2 > 4)",
+      "options_json": [
+        "False",
+        "True",
+        "5",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "and is True only when both comparisons are True.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q08",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this boolean value?",
+      "content": {
+        "buggy_code": "is_ready = true",
+        "bug_description": "true should be True with a capital T"
+      },
+      "correct_answer": "true should be True with a capital T",
+      "explanation": "Python booleans are True and False.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q09",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner must be at least 18 and have an ID. Which operator connects the conditions?",
+      "options_json": [
+        "and",
+        "or",
+        "not",
+        "+"
+      ],
+      "correct_answer": "0",
+      "explanation": "Both requirements must be satisfied, so and is correct.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m04_q10",
+      "quiz_id": "quiz_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write code that prints True if score is between 75 and 100 inclusive.",
+      "content": {
+        "starter_code": "score = 85\n# Print the comparison\n",
+        "hint": "Combine two comparisons with and.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "and"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/engine/scoring_engine.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import 'quiz_result_screen.dart';
+import '../../../../shared/widgets/parsons_question_widget.dart';
+import '../../../learn/data/services/module_unlock_service.dart';
 
 class ModuleQuizScreen extends StatefulWidget {
   final String moduleId;
@@ -41,9 +42,6 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
   String? _selectedAnswer;
 
   // ── Parsons state ──────────────────────────────────────────────────────────
-  List<Map<String, dynamic>> _parsonsBlocks = [];
-  bool _parsonsSubmitted = false;
-
   // ── Fill blank state ───────────────────────────────────────────────────────
   final TextEditingController _fillBlankCtrl = TextEditingController();
   bool _fillBlankSubmitted = false;
@@ -66,17 +64,9 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
 
   void _initCurrentQuestion() {
     final q = widget.questions[_currentIndex];
-    final type = q['question_type'] as String? ?? 'multiple_choice';
+    final type = _getQuestionType(q);
 
-    if (type == 'parsons') {
-      final content = _getContent(q);
-      final blocks = (content['blocks'] as List<dynamic>? ?? [])
-          .map((b) => Map<String, dynamic>.from(b as Map))
-          .toList();
-      // Shuffle for display
-      _parsonsBlocks = List.from(blocks)..shuffle();
-      _parsonsSubmitted = false;
-    } else if (type == 'fill_blank') {
+    if (_isFillBlank(type)) {
       _fillBlankCtrl.clear();
       _fillBlankSubmitted = false;
     }
@@ -94,39 +84,29 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
 
   // ── Answer submission ──────────────────────────────────────────────────────
 
+  String _getQuestionType(Map<String, dynamic> q) {
+    return (q['question_type'] ?? q['type'] ?? 'multiple_choice').toString();
+  }
+
+  bool _isFillBlank(String type) {
+    return type == 'fill_blank' || type == 'fill_in_blank';
+  }
+
   void _submitAnswer(String answer) {
+    if (_showFeedback) return;
+
     final q = widget.questions[_currentIndex];
     final correctAnswer = q['correct_answer']?.toString() ?? '';
-    final isCorrect = answer.toLowerCase().trim() ==
-        correctAnswer.toLowerCase().trim();
+    final isCorrect =
+        _normaliseAnswer(answer) == _normaliseAnswer(correctAnswer);
     final pts = ScoringEngine.calcQuestionPoints(
-      questionType: q['question_type'] as String? ?? 'multiple_choice',
+      questionType: _getQuestionType(q),
       isCorrect: isCorrect,
     );
     _pointsPerQuestion.add(pts);
     setState(() {
       _showFeedback = true;
       _selectedAnswer = answer;
-    });
-  }
-
-  void _submitParsons() {
-    final q = widget.questions[_currentIndex];
-    final content = _getContent(q);
-    final correctOrder = (content['correct_order'] as List<dynamic>? ?? [])
-        .map((e) => e.toString())
-        .toList();
-    final currentOrder = _parsonsBlocks.map((b) => b['id'].toString()).toList();
-    final isCorrect = _listsEqual(currentOrder, correctOrder);
-    final pts = ScoringEngine.calcQuestionPoints(
-      questionType: 'parsons',
-      isCorrect: isCorrect,
-    );
-    _pointsPerQuestion.add(pts);
-    setState(() {
-      _parsonsSubmitted = true;
-      _showFeedback = true;
-      _selectedAnswer = isCorrect ? 'correct' : 'incorrect';
     });
   }
 
@@ -137,12 +117,20 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
     setState(() => _fillBlankSubmitted = true);
   }
 
-  bool _listsEqual(List<String> a, List<String> b) {
-    if (a.length != b.length) return false;
-    for (int i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
+  String _normaliseAnswer(String answer) {
+    final trimmed = answer.toLowerCase().trim();
+    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      try {
+        final decoded = jsonDecode(trimmed) as List<dynamic>;
+        return jsonEncode(decoded.map((e) => int.parse(e.toString())).toList());
+      } catch (_) {
+        return trimmed.replaceAll(RegExp(r'\s+'), '');
+      }
     }
-    return true;
+    if (RegExp(r'^\d+(,\d+)*$').hasMatch(trimmed)) {
+      return jsonEncode(trimmed.split(',').map(int.parse).toList());
+    }
+    return trimmed;
   }
 
   void _skipQuestion() {
@@ -154,7 +142,6 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
     setState(() {
       _showFeedback = false;
       _selectedAnswer = null;
-      _parsonsSubmitted = false;
       _fillBlankSubmitted = false;
     });
     if (_currentIndex + 1 >= widget.questions.length) {
@@ -172,28 +159,50 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
     }
     final result = ScoringEngine.calcSessionResult(
       pointsPerQuestion: _pointsPerQuestion,
-      totalQuestions:    widget.questions.length,
-      timeUsedSeconds:   _timeElapsed,
-      timeLimitSeconds:  _timeLimit,
-      isFirstAttempt:    widget.isFirstAttempt,
-      hasStreak:         widget.hasStreak,
-      attemptType:       widget.isRetryQuiz ? 'retry_quiz' : 'module_quiz',
+      totalQuestions: widget.questions.length,
+      timeUsedSeconds: _timeElapsed,
+      timeLimitSeconds: _timeLimit,
+      isFirstAttempt: widget.isFirstAttempt,
+      hasStreak: widget.hasStreak,
+      attemptType: widget.isRetryQuiz ? 'retry_quiz' : 'module_quiz',
+    );
+
+    // Persist attempt
+    await ModuleUnlockService.instance.saveQuizAttempt(
+      moduleId: widget.moduleId,
+      passed: result.passed,
+      totalScore: result.totalScore,
+      timeUsedSeconds: _timeElapsed,
+      accuracyPct: result.accuracyPct,
+      skillLevelAchieved: result.skillLevelAchieved,
+      attemptType: widget.isRetryQuiz ? 'retry_quiz' : 'module_quiz',
+      timeLimitSeconds: _timeLimit,
+      accuracyScore: result.accuracyScore,
+      timeBonus: result.timeBonus,
+      firstAttemptBonus: result.firstAttemptBonus,
+      streakBonus: result.streakBonus,
+    );
+
+    // Unlock exam if quiz was passed
+    if (result.passed) {
+      await ModuleUnlockService.instance.unlockExam(widget.moduleId);
+    }
+
+    if (!mounted) return;
+    final correctCount = _pointsPerQuestion.where((p) => p > 0).length;
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => _QuizResultDialog(
+        result: result,
+        correctCount: correctCount,
+        totalCount: widget.questions.length,
+      ),
     );
 
     if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => QuizResultScreen(
-          result:          result,
-          moduleId:        widget.moduleId,
-          learnerId:       widget.learnerId,
-          isRetryQuiz:     widget.isRetryQuiz,
-          nextModuleId:    widget.nextModuleId,
-          timeUsedSeconds: _timeElapsed,
-        ),
-      ),
-    );
+    Navigator.of(context).pop(); // return to learn screen
   }
 
   @override
@@ -211,6 +220,7 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
         return _buildMultipleChoice(content);
       case 'parsons':
         return _buildParsons(content);
+      case 'fill_in_blank':
       case 'fill_blank':
         return _buildFillBlank(content);
       default:
@@ -241,21 +251,15 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
           padding: const EdgeInsets.only(bottom: 10),
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
-              backgroundColor: bg ?? (isSelected
-                  ? AppColors.primary.withAlpha(30)
-                  : null),
+              backgroundColor:
+                  bg ?? (isSelected ? AppColors.primary.withAlpha(30) : null),
               minimumSize: const Size(double.infinity, 52),
               side: BorderSide(
                 color: isSelected ? AppColors.primary : AppColors.border,
               ),
             ),
-            onPressed: _showFeedback
-                ? null
-                : () => _submitAnswer(idx),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(e.value),
-            ),
+            onPressed: _showFeedback ? null : () => _submitAnswer(idx),
+            child: Align(alignment: Alignment.centerLeft, child: Text(e.value)),
           ),
         );
       }).toList(),
@@ -265,74 +269,22 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
   // ── Parsons (drag-and-drop) ────────────────────────────────────────────────
 
   Widget _buildParsons(Map<String, dynamic> content) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Drag the blocks into the correct order:',
-          style: AppTextStyles.bodySm.copyWith(color: AppColors.mutedForeground),
-        ),
-        const SizedBox(height: 12),
-        ReorderableListView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          onReorder: _parsonsSubmitted
-              ? (_, __) {}
-              : (oldIndex, newIndex) {
-                  setState(() {
-                    if (newIndex > oldIndex) newIndex--;
-                    final item = _parsonsBlocks.removeAt(oldIndex);
-                    _parsonsBlocks.insert(newIndex, item);
-                  });
-                },
-          children: _parsonsBlocks.map((block) {
-            final blockId = block['id'].toString();
-            return Container(
-              key: ValueKey(blockId),
-              margin: const EdgeInsets.only(bottom: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E1E1E),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: _parsonsSubmitted
-                      ? AppColors.border
-                      : AppColors.primary.withAlpha(80),
-                ),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.drag_handle_rounded,
-                      color: AppColors.mutedForeground, size: 18),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      block['code']?.toString() ?? blockId,
-                      style: const TextStyle(
-                        fontFamily: 'monospace',
-                        color: Colors.white,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 12),
-        if (!_parsonsSubmitted)
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: _submitParsons,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-              ),
-              child: const Text('Lock in answer'),
-            ),
-          ),
-      ],
+    final lines = (content['lines'] as List<dynamic>? ?? [])
+        .map((line) => line.toString())
+        .toList();
+
+    if (lines.isEmpty) {
+      return Text(
+        'This question is missing code lines.',
+        style: AppTextStyles.bodySm.copyWith(color: AppColors.error),
+      );
+    }
+
+    return ParsonsQuestionWidget(
+      key: ValueKey('module_parsons_$_currentIndex'),
+      lines: lines,
+      enabled: !_showFeedback,
+      onOrderChanged: (_, answer) => _submitAnswer(answer),
     );
   }
 
@@ -344,7 +296,9 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
       children: [
         Text(
           'Type your answer:',
-          style: AppTextStyles.bodySm.copyWith(color: AppColors.mutedForeground),
+          style: AppTextStyles.bodySm.copyWith(
+            color: AppColors.mutedForeground,
+          ),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -384,10 +338,14 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
   Widget build(BuildContext context) {
     final remaining = _timeLimit - _timeElapsed;
     final q = widget.questions[_currentIndex];
-    final type = q['question_type'] as String? ?? 'multiple_choice';
+    final type = _getQuestionType(q);
     final content = _getContent(q);
     final isLast = _currentIndex + 1 >= widget.questions.length;
     final timeDanger = remaining <= 30;
+    final selectedIsCorrect =
+        _selectedAnswer != null &&
+        _normaliseAnswer(_selectedAnswer!) ==
+            _normaliseAnswer(q['correct_answer']?.toString() ?? '');
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -404,7 +362,9 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
             LinearProgressIndicator(
               value: (_currentIndex + 1) / widget.questions.length,
               backgroundColor: AppColors.surfaceVariant,
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.primary,
+              ),
             ),
           ],
         ),
@@ -413,8 +373,10 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
             padding: const EdgeInsets.only(right: 16),
             child: Center(
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: timeDanger
                       ? AppColors.error.withAlpha(30)
@@ -440,8 +402,7 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
           children: [
             // Question type chip
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
                 color: AppColors.primary.withAlpha(20),
                 borderRadius: BorderRadius.circular(20),
@@ -473,9 +434,7 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: (_selectedAnswer == 'correct' ||
-                          _selectedAnswer ==
-                              (q['correct_answer']?.toString() ?? ''))
+                  color: selectedIsCorrect
                       ? AppColors.successLight
                       : AppColors.warningLight,
                   borderRadius: BorderRadius.circular(10),
@@ -484,14 +443,10 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      (_selectedAnswer == 'correct' ||
-                              _selectedAnswer ==
-                                  (q['correct_answer']?.toString() ?? ''))
+                      selectedIsCorrect
                           ? Icons.check_circle_rounded
                           : Icons.info_rounded,
-                      color: (_selectedAnswer == 'correct' ||
-                              _selectedAnswer ==
-                                  (q['correct_answer']?.toString() ?? ''))
+                      color: selectedIsCorrect
                           ? AppColors.success
                           : AppColors.warning,
                       size: 18,
@@ -512,17 +467,16 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
                 child: ElevatedButton(
                   onPressed: _advance,
                   style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 52)),
+                    minimumSize: const Size(double.infinity, 52),
+                  ),
                   child: Text(isLast ? 'See results' : 'Next question'),
                 ),
               ),
-            ] else if (type == 'multiple_choice' || _parsonsSubmitted || _fillBlankSubmitted)
-              const SizedBox.shrink()
-            else ...[
+            ] else ...[
               const SizedBox(height: 8),
               TextButton(
                 onPressed: _skipQuestion,
-                child: const Text('Skip'),
+                child: const Text('Skip question'),
               ),
             ],
           ],
@@ -533,11 +487,155 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
 
   String _typeLabel(String type) {
     switch (type) {
-      case 'multiple_choice': return 'Multiple Choice';
-      case 'parsons':         return 'Order the Code';
-      case 'fill_blank':      return 'Fill in the Blank';
-      case 'coding':          return 'Coding';
-      default:                return 'Question';
+      case 'multiple_choice':
+        return 'Multiple Choice';
+      case 'parsons':
+        return 'Order the Code';
+      case 'fill_blank':
+        return 'Fill in the Blank';
+      case 'coding':
+        return 'Coding';
+      default:
+        return 'Question';
     }
+  }
+}
+
+// ── Quiz Result Dialog ────────────────────────────────────────────────────────
+
+class _QuizResultDialog extends StatelessWidget {
+  final QuizSessionResult result;
+  final int correctCount;
+  final int totalCount;
+
+  const _QuizResultDialog({
+    required this.result,
+    required this.correctCount,
+    required this.totalCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final passed = result.passed;
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      contentPadding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              passed ? Icons.emoji_events_rounded : Icons.replay_rounded,
+              size: 48,
+              color: passed ? AppColors.primary : AppColors.accent,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              passed ? 'Mini-Quiz Completed!' : 'Keep Practicing!',
+              style: AppTextStyles.h3.copyWith(color: AppColors.foreground),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            _ResultRow(
+              label: 'Points earned',
+              value: '${result.totalScore} pts',
+            ),
+            _ResultRow(
+              label: 'Correct answers',
+              value: '$correctCount / $totalCount',
+            ),
+            if (result.timeBonus > 0)
+              _ResultRow(
+                label: 'Speed bonus',
+                value: '+${result.timeBonus} pts',
+              ),
+            if (result.firstAttemptBonus > 0)
+              _ResultRow(
+                label: 'First attempt bonus',
+                value: '+${result.firstAttemptBonus} pts',
+              ),
+            if (result.streakBonus > 0)
+              _ResultRow(
+                label: 'Streak bonus',
+                value: '+${result.streakBonus} pts',
+              ),
+            const Divider(height: 24),
+            _ResultRow(
+              label: 'Total XP gained',
+              value: '${result.totalScore} XP',
+              bold: true,
+              color: AppColors.primary,
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: passed
+                      ? AppColors.primary
+                      : AppColors.accent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  passed ? 'Back to Learning Path' : 'Try Again',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ResultRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool bold;
+  final Color? color;
+
+  const _ResultRow({
+    required this.label,
+    required this.value,
+    this.bold = false,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.mutedForeground,
+              fontWeight: bold ? FontWeight.w700 : FontWeight.w400,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              color: color ?? AppColors.foreground,
+              fontWeight: bold ? FontWeight.w700 : FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

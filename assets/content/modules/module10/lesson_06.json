@@ -1,0 +1,77 @@
+{
+  "lesson_id": "m10_l06",
+  "module_id": "module_10",
+  "lesson_number": "06",
+  "title": "in Membership",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 6,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m10_l06_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "in Membership",
+      "body": "in Membership is part of List Operations and Methods. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m10_l06_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: in Membership",
+      "body": "The in operator checks whether a value exists in a list. It returns True or False."
+    },
+    {
+      "slide_id": "m10_l06_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Membership with in is like checking whether a name appears on a class list."
+    },
+    {
+      "slide_id": "m10_l06_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: in Membership",
+      "code": "fruits = [\"apple\", \"banana\"]\nprint(\"apple\" in fruits)",
+      "language": "python",
+      "expected_output": "True",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m10_l06_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Choose a list method based on the action you need: add, remove, reorder, check, slice, or copy."
+    },
+    {
+      "slide_id": "m10_l06_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Check whether Python is inside a subjects list.",
+      "starter_code": "subjects = [\"Math\", \"Python\"]\n",
+      "hint": "Use print(\"Python\" in subjects).",
+      "expected_output_contains": "True",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "["
+        ]
+      }
+    }
+  ],
+  "quiz": []
+}

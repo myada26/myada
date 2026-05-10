@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../components/buttons/app_button.dart';
 import '../../../../main.dart'; // For AppRoutes
 
@@ -46,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _onNext() {
     if (_currentIndex == _slides.length - 1) {
       // Last slide
-      Navigator.pushReplacementNamed(context, AppRoutes.permissions);
+      Navigator.pushNamed(context, AppRoutes.permissions);
     } else {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -56,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _onSkip() {
-    Navigator.pushReplacementNamed(context, AppRoutes.entry);
+    Navigator.pushNamed(context, AppRoutes.entry);
   }
 
   @override

@@ -1,0 +1,286 @@
+{
+  "exam_id": "exam_m01",
+  "module_id": "module_01",
+  "ac_type": "module_exam",
+  "title": "Module 1 Final Exam",
+  "description": "Prove your mastery of output, comments, strings, and sequential execution. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m01_e01",
+      "exam_id": "exam_m01",
+      "skill_tag": "Sequencing",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about output, comments, strings, and sequential execution. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to display clear text output and arrange simple Python statements in the correct order",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 1 develops the ability to display clear text output and arrange simple Python statements in the correct order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e02",
+      "exam_id": "exam_m01",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this code:",
+      "content": {
+        "buggy_code": "Print(\"Hello\")",
+        "bug_description": "Print should be print with a lowercase p"
+      },
+      "correct_answer": "Print should be print with a lowercase p",
+      "explanation": "Python is case-sensitive, so Print is not the same as print.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e03",
+      "exam_id": "exam_m01",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the code to display Hello:",
+      "content": {
+        "code_with_blank": "___(\"Hello\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "print",
+      "explanation": "print() displays output in Python.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e04",
+      "exam_id": "exam_m01",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to print Start, Work, Finish in order.",
+      "content": {
+        "lines": [
+          "print(\"Work\")",
+          "print(\"Finish\")",
+          "print(\"Start\")"
+        ],
+        "correct_order": [
+          2,
+          0,
+          1
+        ]
+      },
+      "correct_answer": "[2,0,1]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e05",
+      "exam_id": "exam_m01",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What will this code output?\nprint(\"A\")\nprint(\"B\")",
+      "options_json": [
+        "A\nB",
+        "B\nA",
+        "AB",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "Each print() call displays on a new line in written order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e06",
+      "exam_id": "exam_m01",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write a program that prints your name on line 1 and MyADA on line 2.",
+      "content": {
+        "starter_code": "# Write two print statements below\n",
+        "hint": "Use two print() calls.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 2
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e07",
+      "exam_id": "exam_m01",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "print(Hello)",
+        "bug_description": "Hello must be placed inside quotes"
+      },
+      "correct_answer": "Hello must be placed inside quotes",
+      "explanation": "Text strings must be written inside quotation marks.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e08",
+      "exam_id": "exam_m01",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the comment line:",
+      "content": {
+        "code_with_blank": "___ This explains the code\nprint(\"Hi\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "#",
+      "explanation": "Python comments begin with #.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e09",
+      "exam_id": "exam_m01",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner wants each receipt detail on a separate line. Which solution is best?",
+      "options_json": [
+        "Use one print() call for each receipt line",
+        "Put all text in one comment",
+        "Use Print() with a capital P",
+        "Remove quotation marks"
+      ],
+      "correct_answer": "0",
+      "explanation": "Separate print statements create separate output lines.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e10",
+      "exam_id": "exam_m01",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the receipt lines in the correct order: item, price, thank-you.",
+      "content": {
+        "lines": [
+          "print(\"Thank you\")",
+          "print(\"Item: Pen\")",
+          "print(\"Price: 10\")"
+        ],
+        "correct_order": [
+          1,
+          2,
+          0
+        ]
+      },
+      "correct_answer": "[1,2,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e11",
+      "exam_id": "exam_m01",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write a three-line output: Title, Author, Year.",
+      "content": {
+        "starter_code": "# Print the three labels below\n",
+        "hint": "Use one print statement per line.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 3
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e12",
+      "exam_id": "exam_m01",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in output, comments, strings, and sequential execution?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e13",
+      "exam_id": "exam_m01",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the code to print the variable value:",
+      "content": {
+        "code_with_blank": "message = \"Ready\"\n___(message)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "print",
+      "explanation": "print(message) displays the value stored in message.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e14",
+      "exam_id": "exam_m01",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Identify the sequencing problem:",
+      "content": {
+        "buggy_code": "print(\"Finish\")\nprint(\"Start\")",
+        "bug_description": "The output order is reversed"
+      },
+      "correct_answer": "The output order is reversed",
+      "explanation": "Python executes top to bottom, so Start should be printed before Finish.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m01_e15",
+      "exam_id": "exam_m01",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 1 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with output, comments, strings, and sequential execution",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of output, comments, strings, and sequential execution.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

@@ -1,14 +1,12 @@
 // lib/features/auth/presentation/screens/forgot_password_screen.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../components/buttons/app_button.dart';
 import '../../../../components/inputs/app_text_field.dart';
 import '../../../../controllers/auth_controller.dart'; // For AuthController
-import '../../../../main.dart'; // For AppRoutes
 import 'package:provider/provider.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

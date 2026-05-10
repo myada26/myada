@@ -1,0 +1,27 @@
+[
+    {
+        "module_id": "module_10",
+        "number": 10,
+        "title": "List Operations and Methods",
+        "subtitle": "Manipulate lists using insert(), remove(), pop(), sort(), reverse(), membersh…",
+        "skill_tag": "Computational Thinking",
+        "icon": "lightbulb_outline_rounded",
+        "lesson_count": 9,
+        "lessons": [
+            "m10_l01",
+            "m10_l02",
+            "m10_l03",
+            "m10_l04",
+            "m10_l05",
+            "m10_l06",
+            "m10_l07",
+            "m10_l08",
+            "m10_l09"
+        ],
+        "estimated_minutes": 45,
+        "prerequisite_module_id": "module_09",
+        "unlock_condition": "module_09_passed",
+        "badge_id": "badge_module_10",
+        "cert_eligible": false
+    }
+]

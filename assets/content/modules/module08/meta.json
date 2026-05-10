@@ -1,0 +1,29 @@
+[
+    {
+        "module_id": "module_08",
+        "number": 8,
+        "title": "Functions and Modularity",
+        "subtitle": "Break programs into reusable functions with parameters, arguments, return val…",
+        "skill_tag": "Computational Thinking",
+        "icon": "lightbulb_outline_rounded",
+        "lesson_count": 11,
+        "lessons": [
+            "m08_l01",
+            "m08_l02",
+            "m08_l03",
+            "m08_l04",
+            "m08_l05",
+            "m08_l06",
+            "m08_l07",
+            "m08_l08",
+            "m08_l09",
+            "m08_l10",
+            "m08_l11"
+        ],
+        "estimated_minutes": 55,
+        "prerequisite_module_id": "module_07",
+        "unlock_condition": "module_07_passed",
+        "badge_id": "badge_module_08",
+        "cert_eligible": false
+    }
+]

@@ -118,6 +118,29 @@ class ModuleUnlockService {
     });
   }
 
+  // ── Exam unlock (stored as moduleId + "_exam" in module_unlocks) ─────────
+
+  Future<void> unlockExam(String moduleId) async {
+    final db  = await AppDatabase.instance.database;
+    final now = DateTime.now().toIso8601String();
+    await db.rawInsert('''
+      INSERT OR IGNORE INTO module_unlocks
+        (id, learner_id, module_id, unlocked_at, unlock_reason)
+      VALUES (?, ?, ?, ?, ?)
+    ''', [_uuid.v4(), _uid, '${moduleId}_exam', now, 'quiz_passed']);
+  }
+
+  Future<bool> isExamUnlocked(String moduleId) async {
+    final db   = await AppDatabase.instance.database;
+    final rows = await db.query(
+      'module_unlocks',
+      where: 'learner_id = ? AND module_id = ?',
+      whereArgs: [_uid, '${moduleId}_exam'],
+      limit: 1,
+    );
+    return rows.isNotEmpty;
+  }
+
   // ── Get full module state for the LearnScreen card ────────────────────────
 
   Future<ModuleState> getModuleState(

@@ -1,0 +1,78 @@
+﻿{
+  "lesson_id": "m02_l08",
+  "module_id": "module_02",
+  "lesson_number": "08",
+  "title": "Changing Variable Values",
+  "skill_tag": "Sequencing",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m02_l08_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Changing Variable Values",
+      "body": "Changing Variable Values is part of Variables and Primitive Data Types. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m02_l08_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Changing Variable Values",
+      "body": "A variable can be assigned a new value. When this happens, the old value is replaced by the new value."
+    },
+    {
+      "slide_id": "m02_l08_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Changing a variable is like updating a whiteboard. The new information replaces what was written before."
+    },
+    {
+      "slide_id": "m02_l08_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Changing Variable Values",
+      "code": "points = 10\npoints = 15\nprint(points)",
+      "language": "python",
+      "expected_output": "15",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m02_l08_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Use clear variable names and match the data type to the kind of value you need to store."
+    },
+    {
+      "slide_id": "m02_l08_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Create a variable named level, change it to a new value, then print it.",
+      "starter_code": "level = 1\n# change level below\n",
+      "hint": "Assign level again using a new value before printing.",
+      "expected_output_contains": "2",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What happens when you assign a new value to an existing variable in Python?","content":{"options":["Python creates a second variable with the same name","Python keeps both old and new values","Python replaces the old value with the new value","Python causes an error because variables cannot change"],"correct_index":2},"correct_answer":"2","explanation":"Right! Reassigning a variable replaces the old value entirely — like erasing a whiteboard and writing something new."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines in the correct order to set points to 10, update it to 15, and print the final value.","content":{"lines":["points = 15","print(points)","points = 10"],"correct_order":[2,0,1]},"correct_answer":"[2,0,1]","explanation":"points starts at 10, then is reassigned to 15 which replaces the original, and finally print() shows the current value of 15."},{"question_id":"q3","question_type":"coding","prompt_text":"Create a variable named level set to 1, change it to 2, and print the updated value.","content":{"starter_code":"level = 1\n# change level below\n","hint":"Assign level a new value on the next line, then use print(level).","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"Write level = 2 after the first assignment. print(level) then outputs 2. Reassigning updates the stored value completely."}]
+}

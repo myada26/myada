@@ -5,10 +5,12 @@ class RankedStudent {
   final String name;
   final int rank;
   final int totalPoints;
-  final int? rankChange; // positive = moved up, negative = moved down, null = no change
+  final int?
+  rankChange; // positive = moved up, negative = moved down, null = no change
   final bool isCurrentUser;
   final int currentStreak;
   final int modulesCompleted;
+  final String? avatarPath;
 
   const RankedStudent({
     required this.id,
@@ -19,6 +21,7 @@ class RankedStudent {
     this.isCurrentUser = false,
     this.currentStreak = 0,
     this.modulesCompleted = 0,
+    this.avatarPath,
   });
 
   /// Get the user's initials (first letter of first + last name).

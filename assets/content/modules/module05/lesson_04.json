@@ -1,0 +1,97 @@
+﻿{
+  "lesson_id": "m05_l04",
+  "module_id": "module_05",
+  "lesson_number": "04",
+  "title": "elif Chains",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m05_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "elif Chains",
+      "body": "elif Chains is part of Conditional Execution. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m05_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: elif Chains",
+      "body": "An elif chain checks several conditions in order. Python runs the first matching branch and skips the rest."
+    },
+    {
+      "slide_id": "m05_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "elif is like choosing from several doors. The first door that fits the condition is opened."
+    },
+    {
+      "slide_id": "m05_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: elif Chains",
+      "code": "grade = 85\nif grade >= 90:\n    print(\"Excellent\")\nelif grade >= 75:\n    print(\"Passed\")\nelse:\n    print(\"Review\")",
+      "language": "python",
+      "expected_output": "Passed",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line checks a condition before running the indented code."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 4,
+          "note": "This line checks another condition if the earlier condition was false."
+        },
+        {
+          "line": 5,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 6,
+          "note": "This line provides the path to run when previous conditions are false."
+        },
+        {
+          "line": 7,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m05_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A conditional needs a colon, correct indentation, and a condition that clearly evaluates to True or False."
+    },
+    {
+      "slide_id": "m05_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use if-elif-else to classify a temperature as Hot, Warm, or Cold.",
+      "starter_code": "temperature = 25\n",
+      "hint": "Check the highest condition first, then the next.",
+      "expected_output_contains": "Warm",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "if"
+        ]
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What does Python do once it finds a True condition in an elif chain?","content":{"options":["It checks all remaining conditions anyway","It runs all matching branches","It runs only the first matching branch and skips the rest","It returns to the start of the chain"],"correct_index":2},"correct_answer":"2","explanation":"Exactly right! Python runs only the first True branch in an elif chain and immediately skips the rest. This is called short-circuit evaluation."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines to classify a grade as Excellent, Passed, or Review using elif.","content":{"lines":["elif grade >= 75:","    print(\"Passed\")","grade = 85","    print(\"Excellent\")","if grade >= 90:"],"correct_order":[2,4,3,0,1]},"correct_answer":"[2,4,3,0,1]","explanation":"The variable is first, then the if checks the highest threshold, its print block follows, then elif checks the next threshold with its block."},{"question_id":"q3","question_type":"coding","prompt_text":"Use if-elif-else to classify a temperature: Hot for above 35, Warm for above 20, otherwise Cold.","content":{"starter_code":"temperature = 25\n","hint":"Check the highest condition first with if, then elif for the next, and else for the rest.","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"With temperature = 25: if temperature > 35: is False, elif temperature > 20: is True so Warm is printed. Always check the highest range first in elif chains."}]
+}

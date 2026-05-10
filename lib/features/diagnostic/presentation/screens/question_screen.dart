@@ -7,6 +7,7 @@ import '../../../../controllers/diagnostic_controller.dart';
 import '../../../../controllers/learning_path_controller.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../models/diagnostic_models.dart';
+import '../../../../shared/widgets/parsons_question_widget.dart';
 import 'package:provider/provider.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   List<String>? _parsonsOrder;
   Map<String, int>? _dropdownSelections;
   bool _isNavigating = false; // guard to prevent double-navigation
+  int? _localQuestionIndex;
 
   @override
   void didChangeDependencies() {
@@ -37,7 +39,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
         // 1. Build the learning path from diagnostic scores.
         final pathCtrl = context.read<LearningPathController>();
-        pathCtrl.buildResult(scores: ctrl.scores, skips: ctrl.skips);
+        await pathCtrl.buildResult(scores: ctrl.scores, skips: ctrl.skips);
+        if (!mounted) return;
 
         // 2. Persist the diagnostic completion flag to the user profile.
         final auth = context.read<AuthController>();
@@ -53,7 +56,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
     }
 
     // ── Reset local selections when moving to a new question ──────────────────
-    if (ctrl.selectedAnswer == null && _mcqSelection != null) {
+    if (_localQuestionIndex != ctrl.currentIndex) {
+      _localQuestionIndex = ctrl.currentIndex;
       _mcqSelection = null;
       _parsonsOrder = null;
       _dropdownSelections = null;
@@ -64,11 +68,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
       final q = ctrl.currentQuestion;
       if (q.type == QuestionType.parsons && _parsonsOrder == null) {
         _parsonsOrder = List.from(q.items!);
-        // Defer the notifyListeners call out of the build frame.
-        Future.microtask(() {
-          if (mounted) ctrl.selectAnswer(_parsonsOrder);
-        });
-      } else if (q.type == QuestionType.dropdown && _dropdownSelections == null) {
+      } else if (q.type == QuestionType.dropdown &&
+          _dropdownSelections == null) {
         _dropdownSelections = {};
         for (var drop in q.drops!) {
           _dropdownSelections![drop['id']] = 0;
@@ -121,13 +122,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 children: [
                   Text(
                     "Question ${ctrl.currentIndex + 1} of ${ctrl.questionOrder.length}",
-                    style: AppTextStyles.bodySm.copyWith(color: AppColors.mutedForeground),
+                    style: AppTextStyles.bodySm.copyWith(
+                      color: AppColors.mutedForeground,
+                    ),
                   ),
                   Row(
                     children: [
                       TextButton(
                         onPressed: _handleSkip,
-                        style: TextButton.styleFrom(foregroundColor: AppColors.mutedForeground),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.mutedForeground,
+                        ),
                         child: const Text("Skip"),
                       ),
                       const SizedBox(width: 8),
@@ -169,14 +174,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
               // Question Metadata
               Text(
                 q.label.toUpperCase(),
-                style: AppTextStyles.caption.copyWith(color: AppColors.primary, letterSpacing: 0.5),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primary,
+                  letterSpacing: 0.5,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 q.text,
                 style: AppTextStyles.h4.copyWith(
                   fontSize: 18, // Custom size for question text
-                  fontWeight: FontWeight.w500, height: 1.4,
+                  fontWeight: FontWeight.w500,
+                  height: 1.4,
                 ),
               ),
               const SizedBox(height: 16),
@@ -189,9 +198,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.surface,
                     borderRadius: BorderRadius.circular(AppRadius.lg),
-                    border: Border.all(
-                      color: AppColors.border,
-                    ),
+                    border: Border.all(color: AppColors.border),
                   ),
                   child: Text(
                     q.code!,
@@ -247,12 +254,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primary.withOpacity(0.1)
+                    ? AppColors.primary.withValues(alpha: 0.1)
                     : AppColors.background,
                 border: Border.all(
                   color: isSelected
                       ? AppColors.primary
-                      : AppColors.border.withOpacity(0.5),
+                      : AppColors.border.withValues(alpha: 0.5),
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -271,7 +278,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       style: TextStyle(
                         color: isSelected
                             ? Colors.white
-                            : AppColors.foreground.withOpacity(0.7),
+                            : AppColors.foreground.withValues(alpha: 0.7),
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
@@ -291,69 +298,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
         },
       );
     } else if (q.type == QuestionType.parsons) {
-      // ReorderableListView needs a material context, and we must handle state
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Drag to reorder the lines.",
-            style: AppTextStyles.bodySm.copyWith(
-              color: AppColors.mutedForeground,
-            ), // Using bodySm for helper text
+      final lines = q.items ?? const <String>[];
+      if (lines.isEmpty) {
+        return Text(
+          'This question is missing code lines.',
+          style: AppTextStyles.bodySm.copyWith(color: AppColors.error),
+        );
+      }
 
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: ReorderableListView(
-              onReorder: (oldIndex, newIndex) {
-                setState(() {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final item = _parsonsOrder!.removeAt(oldIndex);
-                  _parsonsOrder!.insert(newIndex, item);
-                });
-                ctrl.selectAnswer(_parsonsOrder);
-              },
-              children: _parsonsOrder!.map((item) {
-                return Container(
-                  key: ValueKey(item),
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration( // Styling for reorderable items
-                    color: AppColors.surface,
-                    border: Border.all(
-                      color: AppColors.border,
-                    ),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.drag_indicator,
-                        size: 16,
-                        color: AppColors.mutedForeground,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontFamily: 'monospace',
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
+      return ParsonsQuestionWidget(
+        key: ValueKey('diagnostic_parsons_${ctrl.currentIndex}'),
+        lines: lines,
+        expand: true,
+        onOrderChanged: (order, _) {
+          final arrangedLines = order.map((index) => lines[index]).toList();
+          setState(() => _parsonsOrder = arrangedLines);
+          ctrl.selectAnswer(arrangedLines);
+        },
       );
     } else if (q.type == QuestionType.dropdown) {
       // Very basic Dropdown representation
@@ -367,7 +328,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
           codeSpans.add(
             Text(
               remaining,
-              style: AppTextStyles.body.copyWith(fontFamily: 'monospace', height: 1.6),
+              style: AppTextStyles.body.copyWith(
+                fontFamily: 'monospace',
+                height: 1.6,
+              ),
             ),
           );
           break;
@@ -375,7 +339,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
           codeSpans.add(
             Text(
               remaining.substring(0, nextDrop),
-              style: AppTextStyles.body.copyWith(fontFamily: 'monospace', height: 1.6),
+              style: AppTextStyles.body.copyWith(
+                fontFamily: 'monospace',
+                height: 1.6,
+              ),
             ),
           );
           // Extract the id
@@ -403,7 +370,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 title: Text(
                                   entry.value,
                                   style: const TextStyle(
-                                    fontFamily: 'monospace', // Keep monospace for code
+                                    fontFamily:
+                                        'monospace', // Keep monospace for code
                                   ),
                                 ),
                                 onTap: () => Navigator.pop(context, entry.key),
@@ -433,7 +401,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 child: Text(
                   currentSelectionObj,
                   style: AppTextStyles.body.copyWith(
-                    fontFamily: 'monospace', color: AppColors.primary, fontWeight: FontWeight.bold,
+                    fontFamily: 'monospace',
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

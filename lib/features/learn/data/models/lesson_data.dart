@@ -1,5 +1,7 @@
 // lib/features/learn/data/models/lesson_data.dart
 
+// ─── Shared ───────────────────────────────────────────────────────────────────
+
 class CodeAnnotation {
   final int line;
   final String note;
@@ -30,45 +32,114 @@ class CodeExample {
       );
 }
 
-class TryItYourself {
-  final String prompt;
-  final String starterCode;
-  final String hint;
-  final String validationType;
-  final Map<String, dynamic> validationRules;
+// ─── Slide types ──────────────────────────────────────────────────────────────
 
-  const TryItYourself({
-    required this.prompt,
-    required this.starterCode,
-    required this.hint,
-    required this.validationType,
-    required this.validationRules,
+class SlideData {
+  final String slideId;
+  final String slideType; // 'concept' | 'analogy' | 'code_example'
+  final String? heading;
+  final String? body;
+  final String? language;
+  final String? code;
+  final List<CodeAnnotation> annotations;
+
+  const SlideData({
+    required this.slideId,
+    required this.slideType,
+    this.heading,
+    this.body,
+    this.language,
+    this.code,
+    this.annotations = const [],
   });
 
-  factory TryItYourself.fromJson(Map<String, dynamic> json) => TryItYourself(
-        prompt: json['prompt'],
-        starterCode: json['starter_code'],
-        hint: json['hint'],
-        validationType: json['validation_type'],
-        validationRules: json['validation_rules'] ?? {},
+  factory SlideData.fromJson(Map<String, dynamic> json) => SlideData(
+        slideId: json['slide_id'] as String,
+        slideType: json['slide_type'] as String,
+        heading: json['heading'] as String?,
+        body: json['body'] as String?,
+        language: json['language'] as String?,
+        code: json['code'] as String?,
+        annotations: json['annotations'] != null
+            ? (json['annotations'] as List)
+                .map((a) => CodeAnnotation.fromJson(a))
+                .toList()
+            : const [],
       );
 }
+
+// ─── Lesson-embedded quiz ─────────────────────────────────────────────────────
+
+class LessonQuizQuestion {
+  final String questionId;
+  final String questionType; // 'multiple_choice' | 'fill_in_blank' | 'spot_bug'
+  final String promptText;
+  final Map<String, dynamic> content;
+  final String correctAnswer;
+  final int? correctIndex;
+  final List<String>? options;
+  final String explanation;
+
+  const LessonQuizQuestion({
+    required this.questionId,
+    required this.questionType,
+    required this.promptText,
+    required this.content,
+    required this.correctAnswer,
+    this.correctIndex,
+    this.options,
+    required this.explanation,
+  });
+
+  factory LessonQuizQuestion.fromJson(Map<String, dynamic> json) {
+    final type = json['question_type'] as String;
+    final content = Map<String, dynamic>.from(json['content'] as Map);
+    return LessonQuizQuestion(
+      questionId: json['question_id'] as String,
+      questionType: type,
+      promptText: json['prompt_text'] as String,
+      content: content,
+      correctAnswer: (json['correct_answer'] ?? '').toString(),
+      correctIndex: type == 'multiple_choice'
+          ? content['correct_index'] as int?
+          : null,
+      options: type == 'multiple_choice' && content['options'] != null
+          ? List<String>.from(content['options'] as List)
+          : null,
+      explanation: json['explanation'] as String,
+    );
+  }
+
+  bool checkAnswer(dynamic userAnswer) {
+    switch (questionType) {
+      case 'multiple_choice':
+        return userAnswer == correctIndex;
+      case 'fill_in_blank':
+      case 'spot_bug':
+        return (userAnswer as String).trim().toLowerCase() ==
+            correctAnswer.trim().toLowerCase();
+      case 'parsons':
+        return (userAnswer as String).trim() == correctAnswer.trim();
+      case 'coding':
+        return (userAnswer as String).trim().isNotEmpty;
+      default:
+        return false;
+    }
+  }
+}
+
+// ─── Lesson ───────────────────────────────────────────────────────────────────
 
 class LessonData {
   final String lessonId;
   final String moduleId;
-  final int lessonNumber;
+  final String lessonNumber; // "1.1", "1.2", etc.
   final String title;
   final String skillTag;
   final int estimatedMinutes;
-  final Map<String, String> concept;       // {heading, body}
-  final Map<String, String> analogy;       // {heading, body}
-  final CodeExample codeExample;
-  final String expectedOutput;
-  final String keyRule;
-  final TryItYourself tryItYourself;
+  final List<SlideData> slides;
+  final List<LessonQuizQuestion> quiz;
   final int completionXp;
-  final bool isBookmarkable;
   final bool isModuleCloser;
 
   const LessonData({
@@ -78,38 +149,33 @@ class LessonData {
     required this.title,
     required this.skillTag,
     required this.estimatedMinutes,
-    required this.concept,
-    required this.analogy,
-    required this.codeExample,
-    required this.expectedOutput,
-    required this.keyRule,
-    required this.tryItYourself,
+    required this.slides,
+    required this.quiz,
     required this.completionXp,
-    required this.isBookmarkable,
     required this.isModuleCloser,
   });
 
   factory LessonData.fromJson(Map<String, dynamic> json) => LessonData(
-        lessonId: json['lesson_id'],
-        moduleId: json['module_id'],
-        lessonNumber: json['lesson_number'],
-        title: json['title'],
-        skillTag: json['skill_tag'],
-        estimatedMinutes: json['estimated_minutes'],
-        concept: Map<String, String>.from(json['concept']),
-        analogy: Map<String, String>.from(json['analogy']),
-        codeExample: CodeExample.fromJson(json['code_example']),
-        expectedOutput: json['expected_output'],
-        keyRule: json['key_rule'],
-        tryItYourself: TryItYourself.fromJson(json['try_it_yourself']),
-        completionXp: json['completion_xp'],
-        isBookmarkable: json['is_bookmarkable'] ?? true,
-        isModuleCloser: json['is_module_closer'] ?? false,
+        lessonId: json['lesson_id'] as String,
+        moduleId: json['module_id'] as String,
+        lessonNumber: (json['lesson_number'] ?? '').toString(),
+        title: json['title'] as String,
+        skillTag: json['skill_tag'] as String,
+        estimatedMinutes: json['estimated_minutes'] as int,
+        slides: (json['slides'] as List)
+            .map((s) => SlideData.fromJson(s as Map<String, dynamic>))
+            .toList(),
+        quiz: (json['quiz'] as List)
+            .map((q) => LessonQuizQuestion.fromJson(q as Map<String, dynamic>))
+            .toList(),
+        completionXp: json['completion_xp'] as int,
+        isModuleCloser: (json['is_module_closer'] ?? false) as bool,
       );
 }
 
-// ─────────────────────────────────────────────────────────────
-// lib/features/quiz/data/models/quiz_data.dart
+// ─────────────────────────────────────────────────────────────────────────────
+// Module-level quiz models (unchanged)
+// ─────────────────────────────────────────────────────────────────────────────
 
 enum QuestionType { multipleChoice, parsons, fillBlank }
 

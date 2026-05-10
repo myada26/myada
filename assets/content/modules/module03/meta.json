@@ -1,0 +1,28 @@
+[
+    {
+        "module_id": "module_03",
+        "number": 3,
+        "title": "Mathematical and String Operations",
+        "subtitle": "Practice arithmetic, precedence, modulo, string joining, repetition, f-string…",
+        "skill_tag": "Computational Thinking",
+        "icon": "lightbulb_outline_rounded",
+        "lesson_count": 10,
+        "lessons": [
+            "m03_l01",
+            "m03_l02",
+            "m03_l03",
+            "m03_l04",
+            "m03_l05",
+            "m03_l06",
+            "m03_l07",
+            "m03_l08",
+            "m03_l09",
+            "m03_l10"
+        ],
+        "estimated_minutes": 50,
+        "prerequisite_module_id": "module_02",
+        "unlock_condition": "module_02_passed",
+        "badge_id": "badge_module_03",
+        "cert_eligible": false
+    }
+]

@@ -1,0 +1,25 @@
+[
+    {
+        "module_id": "module_06",
+        "number": 6,
+        "title": "Indefinite Iteration",
+        "subtitle": "Learn while loops, loop conditions, counters, accumulators, break statements,…",
+        "skill_tag": "Logic Flow",
+        "icon": "alt_route_rounded",
+        "lesson_count": 7,
+        "lessons": [
+            "m06_l01",
+            "m06_l02",
+            "m06_l03",
+            "m06_l04",
+            "m06_l05",
+            "m06_l06",
+            "m06_l07"
+        ],
+        "estimated_minutes": 35,
+        "prerequisite_module_id": "module_05",
+        "unlock_condition": "module_05_passed",
+        "badge_id": "badge_module_06",
+        "cert_eligible": false
+    }
+]

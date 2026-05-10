@@ -30,6 +30,8 @@ import 'features/diagnostic/presentation/screens/question_screen.dart';
 import 'features/diagnostic/presentation/screens/result_screen.dart';
 import 'shared/widgets/main_nav_shell.dart';
 import 'features/learn/presentation/screens/lesson_screen.dart';
+import 'features/learn/presentation/screens/module_detail_screen.dart';
+import 'features/learn/presentation/screens/lesson_viewer_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -127,6 +129,22 @@ class MyAdaApp extends StatelessWidget {
                 totalLessonsInModule: args['totalLessonsInModule'] ?? 5,
               ),
             );
+          case AppRoutes.moduleDetail:
+            final args = settings.arguments as Map<String, dynamic>? ?? {};
+            return MaterialPageRoute(
+              builder: (_) => ModuleDetailScreen(
+                moduleId: args['moduleId'] ?? 'module_01',
+              ),
+            );
+          case AppRoutes.lessonViewer:
+            final args = settings.arguments as Map<String, dynamic>? ?? {};
+            return MaterialPageRoute(
+              builder: (_) => LessonViewerScreen(
+                moduleId: args['moduleId'] ?? 'module_01',
+                lessonId: args['lessonId'] ?? 'm01_l1_1',
+                lessonNumber: args['lessonNumber'] ?? '1.1',
+              ),
+            );
           default:
             return null;
         }
@@ -218,4 +236,6 @@ class AppRoutes {
   static const learnPath = '/learn/path';
   static const codeEditor = '/learn/code-editor';
   static const quiz = '/learn/quiz';
+  static const moduleDetail = '/module-detail';
+  static const lessonViewer = '/lesson-viewer';
 }

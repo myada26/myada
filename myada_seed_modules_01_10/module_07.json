@@ -1,0 +1,56 @@
+{
+  "module_id": "module_07",
+  "order_index": 7,
+  "title": "Definite Iteration",
+  "description": "Use for loops and range() to repeat a known number of times, process strings, build patterns, and calculate totals.",
+  "skill_category": "Sequencing",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 7,
+  "lessons": [
+    {
+      "lesson_id": "m07_l01",
+      "title": "for Loops",
+      "order_index": 1,
+      "file": "lesson_m07_l01.json"
+    },
+    {
+      "lesson_id": "m07_l02",
+      "title": "range()",
+      "order_index": 2,
+      "file": "lesson_m07_l02.json"
+    },
+    {
+      "lesson_id": "m07_l03",
+      "title": "Looping Over Strings",
+      "order_index": 3,
+      "file": "lesson_m07_l03.json"
+    },
+    {
+      "lesson_id": "m07_l04",
+      "title": "Nested for Loops",
+      "order_index": 4,
+      "file": "lesson_m07_l04.json"
+    },
+    {
+      "lesson_id": "m07_l05",
+      "title": "Counting Patterns",
+      "order_index": 5,
+      "file": "lesson_m07_l05.json"
+    },
+    {
+      "lesson_id": "m07_l06",
+      "title": "Using for Loops for Totals",
+      "order_index": 6,
+      "file": "lesson_m07_l06.json"
+    },
+    {
+      "lesson_id": "m07_l07",
+      "title": "Choosing for vs while",
+      "order_index": 7,
+      "file": "lesson_m07_l07.json"
+    }
+  ],
+  "quiz_file": "quiz_m07.json",
+  "exam_file": "exam_m07.json"
+}

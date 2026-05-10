@@ -1,0 +1,305 @@
+{
+  "exam_id": "exam_m05",
+  "module_id": "module_05",
+  "ac_type": "module_exam",
+  "title": "Module 5 Final Exam",
+  "description": "Prove your mastery of if, else, elif, nested conditionals, and grading logic. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m05_e01",
+      "exam_id": "exam_m05",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about if, else, elif, nested conditionals, and grading logic. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to control which code runs by checking conditions and branching into clear decision paths",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 5 develops the ability to control which code runs by checking conditions and branching into clear decision paths.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e02",
+      "exam_id": "exam_m05",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this if statement:",
+      "content": {
+        "buggy_code": "if score >= 75\n    print(\"Passed\")",
+        "bug_description": "Missing colon after the if condition"
+      },
+      "correct_answer": "Missing colon after the if condition",
+      "explanation": "Python requires a colon before the indented block.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e03",
+      "exam_id": "exam_m05",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the conditional keyword:",
+      "content": {
+        "code_with_blank": "___ score >= 75:\n    print(\"Passed\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "if",
+      "explanation": "An if statement starts a conditional decision.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e04",
+      "exam_id": "exam_m05",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to print Passed or Try again.",
+      "content": {
+        "lines": [
+          "else:",
+          "    print(\"Passed\")",
+          "if score >= 75:",
+          "    print(\"Try again\")",
+          "score = 60"
+        ],
+        "correct_order": [
+          4,
+          2,
+          1,
+          0,
+          3
+        ]
+      },
+      "correct_answer": "[4,2,1,0,3]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e05",
+      "exam_id": "exam_m05",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What will print?\nscore = 60\nif score >= 75:\n    print(\"Passed\")\nelse:\n    print(\"Try again\")",
+      "options_json": [
+        "Try again",
+        "Passed",
+        "Both lines",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "The condition is false, so the else block runs.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e06",
+      "exam_id": "exam_m05",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write an if-else program that prints Passed for scores 75 and above, otherwise Failed.",
+      "content": {
+        "starter_code": "score = 80\n# Write the conditional\n",
+        "hint": "Use if score >= 75: and else:.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "if",
+            "else"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e07",
+      "exam_id": "exam_m05",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "if score >= 75:\nprint(\"Passed\")",
+        "bug_description": "The print line must be indented"
+      },
+      "correct_answer": "The print line must be indented",
+      "explanation": "Indented lines belong to the conditional block.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e08",
+      "exam_id": "exam_m05",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the backup branch:",
+      "content": {
+        "code_with_blank": "if score >= 75:\n    print(\"Passed\")\n___:\n    print(\"Try again\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "else",
+      "explanation": "else runs when the if condition is false.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e09",
+      "exam_id": "exam_m05",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A grader has Excellent, Passed, and Failed. Which structure fits best?",
+      "options_json": [
+        "if-elif-else",
+        "print only",
+        "while only",
+        "comment only"
+      ],
+      "correct_answer": "0",
+      "explanation": "Multiple exclusive score ranges are best handled by if-elif-else.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e10",
+      "exam_id": "exam_m05",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the grader from highest to lowest condition.",
+      "content": {
+        "lines": [
+          "elif score >= 75:",
+          "    print(\"Excellent\")",
+          "else:",
+          "if score >= 90:",
+          "    print(\"Passed\")",
+          "    print(\"Failed\")"
+        ],
+        "correct_order": [
+          3,
+          1,
+          0,
+          4,
+          2,
+          5
+        ]
+      },
+      "correct_answer": "[3,1,0,4,2,5]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e11",
+      "exam_id": "exam_m05",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write an elif grader for A, B, and C using score.",
+      "content": {
+        "starter_code": "score = 85\n# Write the if-elif-else grader\n",
+        "hint": "Check the highest score range first.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "if",
+            "elif",
+            "else"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e12",
+      "exam_id": "exam_m05",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in if, else, elif, nested conditionals, and grading logic?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e13",
+      "exam_id": "exam_m05",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the middle branch keyword:",
+      "content": {
+        "code_with_blank": "if grade >= 90:\n    print(\"A\")\n___ grade >= 80:\n    print(\"B\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "elif",
+      "explanation": "elif checks another condition after if.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e14",
+      "exam_id": "exam_m05",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the ordering problem:",
+      "content": {
+        "buggy_code": "if score >= 75:\n    print(\"Passed\")\nelif score >= 90:\n    print(\"Excellent\")",
+        "bug_description": "The 90-or-above condition should be checked first"
+      },
+      "correct_answer": "The 90-or-above condition should be checked first",
+      "explanation": "Otherwise 95 is already caught by score >= 75.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m05_e15",
+      "exam_id": "exam_m05",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 5 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with if, else, elif, nested conditionals, and grading logic",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of if, else, elif, nested conditionals, and grading logic.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

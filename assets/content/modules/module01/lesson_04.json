@@ -1,55 +1,120 @@
 {
-    "lesson_id": "m01_l04",
-    "module_id": "module_01",
-    "lesson_number": 4,
-    "title": "Comments: Notes for Humans",
-    "skill_tag": "Sequencing",
-    "estimated_minutes": 3,
-    "concept": {
-        "heading": "What is a comment?",
-        "body": "A comment is a line in your code that Python completely ignores. It starts with a # symbol. Comments exist for you and other humans — they explain what your code does, why you made certain decisions, or leave notes for your future self. Professional developers write comments constantly. They are not optional extras; they are part of good code."
+  "lesson_id": "m01_l04",
+  "module_id": "module_01",
+  "lesson_number": "04",
+  "title": "Comments and Readable Code",
+  "skill_tag": "Debugging",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m01_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Comments and Readable Code",
+      "body": "Comments and Readable Code is part of Introduction to Python and Output. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
     },
-    "analogy": {
-        "heading": "Think of it this way",
-        "body": "Imagine a recipe book where the chef wrote little notes in the margins: 'Use fresh garlic here — dried garlic ruins this dish.' Those notes are not ingredients and they are not instructions the recipe follows. They are just helpful reminders for whoever is cooking. Comments in Python work exactly the same way — they sit beside your code and explain the thinking behind it, but Python skips right over them."
+    {
+      "slide_id": "m01_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Comments and Readable Code",
+      "body": "Comments are notes written for humans. Python ignores comments, but they help explain what the code is supposed to do."
     },
-    "code_example": {
-        "language": "python",
-        "code": "# This program introduces a student\n# Written by: Carlos Castro\n\nstudent_name = \"Carlos\"  # Store the student's name\nage = 20                 # Store the student's age\n\n# Print the introduction\nprint(\"Hello! My name is\", student_name)\nprint(\"I am\", age, \"years old\")",
-        "annotations": [
-            {
-                "line": 1,
-                "note": "A full-line comment. Python skips this entirely — it produces no output."
-            },
-            {
-                "line": 2,
-                "note": "Another full-line comment. Use these to describe the purpose of a file or section."
-            },
-            {
-                "line": 4,
-                "note": "An inline comment — it follows real code on the same line. The # separates code from the note."
-            },
-            {
-                "line": 5,
-                "note": "Another inline comment. Good comments say WHY, not just WHAT."
-            },
-            {
-                "line": 8,
-                "note": "A section comment before a group of related lines. Helps organize longer programs."
-            }
-        ]
+    {
+      "slide_id": "m01_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A comment is like a sticky note beside a task. It does not perform the task, but it helps the reader understand the task."
     },
-    "expected_output": "Hello! My name is Carlos\nI am 20 years old",
-    "key_rule": "Comments start with #. Python ignores everything after # on that line. Use them freely — they never slow down your program and they make your code far easier to understand later.",
-    "try_it_yourself": {
-        "prompt": "Copy this code and add at least two comments: one explaining what the variable stores, and one explaining what the print line does.\n\nfavorite_subject = \"Programming\"\nprint(\"I love\", favorite_subject)",
-        "starter_code": "favorite_subject = \"Programming\"\nprint(\"I love\", favorite_subject)\n",
-        "hint": "Add a # comment above the variable line and another above the print() line. They won't change the output — Python ignores them!",
-        "validation_type": "code_contains",
-        "validation_rules": {
-            "min_comment_count": 2
+    {
+      "slide_id": "m01_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Comments and Readable Code",
+      "code": "# Display a morning greeting\nprint(\"Good morning\")",
+      "language": "python",
+      "expected_output": "Good morning",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This is a comment for human readers. Python ignores it during execution."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
         }
+      ]
     },
-    "completion_xp": 10,
-    "is_bookmarkable": true
+    {
+      "slide_id": "m01_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Write one clear instruction at a time. Python reads your code from top to bottom, so order and spelling matter."
+    },
+    {
+      "slide_id": "m01_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Add a comment, then print the word Done.",
+      "starter_code": "# Explain your code here\n",
+      "hint": "Comments start with #. After the comment, write print(\"Done\").",
+      "expected_output_contains": "Done",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question_id": "q1",
+      "question_type": "multiple_choice",
+      "prompt_text": "What does Python do when it encounters a comment (a line starting with #)?",
+      "content": {
+        "options": [
+          "It executes the comment as a special command",
+          "It displays the comment text on the screen",
+          "It ignores the comment completely during execution",
+          "It stores the comment in a variable"
+        ],
+        "correct_index": 2
+      },
+      "correct_answer": "2",
+      "explanation": "Correct! Python ignores comments during execution. They are notes for human readers only — they help explain what the code is doing without affecting how it runs."
+    },
+    {
+      "question_id": "q2",
+      "question_type": "parsons",
+      "prompt_text": "Arrange the following lines in the correct order to add a comment and then print a morning greeting.",
+      "content": {
+        "lines": [
+          "print(\"Good morning\")",
+          "# Display a morning greeting"
+        ],
+        "correct_order": [1, 0]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The comment describing what the code does is written first, then the print() statement runs to show the greeting. Comments come before the code they describe."
+    },
+    {
+      "question_id": "q3",
+      "question_type": "coding",
+      "prompt_text": "Write a comment explaining your code, then print the word 'Done' on the next line.",
+      "content": {
+        "starter_code": "# Explain your code here\n",
+        "hint": "Comments start with #. After the comment, write print(\"Done\").",
+        "validation_type": "output_contains",
+        "validation_rules": {
+          "min_print_calls": 1
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt.",
+      "explanation": "A comment like # Print the word Done is written above, then print(\"Done\") on the next line. Python skips the comment and only runs the print statement."
+    }
+  ]
 }

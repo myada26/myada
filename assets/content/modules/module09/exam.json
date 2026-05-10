@@ -1,0 +1,294 @@
+{
+  "exam_id": "exam_m09",
+  "module_id": "module_09",
+  "ac_type": "module_exam",
+  "title": "Module 9 Final Exam",
+  "description": "Prove your mastery of lists, indexing, updating, append(), len(), loops, and numeric list calculations. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m09_e01",
+      "exam_id": "exam_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about lists, indexing, updating, append(), len(), loops, and numeric list calculations. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to store collections, access list items, modify values, and process list data",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 9 develops the ability to store collections, access list items, modify values, and process list data.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e02",
+      "exam_id": "exam_m09",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the index bug:",
+      "content": {
+        "buggy_code": "colors = [\"red\", \"blue\"]\nprint(colors[2])",
+        "bug_description": "Index 2 is out of range"
+      },
+      "correct_answer": "Index 2 is out of range",
+      "explanation": "The valid indexes are 0 and 1.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e03",
+      "exam_id": "exam_m09",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the empty list:",
+      "content": {
+        "code_with_blank": "items = ___",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "[]",
+      "explanation": "Square brackets create a list.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e04",
+      "exam_id": "exam_m09",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to create a list, append an item, and print it.",
+      "content": {
+        "lines": [
+          "print(names)",
+          "names.append(\"Ana\")",
+          "names = []"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e05",
+      "exam_id": "exam_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\ncolors = [\"red\", \"blue\"]\nprint(colors[0])",
+      "options_json": [
+        "red",
+        "blue",
+        "0",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "Index 0 accesses the first item.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e06",
+      "exam_id": "exam_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a list of three subjects and print each subject using a for loop.",
+      "content": {
+        "starter_code": "# Create list and loop through it\n",
+        "hint": "Use square brackets and a for loop.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "for",
+            "["
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e07",
+      "exam_id": "exam_m09",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong if the goal is to change the first item?",
+      "content": {
+        "buggy_code": "items = [\"old\", \"new\"]\nitems[1] = \"updated\"",
+        "bug_description": "Index 0 should be used for the first item"
+      },
+      "correct_answer": "Index 0 should be used for the first item",
+      "explanation": "Python starts counting at 0.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e08",
+      "exam_id": "exam_m09",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the method that adds to the end:",
+      "content": {
+        "code_with_blank": "names.___(\"Ana\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "append",
+      "explanation": "append() adds an item to the end of a list.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e09",
+      "exam_id": "exam_m09",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner needs to store many scores in one variable. Which structure fits best?",
+      "options_json": [
+        "List",
+        "Boolean",
+        "Single comment",
+        "One print only"
+      ],
+      "correct_answer": "0",
+      "explanation": "A list can store multiple related values.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e10",
+      "exam_id": "exam_m09",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines to print each item in a list.",
+      "content": {
+        "lines": [
+          "    print(item)",
+          "for item in items:",
+          "items = [\"pen\", \"book\"]"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e11",
+      "exam_id": "exam_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a list of scores and print the average using sum() and len().",
+      "content": {
+        "starter_code": "# Create scores and calculate average\n",
+        "hint": "average = sum(scores) / len(scores)",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "sum",
+            "len"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e12",
+      "exam_id": "exam_m09",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in lists, indexing, updating, append(), len(), loops, and numeric list calculations?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e13",
+      "exam_id": "exam_m09",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the length check:",
+      "content": {
+        "code_with_blank": "print(___(items))",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "len",
+      "explanation": "len(items) returns the number of list items.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e14",
+      "exam_id": "exam_m09",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the list method mistake:",
+      "content": {
+        "buggy_code": "names = []\nnames.add(\"Ana\")",
+        "bug_description": "Lists use append(), not add(), to add an item"
+      },
+      "correct_answer": "Lists use append(), not add(), to add an item",
+      "explanation": "append() is the list method for adding to the end.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m09_e15",
+      "exam_id": "exam_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 9 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with lists, indexing, updating, append(), len(), loops, and numeric list calculations",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of lists, indexing, updating, append(), len(), loops, and numeric list calculations.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

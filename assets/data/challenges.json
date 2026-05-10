@@ -1,0 +1,57 @@
+[
+  {
+    "id": "ch_001",
+    "type": "mastery_challenge",
+    "title": "Predict the Output",
+    "description": "Read the code snippet and predict what will be printed to the console.",
+    "skill_tag": "logic_flow",
+    "required_module_state": "completed",
+    "time_limit_seconds": 300,
+    "points_reward": 20,
+    "question_ids": []
+  },
+  {
+    "id": "ch_002",
+    "type": "mastery_challenge",
+    "title": "Debug the Block",
+    "description": "Find and fix the bug in the provided code block within the time limit.",
+    "skill_tag": "debugging",
+    "required_module_state": "completed",
+    "time_limit_seconds": 420,
+    "points_reward": 25,
+    "question_ids": []
+  },
+  {
+    "id": "ch_003",
+    "type": "mastery_challenge",
+    "title": "Sequence Scramble",
+    "description": "Rearrange the code lines into the correct order to produce the expected output.",
+    "skill_tag": "sequencing",
+    "required_module_state": "completed",
+    "time_limit_seconds": 240,
+    "points_reward": 15,
+    "question_ids": []
+  },
+  {
+    "id": "ch_004",
+    "type": "skill_drill",
+    "title": "Syntax Check",
+    "description": "Practice identifying syntax errors across short code snippets. No timer — take your time.",
+    "skill_tag": "syntax",
+    "required_module_state": "in_progress",
+    "time_limit_seconds": 0,
+    "points_reward": 10,
+    "question_ids": []
+  },
+  {
+    "id": "ch_005",
+    "type": "skill_drill",
+    "title": "Computational Thinking Drill",
+    "description": "Work through logic puzzles that build your computational reasoning skills. Low-stakes practice.",
+    "skill_tag": "computational_thinking",
+    "required_module_state": "in_progress",
+    "time_limit_seconds": 0,
+    "points_reward": 10,
+    "question_ids": []
+  }
+]

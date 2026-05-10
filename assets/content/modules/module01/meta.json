@@ -2,36 +2,23 @@
     {
         "module_id": "module_01",
         "number": 1,
-        "title": "The Genesis of Execution",
-        "subtitle": "Output and Memory",
+        "title": "Introduction to Python and Output",
+        "subtitle": "Begin your Python journey. Learn what Python is, how to display output, write…",
         "skill_tag": "Sequencing",
-        "icon": "play_circle_outline_rounded",
-        "lesson_count": 5,
-        "estimated_minutes": 20,
-        "prerequisite_module_id": null,
-        "unlock_condition": "diagnostic_complete OR module_00_passed",
-        "badge_id": "badge_genesis",
-        "cert_eligible": false
-    },
-    {
-        "module_id": "module_01_remediation",
-        "title": "Quick Boost: Output Basics",
-        "parent_module_id": "module_01",
-        "is_remediation": true,
-        "trigger_condition": "quiz_score < 70",
-        "failed_skill_tags": [
-            "Sequencing",
-            "Syntax"
-        ],
+        "icon": "low_priority_rounded",
+        "lesson_count": 6,
         "lessons": [
-            "m01r_l01",
-            "m01r_l02",
-            "m01r_l03"
+            "m01_l01",
+            "m01_l02",
+            "m01_l03",
+            "m01_l04",
+            "m01_l05",
+            "m01_l06"
         ],
-        "quiz_id": "m01_remediation_quiz",
-        "on_remediation_pass": {
-            "action": "unlock_next",
-            "next_module_id": "module_02"
-        }
+        "estimated_minutes": 30,
+        "prerequisite_module_id": null,
+        "unlock_condition": "diagnostic_complete",
+        "badge_id": "badge_module_01",
+        "cert_eligible": false
     }
 ]

@@ -1,0 +1,294 @@
+{
+  "exam_id": "exam_m03",
+  "module_id": "module_03",
+  "ac_type": "module_exam",
+  "title": "Module 3 Final Exam",
+  "description": "Prove your mastery of arithmetic operators, string operations, f-strings, and type conversion. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m03_e01",
+      "exam_id": "exam_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about arithmetic operators, string operations, f-strings, and type conversion. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to perform calculations and build readable output by combining operators, values, and strings",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 3 develops the ability to perform calculations and build readable output by combining operators, values, and strings.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e02",
+      "exam_id": "exam_m03",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this concatenation:",
+      "content": {
+        "buggy_code": "age = 18\nprint(\"Age: \" + age)",
+        "bug_description": "age must be converted to a string or formatted with an f-string"
+      },
+      "correct_answer": "age must be converted to a string or formatted with an f-string",
+      "explanation": "Python cannot directly concatenate a string and integer.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e03",
+      "exam_id": "exam_m03",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the expression for multiplication:",
+      "content": {
+        "code_with_blank": "total = price ___ quantity",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "*",
+      "explanation": "The * operator multiplies values.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e04",
+      "exam_id": "exam_m03",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to calculate and print total price.",
+      "content": {
+        "lines": [
+          "print(total)",
+          "total = price * quantity",
+          "price = 10",
+          "quantity = 3"
+        ],
+        "correct_order": [
+          2,
+          3,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,3,1,0]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e05",
+      "exam_id": "exam_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What will this code output?\nprint(2 + 3 * 4)",
+      "options_json": [
+        "14",
+        "20",
+        "24",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "Multiplication happens before addition.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e06",
+      "exam_id": "exam_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write a program that stores price and quantity, then prints the total.",
+      "content": {
+        "starter_code": "# Use variables and multiplication\n",
+        "hint": "Multiply price by quantity and print the result.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "*"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e07",
+      "exam_id": "exam_m03",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this f-string?",
+      "content": {
+        "buggy_code": "name = \"Ada\"\nprint(\"Hello, {name}\")",
+        "bug_description": "The string is missing the f prefix"
+      },
+      "correct_answer": "The string is missing the f prefix",
+      "explanation": "Without f, {name} is printed literally.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e08",
+      "exam_id": "exam_m03",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the f-string:",
+      "content": {
+        "code_with_blank": "name = \"Ada\"\nprint(f\"Hello, {___}\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "name",
+      "explanation": "The variable name goes inside braces in an f-string.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e09",
+      "exam_id": "exam_m03",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner wants to display Score: 95 using a variable. Which is clearest?",
+      "options_json": [
+        "print(f\"Score: {score}\")",
+        "print(\"Score: \" + score)",
+        "print(score: 95)",
+        "print(fScore)"
+      ],
+      "correct_answer": "0",
+      "explanation": "An f-string cleanly inserts the variable into text.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e10",
+      "exam_id": "exam_m03",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines to convert text and add 5.",
+      "content": {
+        "lines": [
+          "print(number + 5)",
+          "number = int(text)",
+          "text = \"10\""
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e11",
+      "exam_id": "exam_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Use an f-string to print a name and score in one sentence.",
+      "content": {
+        "starter_code": "# Create variables and print an f-string\n",
+        "hint": "Use f\"Name: {name}, Score: {score}\".",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "f"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e12",
+      "exam_id": "exam_m03",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in arithmetic operators, string operations, f-strings, and type conversion?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e13",
+      "exam_id": "exam_m03",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the conversion from text to integer:",
+      "content": {
+        "code_with_blank": "number = ___(\"25\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "int",
+      "explanation": "int(\"25\") converts numeric text into an integer.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e14",
+      "exam_id": "exam_m03",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the precedence mistake for making 20:",
+      "content": {
+        "buggy_code": "result = 2 + 3 * 4",
+        "bug_description": "Parentheses are needed if 2 + 3 should happen first"
+      },
+      "correct_answer": "Parentheses are needed if 2 + 3 should happen first",
+      "explanation": "Without parentheses, multiplication happens first and the result is 14.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m03_e15",
+      "exam_id": "exam_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 3 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with arithmetic operators, string operations, f-strings, and type conversion",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of arithmetic operators, string operations, f-strings, and type conversion.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

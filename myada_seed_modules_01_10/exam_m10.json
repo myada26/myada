@@ -1,0 +1,294 @@
+{
+  "exam_id": "exam_m10",
+  "module_id": "module_10",
+  "ac_type": "module_exam",
+  "title": "Module 10 Final Exam",
+  "description": "Prove your mastery of list methods, membership, slicing, safe copying, and choosing the correct list operation. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m10_e01",
+      "exam_id": "exam_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about list methods, membership, slicing, safe copying, and choosing the correct list operation. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to modify and inspect lists using the right operation for adding, removing, sorting, reversing, slicing, and copying",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 10 develops the ability to modify and inspect lists using the right operation for adding, removing, sorting, reversing, slicing, and copying.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e02",
+      "exam_id": "exam_m10",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the remove/pop confusion:",
+      "content": {
+        "buggy_code": "items = [\"a\", \"b\"]\nitems.remove(1)",
+        "bug_description": "remove() deletes by value, not by index"
+      },
+      "correct_answer": "remove() deletes by value, not by index",
+      "explanation": "Use pop(1) to remove by index.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e03",
+      "exam_id": "exam_m10",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the method to add at index 1:",
+      "content": {
+        "code_with_blank": "items.___(1, \"new\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "insert",
+      "explanation": "insert(index, value) adds an item at a specific position.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e04",
+      "exam_id": "exam_m10",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to insert b between a and c.",
+      "content": {
+        "lines": [
+          "letters.insert(1, \"b\")",
+          "print(letters)",
+          "letters = [\"a\", \"c\"]"
+        ],
+        "correct_order": [
+          2,
+          0,
+          1
+        ]
+      },
+      "correct_answer": "[2,0,1]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e05",
+      "exam_id": "exam_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\nnumbers = [3, 1, 2]\nnumbers.sort()\nprint(numbers)",
+      "options_json": [
+        "[1, 2, 3]",
+        "[3, 1, 2]",
+        "[2, 1, 3]",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "sort() changes the list into ascending order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e06",
+      "exam_id": "exam_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a list, insert an item in the middle, and print the list.",
+      "content": {
+        "starter_code": "# Use insert()\n",
+        "hint": "Use list.insert(index, value).",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "insert"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e07",
+      "exam_id": "exam_m10",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong if the original must stay unchanged?",
+      "content": {
+        "buggy_code": "copy = original\ncopy.append(\"new\")",
+        "bug_description": "This aliases the same list instead of making a safe copy"
+      },
+      "correct_answer": "This aliases the same list instead of making a safe copy",
+      "explanation": "Use original.copy() for a separate list.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e08",
+      "exam_id": "exam_m10",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the membership check:",
+      "content": {
+        "code_with_blank": "print(\"apple\" ___ fruits)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "in",
+      "explanation": "in checks whether a value exists in a list.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e09",
+      "exam_id": "exam_m10",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner knows the value to delete but not its index. Which method should be used?",
+      "options_json": [
+        "remove(value)",
+        "pop(index)",
+        "sort()",
+        "copy()"
+      ],
+      "correct_answer": "0",
+      "explanation": "remove() deletes by matching value.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e10",
+      "exam_id": "exam_m10",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines to copy, modify the copy, and print original.",
+      "content": {
+        "lines": [
+          "copy.append(3)",
+          "copy = original.copy()",
+          "print(original)",
+          "original = [1, 2]"
+        ],
+        "correct_order": [
+          3,
+          1,
+          0,
+          2
+        ]
+      },
+      "correct_answer": "[3,1,0,2]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e11",
+      "exam_id": "exam_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a safe copy of a list, change only the copy, then print both lists.",
+      "content": {
+        "starter_code": "# Use copy()\n",
+        "hint": "Use copied = original.copy() before modifying copied.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 2,
+          "required_syntax": [
+            "copy"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e12",
+      "exam_id": "exam_m10",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in list methods, membership, slicing, safe copying, and choosing the correct list operation?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e13",
+      "exam_id": "exam_m10",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the safe copy:",
+      "content": {
+        "code_with_blank": "backup = original.___()",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "copy",
+      "explanation": "copy() creates a separate list.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e14",
+      "exam_id": "exam_m10",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the slicing expectation mistake:",
+      "content": {
+        "buggy_code": "numbers = [1, 2, 3, 4]\nprint(numbers[1:3])  # expects [2, 3, 4]",
+        "bug_description": "The stop index 3 is excluded"
+      },
+      "correct_answer": "The stop index 3 is excluded",
+      "explanation": "numbers[1:3] returns [2, 3], not [2, 3, 4].",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m10_e15",
+      "exam_id": "exam_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 10 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with list methods, membership, slicing, safe copying, and choosing the correct list operation",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of list methods, membership, slicing, safe copying, and choosing the correct list operation.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

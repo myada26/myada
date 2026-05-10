@@ -27,13 +27,14 @@ class LocalUserAdapter extends TypeAdapter<LocalUser> {
       ..hasCompletedDiagnostic = fields[7] as bool
       ..startingLevel = fields[8] as String?
       ..createdAt = fields[9] as DateTime
-      ..lastSeenAt = fields[10] as DateTime;
+      ..lastSeenAt = fields[10] as DateTime
+      ..avatarPath = fields[11] as String?;
   }
 
   @override
   void write(BinaryWriter writer, LocalUser obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -55,7 +56,9 @@ class LocalUserAdapter extends TypeAdapter<LocalUser> {
       ..writeByte(9)
       ..write(obj.createdAt)
       ..writeByte(10)
-      ..write(obj.lastSeenAt);
+      ..write(obj.lastSeenAt)
+      ..writeByte(11)
+      ..write(obj.avatarPath);
   }
 
   @override

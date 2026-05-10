@@ -1,0 +1,196 @@
+{
+  "quiz_id": "quiz_m08",
+  "module_id": "module_08",
+  "ac_type": "lesson_quiz",
+  "title": "Module 8 Quiz",
+  "description": "Test your understanding of functions, parameters, arguments, return values, scope, reuse, and decomposition across all lessons in Module 8.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m08_q01",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 8: Functions and Modularity?",
+      "options_json": [
+        "To organize code into reusable functions that receive input, return results, and solve smaller parts of a problem",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to organize code into reusable functions that receive input, return results, and solve smaller parts of a problem.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q02",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the function definition:",
+      "content": {
+        "code_with_blank": "___ greet():\n    print(\"Hello\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "def",
+      "explanation": "def begins a function definition.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q03",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the function syntax bug:",
+      "content": {
+        "buggy_code": "def greet()\n    print(\"Hi\")",
+        "bug_description": "Missing colon after the function header"
+      },
+      "correct_answer": "Missing colon after the function header",
+      "explanation": "Function headers must end with a colon.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q04",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to define and call a greeting function.",
+      "content": {
+        "lines": [
+          "greet()",
+          "    print(\"Hello\")",
+          "def greet():"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q05",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "Which keyword defines a function in Python?",
+      "options_json": [
+        "def",
+        "function",
+        "make",
+        "return only"
+      ],
+      "correct_answer": "0",
+      "explanation": "Python uses def to define a function.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q06",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the return statement:",
+      "content": {
+        "code_with_blank": "def double(n):\n    ___ n * 2",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "return",
+      "explanation": "return sends the result back from the function.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q07",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\ndef double(n):\n    return n * 2\nprint(double(4))",
+      "options_json": [
+        "8",
+        "4",
+        "double",
+        "None"
+      ],
+      "correct_answer": "0",
+      "explanation": "double(4) returns 8, and print displays it.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q08",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "def greet():\nprint(\"Hi\")",
+        "bug_description": "The function body must be indented"
+      },
+      "correct_answer": "The function body must be indented",
+      "explanation": "Indented lines belong to the function.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q09",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A program repeats the same receipt line format many times. What should the learner use?",
+      "options_json": [
+        "A reusable function",
+        "A new variable name only",
+        "A comment only",
+        "An infinite loop"
+      ],
+      "correct_answer": "0",
+      "explanation": "Functions reduce repeated code by packaging reusable behavior.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m08_q10",
+      "quiz_id": "quiz_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Define a function greet(name) that prints Hello, followed by the name, then call it.",
+      "content": {
+        "starter_code": "# Define and call greet(name)\n",
+        "hint": "Use a parameter and an f-string.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "def"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

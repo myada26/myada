@@ -1,0 +1,196 @@
+{
+  "quiz_id": "quiz_m10",
+  "module_id": "module_10",
+  "ac_type": "lesson_quiz",
+  "title": "Module 10 Quiz",
+  "description": "Test your understanding of list methods, membership, slicing, safe copying, and choosing the correct list operation across all lessons in Module 10.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m10_q01",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 10: List Operations and Methods?",
+      "options_json": [
+        "To modify and inspect lists using the right operation for adding, removing, sorting, reversing, slicing, and copying",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to modify and inspect lists using the right operation for adding, removing, sorting, reversing, slicing, and copying.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q02",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the method to add at index 1:",
+      "content": {
+        "code_with_blank": "items.___(1, \"new\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "insert",
+      "explanation": "insert(index, value) adds an item at a specific position.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q03",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the remove/pop confusion:",
+      "content": {
+        "buggy_code": "items = [\"a\", \"b\"]\nitems.remove(1)",
+        "bug_description": "remove() deletes by value, not by index"
+      },
+      "correct_answer": "remove() deletes by value, not by index",
+      "explanation": "Use pop(1) to remove by index.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q04",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to insert b between a and c.",
+      "content": {
+        "lines": [
+          "letters.insert(1, \"b\")",
+          "print(letters)",
+          "letters = [\"a\", \"c\"]"
+        ],
+        "correct_order": [
+          2,
+          0,
+          1
+        ]
+      },
+      "correct_answer": "[2,0,1]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q05",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "Which method removes and returns the last item by default?",
+      "options_json": [
+        "pop()",
+        "remove()",
+        "sort()",
+        "insert()"
+      ],
+      "correct_answer": "0",
+      "explanation": "pop() removes and returns an item; without an index it uses the last item.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q06",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the membership check:",
+      "content": {
+        "code_with_blank": "print(\"apple\" ___ fruits)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "in",
+      "explanation": "in checks whether a value exists in a list.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q07",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\nnumbers = [3, 1, 2]\nnumbers.sort()\nprint(numbers)",
+      "options_json": [
+        "[1, 2, 3]",
+        "[3, 1, 2]",
+        "[2, 1, 3]",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "sort() changes the list into ascending order.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q08",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong if the original must stay unchanged?",
+      "content": {
+        "buggy_code": "copy = original\ncopy.append(\"new\")",
+        "bug_description": "This aliases the same list instead of making a safe copy"
+      },
+      "correct_answer": "This aliases the same list instead of making a safe copy",
+      "explanation": "Use original.copy() for a separate list.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q09",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner knows the value to delete but not its index. Which method should be used?",
+      "options_json": [
+        "remove(value)",
+        "pop(index)",
+        "sort()",
+        "copy()"
+      ],
+      "correct_answer": "0",
+      "explanation": "remove() deletes by matching value.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m10_q10",
+      "quiz_id": "quiz_m10",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a list, insert an item in the middle, and print the list.",
+      "content": {
+        "starter_code": "# Use insert()\n",
+        "hint": "Use list.insert(index, value).",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "insert"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

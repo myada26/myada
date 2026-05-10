@@ -1,0 +1,81 @@
+﻿{
+  "lesson_id": "m05_l01",
+  "module_id": "module_05",
+  "lesson_number": "01",
+  "title": "What is a Decision in Code?",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m05_l01_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "What is a Decision in Code?",
+      "body": "What is a Decision in Code? is part of Conditional Execution. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m05_l01_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: What is a Decision in Code?",
+      "body": "A decision in code lets a program choose what to do based on a condition. This makes programs responsive instead of fixed."
+    },
+    {
+      "slide_id": "m05_l01_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A decision is like a traffic light. The action depends on the signal: stop, wait, or go."
+    },
+    {
+      "slide_id": "m05_l01_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: What is a Decision in Code?",
+      "code": "score = 90\nif score >= 75:\n    print(\"Passed\")",
+      "language": "python",
+      "expected_output": "Passed",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line checks a condition before running the indented code."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m05_l01_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A conditional needs a colon, correct indentation, and a condition that clearly evaluates to True or False."
+    },
+    {
+      "slide_id": "m05_l01_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use an if statement to print Approved when age is at least 18.",
+      "starter_code": "age = 20\n",
+      "hint": "Remember the colon and indentation after the if line.",
+      "expected_output_contains": "Approved",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "if"
+        ]
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What does a decision in code allow a program to do?","content":{"options":["Run all lines no matter what","Choose what to do based on a condition","Store a value in a variable","Display all text at once"],"correct_index":1},"correct_answer":"1","explanation":"A decision lets a program respond differently based on a condition, making it responsive rather than fixed output."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines to check a score and print Passed only if it is at least 75.","content":{"lines":["score = 90","if score >= 75:","    print(\"Passed\")"],"correct_order":[0,1,2]},"correct_answer":"[0,1,2]","explanation":"The variable is assigned first, then the if statement checks the condition, and the indented print runs only when the condition is True."},{"question_id":"q3","question_type":"coding","prompt_text":"Use an if statement to print Approved when age is at least 18.","content":{"starter_code":"age = 20\n","hint":"Remember the colon after the if condition and indent the print line.","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"Write if age >= 18: then on the next indented line print Approved. The colon and indentation are both required."}]
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "module_id": "module_04",
+        "number": 4,
+        "title": "Boolean Logic and Comparisons",
+        "subtitle": "Understand True and False values, comparison operators, and logical operators…",
+        "skill_tag": "Logic Flow",
+        "icon": "alt_route_rounded",
+        "lesson_count": 8,
+        "lessons": [
+            "m04_l01",
+            "m04_l02",
+            "m04_l03",
+            "m04_l04",
+            "m04_l05",
+            "m04_l06",
+            "m04_l07",
+            "m04_l08"
+        ],
+        "estimated_minutes": 40,
+        "prerequisite_module_id": "module_03",
+        "unlock_condition": "module_03_passed",
+        "badge_id": "badge_module_04",
+        "cert_eligible": false
+    }
+]

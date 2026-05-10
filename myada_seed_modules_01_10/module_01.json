@@ -1,0 +1,50 @@
+{
+  "module_id": "module_01",
+  "order_index": 1,
+  "title": "Introduction to Python and Output",
+  "description": "Begin your Python journey. Learn what Python is, how to display output, write comments, and arrange simple instructions in order.",
+  "skill_category": "Sequencing",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 6,
+  "lessons": [
+    {
+      "lesson_id": "m01_l01",
+      "title": "What is Python?",
+      "order_index": 1,
+      "file": "lesson_m01_l01.json"
+    },
+    {
+      "lesson_id": "m01_l02",
+      "title": "The Print Statement",
+      "order_index": 2,
+      "file": "lesson_m01_l02.json"
+    },
+    {
+      "lesson_id": "m01_l03",
+      "title": "Text and Strings",
+      "order_index": 3,
+      "file": "lesson_m01_l03.json"
+    },
+    {
+      "lesson_id": "m01_l04",
+      "title": "Comments and Readable Code",
+      "order_index": 4,
+      "file": "lesson_m01_l04.json"
+    },
+    {
+      "lesson_id": "m01_l05",
+      "title": "Sequential Execution",
+      "order_index": 5,
+      "file": "lesson_m01_l05.json"
+    },
+    {
+      "lesson_id": "m01_l06",
+      "title": "First Mini Program: Simple Receipt",
+      "order_index": 6,
+      "file": "lesson_m01_l06.json"
+    }
+  ],
+  "quiz_file": "quiz_m01.json",
+  "exam_file": "exam_m01.json"
+}

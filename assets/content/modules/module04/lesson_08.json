@@ -1,0 +1,78 @@
+﻿{
+  "lesson_id": "m04_l08",
+  "module_id": "module_04",
+  "lesson_number": "08",
+  "title": "Truth Tables in Code",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m04_l08_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Truth Tables in Code",
+      "body": "Truth Tables in Code is part of Boolean Logic and Comparisons. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m04_l08_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Truth Tables in Code",
+      "body": "A truth table shows how boolean operators behave for different True and False combinations. It helps you predict logic before coding."
+    },
+    {
+      "slide_id": "m04_l08_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A truth table is like a checklist grid showing what happens for every possible pair of answers."
+    },
+    {
+      "slide_id": "m04_l08_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Truth Tables in Code",
+      "code": "a = True\nb = False\nprint(a or b)",
+      "language": "python",
+      "expected_output": "True",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m04_l08_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Boolean expressions must produce True or False. Use comparisons and logical operators carefully."
+    },
+    {
+      "slide_id": "m04_l08_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Print the result of True and False.",
+      "starter_code": "# Write the truth-table expression below\n",
+      "hint": "Use print(True and False).",
+      "expected_output_contains": "False",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What is the result of True and False in Python?","content":{"options":["True","False","None","Error"],"correct_index":1},"correct_answer":"1","explanation":"Well done! True and False evaluates to False because the and operator requires both values to be True. If either is False, the result is False."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines to set two boolean variables and evaluate them with or.","content":{"lines":["b = False","print(a or b)","a = True"],"correct_order":[2,0,1]},"correct_answer":"[2,0,1]","explanation":"a is assigned first, then b is assigned False, and finally or checks whether at least one is True. Since a is True, the result is True."},{"question_id":"q3","question_type":"coding","prompt_text":"Print the result of the expression True and False to verify what the and operator returns.","content":{"starter_code":"# Write the truth-table expression below\n","hint":"Use print(True and False).","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"print(True and False) outputs False. The and operator needs both values to be True. This matches the truth table entry: T AND F = F."}]
+}

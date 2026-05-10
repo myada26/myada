@@ -1,0 +1,288 @@
+{
+  "exam_id": "exam_m04",
+  "module_id": "module_04",
+  "ac_type": "module_exam",
+  "title": "Module 4 Final Exam",
+  "description": "Prove your mastery of boolean expressions, comparisons, and logical operators. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m04_e01",
+      "exam_id": "exam_m04",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about boolean expressions, comparisons, and logical operators. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to evaluate True or False conditions using comparison and logical operators",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 4 develops the ability to evaluate True or False conditions using comparison and logical operators.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e02",
+      "exam_id": "exam_m04",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this comparison:",
+      "content": {
+        "buggy_code": "if score = 75:\n    print(\"Passed\")",
+        "bug_description": "Use == or >= for comparison, not ="
+      },
+      "correct_answer": "Use == or >= for comparison, not =",
+      "explanation": "= assigns a value and cannot be used as the condition shown.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e03",
+      "exam_id": "exam_m04",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the comparison for at least 75:",
+      "content": {
+        "code_with_blank": "passed = score ___ 75",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": ">=",
+      "explanation": ">= means greater than or equal to.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e04",
+      "exam_id": "exam_m04",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to check if score is in the passing range.",
+      "content": {
+        "lines": [
+          "print(score >= 75 and score <= 100)",
+          "score = 88"
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e05",
+      "exam_id": "exam_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\nprint(5 > 3 and 2 > 4)",
+      "options_json": [
+        "False",
+        "True",
+        "5",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "and is True only when both comparisons are True.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e06",
+      "exam_id": "exam_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write code that prints True if score is between 75 and 100 inclusive.",
+      "content": {
+        "starter_code": "score = 85\n# Print the comparison\n",
+        "hint": "Combine two comparisons with and.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "and"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e07",
+      "exam_id": "exam_m04",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this boolean value?",
+      "content": {
+        "buggy_code": "is_ready = true",
+        "bug_description": "true should be True with a capital T"
+      },
+      "correct_answer": "true should be True with a capital T",
+      "explanation": "Python booleans are True and False.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e08",
+      "exam_id": "exam_m04",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the logical expression:",
+      "content": {
+        "code_with_blank": "can_enter = has_id ___ paid_fee",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "and",
+      "explanation": "and requires both conditions to be True.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e09",
+      "exam_id": "exam_m04",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner must be at least 18 and have an ID. Which operator connects the conditions?",
+      "options_json": [
+        "and",
+        "or",
+        "not",
+        "+"
+      ],
+      "correct_answer": "0",
+      "explanation": "Both requirements must be satisfied, so and is correct.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e10",
+      "exam_id": "exam_m04",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines to check weekend using or.",
+      "content": {
+        "lines": [
+          "print(day == \"Saturday\" or day == \"Sunday\")",
+          "day = \"Sunday\""
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e11",
+      "exam_id": "exam_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write code that checks whether a day is Saturday or Sunday.",
+      "content": {
+        "starter_code": "day = \"Saturday\"\n# Print the weekend check\n",
+        "hint": "Use or between two equality comparisons.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "or"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e12",
+      "exam_id": "exam_m04",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in boolean expressions, comparisons, and logical operators?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e13",
+      "exam_id": "exam_m04",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the expression to reverse a boolean:",
+      "content": {
+        "code_with_blank": "is_open = False\nprint(___ is_open)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "not",
+      "explanation": "not reverses a boolean value.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e14",
+      "exam_id": "exam_m04",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the logic issue:",
+      "content": {
+        "buggy_code": "age = 20\nprint(age > 18 and age < 18)",
+        "bug_description": "The same age cannot be both greater than 18 and less than 18"
+      },
+      "correct_answer": "The same age cannot be both greater than 18 and less than 18",
+      "explanation": "and requires both sides to be True at the same time.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m04_e15",
+      "exam_id": "exam_m04",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 4 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with boolean expressions, comparisons, and logical operators",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of boolean expressions, comparisons, and logical operators.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

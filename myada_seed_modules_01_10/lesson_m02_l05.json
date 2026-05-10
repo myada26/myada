@@ -1,0 +1,82 @@
+{
+  "lesson_id": "m02_l05",
+  "module_id": "module_02",
+  "order_index": 5,
+  "title": "Strings as Data",
+  "skill_tag": "Syntax",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m02_l05_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Strings as Data",
+      "body": "Strings as Data is part of Variables and Primitive Data Types. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m02_l05_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Strings as Data",
+      "body": "A string stores text data. Names, labels, addresses, and messages are usually represented as strings."
+    },
+    {
+      "slide_id": "m02_l05_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A string is like a word written on a sign. The quotation marks are the frame that tells Python the content is text."
+    },
+    {
+      "slide_id": "m02_l05_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Strings as Data",
+      "code": "course = \"Python\"\nprint(course)",
+      "language": "python",
+      "expected_output": "Python",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m02_l05_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Use clear variable names and match the data type to the kind of value you need to store."
+    },
+    {
+      "slide_id": "m02_l05_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Store your favorite subject as a string and print it.",
+      "starter_code": "subject = \"\"\n",
+      "hint": "Text must be placed inside quotation marks.",
+      "expected_output_contains": "subject",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m02_l05_cc",
+    "lesson_id": "m02_l05",
+    "prompt_text": "Create a string variable named language with the value Python and print it.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Python",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

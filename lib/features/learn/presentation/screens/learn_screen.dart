@@ -8,7 +8,7 @@ import '../../../../controllers/learning_path_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../components/navigation/global_sync_header.dart';
+import '../../../../components/navigation/global_stat_bar.dart';
 import '../../../../features/learn/data/services/progress_service.dart';
 import '../../../../features/learn/data/services/module_unlock_service.dart';
 import '../../../../models/learning_path_model.dart';
@@ -16,7 +16,7 @@ import '../../../../main.dart';
 import 'module_quiz_screen.dart';
 
 // Local enum that mirrors ModuleUnlockService.ModuleState (avoids import conflicts)
-enum _ModuleState { locked, inProgress, readyForQuiz, passed }
+enum _ModuleState { locked, inProgress, readyForQuiz, passed, recommended, mastered }
 
 // ── Layout constants that mirror the inspiration's fixed coordinate system ────
 
@@ -73,7 +73,7 @@ class LearnScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const GlobalSyncHeader(),
+                        const GlobalStatBar(),
                         const SizedBox(height: AppSpacing.md),
                         Text(
                           'Learning Path',
@@ -83,9 +83,6 @@ class LearnScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // ── Filter chips ──────────────────────────────────────────
-                SliverToBoxAdapter(child: _FilterChips()),
 
                 // ── Diagnostic banner (if no result yet) ─────────────────
                 if (!controller.hasResult)
@@ -356,6 +353,12 @@ class _ModuleCardAsyncState extends State<_ModuleCardAsync> {
   }
 
   Future<void> _loadState() async {
+    // Mastered from diagnostic → always show as completed regardless of DB
+    if (widget.module.status == ModuleStatus.mastered) {
+      if (mounted) setState(() { _state = _ModuleState.mastered; _loaded = true; });
+      return;
+    }
+
     final ms = await ModuleUnlockService.instance.getModuleState(
       widget.module.moduleId,
       widget.module.estimatedLessons,
@@ -363,7 +366,9 @@ class _ModuleCardAsyncState extends State<_ModuleCardAsync> {
     _ModuleState mapped;
     switch (ms) {
       case ModuleState.inProgress:
-        mapped = _ModuleState.inProgress;
+        mapped = widget.module.status == ModuleStatus.recommended
+            ? _ModuleState.recommended
+            : _ModuleState.inProgress;
         break;
       case ModuleState.readyForQuiz:
         mapped = _ModuleState.readyForQuiz;
@@ -372,7 +377,10 @@ class _ModuleCardAsyncState extends State<_ModuleCardAsync> {
         mapped = _ModuleState.passed;
         break;
       default:
-        mapped = _ModuleState.locked;
+        // Locked in DB — recommended modules are auto-unlocked after diagnostic
+        mapped = widget.module.status == ModuleStatus.recommended
+            ? _ModuleState.recommended
+            : _ModuleState.locked;
     }
     if (mounted) setState(() { _state = mapped; _loaded = true; });
   }
@@ -397,7 +405,7 @@ class _ModuleCardAsyncState extends State<_ModuleCardAsync> {
     return _ModuleTimelineCard(
       module: widget.module,
       moduleState: _state,
-      onTap: _state != _ModuleState.locked ? () => _handleTap(context) : null,
+      onTap: (_state != _ModuleState.locked) ? () => _handleTap(context) : null,
       onRefresh: _refresh,
       index: widget.index,
       isFirst: widget.isFirst,
@@ -417,22 +425,10 @@ class _ModuleCardAsyncState extends State<_ModuleCardAsync> {
   }
 
   Future<void> _openLesson(BuildContext context) async {
-    String? savedLessonId =
-        await ProgressService.instance.getLastViewedLesson(widget.module.moduleId);
-    final lessonId = savedLessonId ?? '${widget.module.moduleId}_l01';
-    final parts = lessonId.split('_l');
-    final lessonNumber =
-        parts.length == 2 ? (int.tryParse(parts[1]) ?? 1) : 1;
-
     if (!context.mounted) return;
     await Navigator.of(context).pushNamed(
-      AppRoutes.lesson,
-      arguments: {
-        'lessonId': lessonId,
-        'moduleId': widget.module.moduleId,
-        'lessonNumber': lessonNumber,
-        'totalLessonsInModule': widget.module.estimatedLessons,
-      },
+      AppRoutes.moduleDetail,
+      arguments: {'moduleId': widget.module.moduleId},
     );
   }
 
@@ -524,15 +520,18 @@ class _ModuleTimelineCard extends StatelessWidget {
     required this.totalWidth,
   });
 
-  bool get _isLocked    => moduleState == _ModuleState.locked;
-  bool get _isPassed    => moduleState == _ModuleState.passed;
-  bool get _isQuizReady => moduleState == _ModuleState.readyForQuiz;
-  bool get _isEven      => index.isEven;
+  bool get _isLocked      => moduleState == _ModuleState.locked;
+  bool get _isPassed      => moduleState == _ModuleState.passed;
+  bool get _isMastered    => moduleState == _ModuleState.mastered;
+  bool get _isRecommended => moduleState == _ModuleState.recommended;
+  bool get _isQuizReady   => moduleState == _ModuleState.readyForQuiz;
+  bool get _isEven        => index.isEven;
 
   // ── Color helpers ─────────────────────────────────────────────────────────
 
   Color get _pillColor {
-    if (_isLocked) return AppColors.locked;
+    if (_isLocked)   return AppColors.locked;
+    if (_isMastered) return AppColors.success;
     switch (module.tagLabel) {
       case 'Sequencing':     return AppColors.success;
       case 'Logic Flow':     return AppColors.primary;
@@ -671,7 +670,7 @@ class _ModuleTimelineCard extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: _isPassed
+        child: (_isPassed || _isMastered)
             ? Icon(Icons.check_rounded, size: 13, color: borderColor)
             : Container(
                 width: 8,
@@ -734,14 +733,14 @@ class _ModuleTimelineCard extends StatelessWidget {
                 : CrossAxisAlignment.end,
             children: [
               Text(
-                module.name.toUpperCase(),
+                'Module ${module.number.toString().padLeft(2, '0')}: ${module.name}'.toUpperCase(),
                 style: AppTextStyles.labelSm.copyWith(
                   color: AppColors.foreground,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.8,
                   fontSize: 11,
                 ),
-                maxLines: 2,          // allow title to wrap
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: iconOnRight ? TextAlign.left : TextAlign.right,
               ),
@@ -760,6 +759,22 @@ class _ModuleTimelineCard extends StatelessWidget {
               if (_isQuizReady) ...[
                 const SizedBox(height: 5),
                 _buildQuizBadge(),
+              ],
+              if (_isMastered) ...[
+                const SizedBox(height: 5),
+                _buildStatusBadge(
+                  label: 'Mastered ✓',
+                  color: AppColors.success,
+                  icon: Icons.verified_rounded,
+                ),
+              ],
+              if (_isRecommended) ...[
+                const SizedBox(height: 5),
+                _buildStatusBadge(
+                  label: 'Recommended',
+                  color: const Color(0xFFF59E0B),
+                  icon: Icons.star_outline_rounded,
+                ),
               ],
             ],
           ),
@@ -821,12 +836,42 @@ class _ModuleTimelineCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.quiz_rounded, size: 10, color: _pillColor),
+          Icon(Icons.fact_check_rounded, size: 10, color: _pillColor),
           const SizedBox(width: 3),
           Text(
-            'Take Exam',
+            'Take Quiz',
             style: AppTextStyles.caption.copyWith(
               color: _pillColor,
+              fontWeight: FontWeight.w700,
+              fontSize: 9,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusBadge({
+    required String label,
+    required Color color,
+    required IconData icon,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withAlpha(20),
+        border: Border.all(color: color.withAlpha(80)),
+        borderRadius: BorderRadius.circular(AppRadius.full),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 10, color: color),
+          const SizedBox(width: 3),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
               fontWeight: FontWeight.w700,
               fontSize: 9,
             ),
@@ -848,7 +893,7 @@ class _ModuleTimelineCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'STEP',
+          'MODULE',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.subtleForeground,
             fontWeight: FontWeight.w700,
@@ -900,65 +945,6 @@ class _TrianglePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _TrianglePainter old) =>
       old.color != color || old.pointingRight != pointingRight;
-}
-
-// ── Filter chips ──────────────────────────────────────────────────────────────
-
-class _FilterChips extends StatefulWidget {
-  @override
-  State<_FilterChips> createState() => _FilterChipsState();
-}
-
-class _FilterChipsState extends State<_FilterChips> {
-  int _selected = 0;
-  static const filters = [
-    'All',
-    'Sequencing',
-    'Logic Flow',
-    'Syntax',
-    'Debugging',
-    'Comp. Thinking',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.screenPadding,
-          vertical: 4,
-        ),
-        scrollDirection: Axis.horizontal,
-        itemCount: filters.length,
-        separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
-        itemBuilder: (context, i) {
-          final selected = _selected == i;
-          return GestureDetector(
-            onTap: () => setState(() => _selected = i),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: selected ? AppColors.primary : AppColors.surface,
-                borderRadius: BorderRadius.circular(AppRadius.full),
-                border: Border.all(
-                  color: selected ? AppColors.primary : AppColors.border,
-                ),
-              ),
-              child: Text(
-                filters[i],
-                style: AppTextStyles.label.copyWith(
-                  color: selected
-                      ? AppColors.primaryForeground
-                      : AppColors.mutedForeground,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
 }
 
 // ── Diagnostic banner ─────────────────────────────────────────────────────────

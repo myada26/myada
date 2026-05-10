@@ -3,11 +3,13 @@ import 'package:provider/provider.dart';
 import '../../../../components/cards/app_cards.dart';
 import '../../../../components/navigation/global_sync_header.dart';
 import '../../../../controllers/learning_path_controller.dart';
+import '../../../../core/services/skill_profile_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/services/leaderboard_service.dart';
 import '../../../../models/learning_path_model.dart';
+import '../../../../features/progress/data/services/challenge_service.dart';
 import '../../../../main.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,14 +21,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _studentRank = 0;
-  int _pointsBehind = 0; // used for today's tasks
+  int _pointsBehind = 0;
   int _totalPoints = 0;
   int _streak = 0;
+  int _modulesCompleted = 0;
+  Map<SkillCategory, double> _liveSkillScores = {};
+  ChallengeModel? _dailyChallenge;
+  ChallengeModel? _skillDrill;
+  RetakeItem?    _retakeItem;
 
   @override
   void initState() {
     super.initState();
     _loadRankData();
+    _loadLiveData();
   }
 
   Future<void> _loadRankData() async {
@@ -34,10 +42,25 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!mounted) return;
     final me = all.where((s) => s.isCurrentUser).firstOrNull;
     setState(() {
-      _studentRank  = me?.rank          ?? 0;
-      _pointsBehind = me != null ? me.gapToAbove(all) : 0; 
-      _totalPoints  = me?.totalPoints   ?? 0;
-      _streak       = me?.currentStreak ?? 0;
+      _studentRank      = me?.rank             ?? 0;
+      _pointsBehind     = me != null ? me.gapToAbove(all) : 0;
+      _totalPoints      = me?.totalPoints      ?? 0;
+      _streak           = me?.currentStreak    ?? 0;
+      _modulesCompleted = me?.modulesCompleted ?? 0;
+    });
+  }
+
+  Future<void> _loadLiveData() async {
+    final scores    = await SkillProfileService.instance.getSkillScores();
+    final daily     = await ChallengeService.instance.getDailyMasteryChallenge();
+    final drill     = await ChallengeService.instance.getDailySkillDrill();
+    final retakes   = await ChallengeService.instance.getRetakeSuggestions();
+    if (!mounted) return;
+    setState(() {
+      _liveSkillScores = scores;
+      _dailyChallenge  = daily;
+      _skillDrill      = drill;
+      _retakeItem      = retakes.isNotEmpty ? retakes.first : null;
     });
   }
 
@@ -116,6 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   rank: _studentRank,
                   points: _totalPoints,
                   pointsBehind: _pointsBehind,
+                  streak: _streak,
+                  modulesCompleted: _modulesCompleted,
                 ),
               ),
             ),
@@ -127,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 0,
               ),
               sliver: SliverToBoxAdapter(
-                child: _SkillBarsSection(skillResults: skillResults),
+                child: _SkillBarsSection(liveScores: _liveSkillScores),
               ),
             ),
             SliverPadding(
@@ -139,8 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               sliver: SliverToBoxAdapter(
                 child: _TodaysTasksSection(
-                  pointsBehind: _pointsBehind,
-                  rank: _studentRank,
+                  pointsBehind:   _pointsBehind,
+                  rank:           _studentRank,
+                  dailyChallenge: _dailyChallenge,
+                  skillDrill:     _skillDrill,
+                  retakeItem:     _retakeItem,
                 ),
               ),
             ),
@@ -447,11 +475,15 @@ class _SnapshotGrid extends StatelessWidget {
   final int rank;
   final int points;
   final int pointsBehind;
+  final int streak;
+  final int modulesCompleted;
 
   const _SnapshotGrid({
     required this.rank,
     required this.points,
     required this.pointsBehind,
+    required this.streak,
+    required this.modulesCompleted,
   });
 
   @override
@@ -465,74 +497,81 @@ class _SnapshotGrid extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _SectionLabel('SNAPSHOT'),
-        Row(
-          children: [
-            Expanded(
-              child: BasicCard(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'rank',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.mutedForeground,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      rankLabel,
-                      style: AppTextStyles.h1.copyWith(
-                        fontSize: 26,
-                        height: 1,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      'of all students',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.subtleForeground,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: BasicCard(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'points',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.mutedForeground,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '$points', // NumberFormat or simple string interpolation
-                      style: AppTextStyles.h1.copyWith(
-                        fontSize: 26,
-                        height: 1,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      pointsSub,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.subtleForeground,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        _SnapshotRow(children: [
+          _SnapshotCard(label: 'rank', value: rankLabel, sub: 'of all students'),
+          _SnapshotCard(label: 'points', value: '$points', sub: pointsSub),
+        ]),
+        const SizedBox(height: AppSpacing.sm),
+        _SnapshotRow(children: [
+          _SnapshotCard(
+            label: 'streak',
+            value: '$streak',
+            sub: streak == 1 ? 'day streak' : 'days streak',
+          ),
+          _SnapshotCard(
+            label: 'modules',
+            value: '$modulesCompleted',
+            sub: 'completed',
+          ),
+        ]),
       ],
+    );
+  }
+}
+
+class _SnapshotRow extends StatelessWidget {
+  final List<Widget> children;
+  const _SnapshotRow({required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: children
+          .expand((w) => [Expanded(child: w), const SizedBox(width: AppSpacing.sm)])
+          .toList()
+        ..removeLast(),
+    );
+  }
+}
+
+class _SnapshotCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final String sub;
+
+  const _SnapshotCard({
+    required this.label,
+    required this.value,
+    required this.sub,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BasicCard(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.mutedForeground,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: AppTextStyles.h1.copyWith(fontSize: 26, height: 1),
+          ),
+          const SizedBox(height: 3),
+          Text(
+            sub,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.subtleForeground,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -542,9 +581,9 @@ class _SnapshotGrid extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _SkillBarsSection extends StatelessWidget {
-  final List<SkillResult> skillResults;
+  final Map<SkillCategory, double> liveScores;
 
-  const _SkillBarsSection({required this.skillResults});
+  const _SkillBarsSection({required this.liveScores});
 
   static const _orderedSkills = [
     SkillCategory.sequencing,
@@ -554,29 +593,37 @@ class _SkillBarsSection extends StatelessWidget {
     SkillCategory.computationalThinking,
   ];
 
+  static const _descriptions = {
+    SkillCategory.sequencing:
+        'Your ability to arrange steps in the correct logical order to solve a problem.',
+    SkillCategory.logicFlow:
+        'How well you trace and predict branching execution paths in a program.',
+    SkillCategory.debugging:
+        'Your skill at finding and fixing errors or unexpected behavior in programs.',
+    SkillCategory.syntax:
+        'Correct use of programming language rules, symbols, and structure.',
+    SkillCategory.computationalThinking:
+        'Breaking complex problems into smaller, manageable, and solvable steps.',
+  };
+
   Color _colorForSkill(SkillCategory cat) {
     return switch (cat) {
-      SkillCategory.sequencing => AppColors.success,
-      SkillCategory.logicFlow => AppColors.primaryLight,
-      SkillCategory.debugging => AppColors.error,
-      SkillCategory.syntax => AppColors.primary,
-      SkillCategory.computationalThinking => AppColors.success,
+      SkillCategory.sequencing             => AppColors.success,
+      SkillCategory.logicFlow              => AppColors.primaryLight,
+      SkillCategory.debugging              => AppColors.error,
+      SkillCategory.syntax                 => AppColors.primary,
+      SkillCategory.computationalThinking  => AppColors.accent,
     };
   }
 
   String _nameForSkill(SkillCategory cat) {
     return switch (cat) {
-      SkillCategory.sequencing => 'Sequencing',
-      SkillCategory.logicFlow => 'Logic Flow',
-      SkillCategory.debugging => 'Debugging',
-      SkillCategory.syntax => 'Syntax',
+      SkillCategory.sequencing            => 'Sequencing',
+      SkillCategory.logicFlow             => 'Logic Flow',
+      SkillCategory.debugging             => 'Debugging',
+      SkillCategory.syntax                => 'Syntax',
       SkillCategory.computationalThinking => 'Comp. Thinking',
     };
-  }
-
-  SkillResult? _findResult(SkillCategory cat) {
-    final matches = skillResults.where((r) => r.skill == cat);
-    return matches.isNotEmpty ? matches.first : null;
   }
 
   @override
@@ -587,14 +634,14 @@ class _SkillBarsSection extends StatelessWidget {
         const _SectionLabel('SKILL BREAKDOWN'),
         Column(
           children: _orderedSkills.map((cat) {
-            final result = _findResult(cat);
-            final double pct = result?.barFraction ?? 0.0;
+            final double pct = liveScores[cat] ?? 0.0;
             return Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: _SkillBar(
                 name: _nameForSkill(cat),
                 color: _colorForSkill(cat),
                 fraction: pct,
+                description: _descriptions[cat]!,
               ),
             );
           }).toList(),
@@ -608,12 +655,30 @@ class _SkillBar extends StatelessWidget {
   final String name;
   final Color color;
   final double fraction;
+  final String description;
 
   const _SkillBar({
     required this.name,
     required this.color,
     required this.fraction,
+    required this.description,
   });
+
+  void _showInfo(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(name, style: AppTextStyles.label),
+        content: Text(description, style: AppTextStyles.bodySm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Got it'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -656,6 +721,17 @@ class _SkillBar extends StatelessWidget {
             textAlign: TextAlign.right,
           ),
         ),
+        GestureDetector(
+          onTap: () => _showInfo(context),
+          child: const Padding(
+            padding: EdgeInsets.only(left: 4),
+            child: Icon(
+              Icons.help_outline_rounded,
+              size: 14,
+              color: AppColors.mutedForeground,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -668,10 +744,16 @@ class _SkillBar extends StatelessWidget {
 class _TodaysTasksSection extends StatelessWidget {
   final int pointsBehind;
   final int rank;
+  final ChallengeModel? dailyChallenge;
+  final ChallengeModel? skillDrill;
+  final RetakeItem?    retakeItem;
 
   const _TodaysTasksSection({
     required this.pointsBehind,
     required this.rank,
+    this.dailyChallenge,
+    this.skillDrill,
+    this.retakeItem,
   });
 
   @override
@@ -684,64 +766,108 @@ class _TodaysTasksSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _SectionLabel("TODAY'S TASKS"),
-        ListCard(
-          leading: const _TaskIcon(
-            bgColor: AppColors.successLight,
-            iconColor: AppColors.success,
-            iconPathBuilder: _buildDailyChallengeIcon,
-          ),
-          title: 'Daily challenge',
-          subtitle: 'Predict the output · 5 min',
-          trailing: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: AppColors.successLight,
-              borderRadius: BorderRadius.circular(6),
+
+        // ── Daily Mastery Challenge ─────────────────────────────────────────
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListCard(
+              leading: const _TaskIcon(
+                bgColor: AppColors.successLight,
+                iconColor: AppColors.success,
+                iconData: Icons.assignment_outlined,
+              ),
+              title: dailyChallenge?.title ?? 'Daily Challenge',
+              subtitle: dailyChallenge != null
+                  ? '${dailyChallenge!.description.split('.').first} · ${dailyChallenge!.timeLimitSeconds ~/ 60} min'
+                  : 'No challenge available yet',
+              trailing: dailyChallenge != null
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: AppColors.successLight,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '+${dailyChallenge!.pointsReward} pts',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  : null,
             ),
-            child: Text(
-              '+20 pts',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w600,
+            const SizedBox(height: 6),
+            const _CompleteItButton(),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+
+        // ── Skill Drill ─────────────────────────────────────────────────────
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListCard(
+              leading: const _TaskIcon(
+                bgColor: AppColors.surfaceVariant,
+                iconColor: AppColors.primaryLight,
+                iconData: Icons.fitness_center_rounded,
+              ),
+              title: skillDrill?.title ?? 'Skill Drill',
+              subtitle: skillDrill?.description.split('.').first ??
+                  'Practice your weakest skill',
+              trailing: const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.surfaceVariant,
               ),
             ),
-          ),
+            const SizedBox(height: 6),
+            const _CompleteItButton(),
+          ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        ListCard(
-          leading: const _TaskIcon(
-            bgColor: AppColors.surfaceVariant,
-            iconColor: AppColors.primaryLight,
-            iconData: Icons.star_outline_rounded,
-          ),
-          title: 'Leaderboard gap',
-          subtitle: leaderGapSub,
-          trailing: const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.surfaceVariant,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        ListCard(
-          leading: const _TaskIcon(
-            bgColor: AppColors.accentSubtle,
-            iconColor: AppColors.success,
-            iconData: Icons.home_repair_service_outlined,
-          ),
-          title: 'Review: Variables',
-          subtitle: 'Low score · recommended',
-          trailing: const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.surfaceVariant,
-          ),
+
+        // ── Review / Leaderboard Gap ────────────────────────────────────────
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (retakeItem != null)
+              ListCard(
+                leading: const _TaskIcon(
+                  bgColor: AppColors.accentSubtle,
+                  iconColor: AppColors.accent,
+                  iconData: Icons.replay_rounded,
+                ),
+                title: 'Review: ${retakeItem!.moduleTitle}',
+                subtitle:
+                    'Last score ${retakeItem!.lastScore.round()}% · Retake recommended',
+                trailing: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.surfaceVariant,
+                ),
+              )
+            else
+              ListCard(
+                leading: const _TaskIcon(
+                  bgColor: AppColors.surfaceVariant,
+                  iconColor: AppColors.primaryLight,
+                  iconData: Icons.leaderboard_rounded,
+                ),
+                title: 'Leaderboard gap',
+                subtitle: leaderGapSub,
+                trailing: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.surfaceVariant,
+                ),
+              ),
+            const SizedBox(height: 6),
+            const _CompleteItButton(),
+          ],
         ),
       ],
     );
-  }
-
-  // Custom painter/builder for the daily challenge icon to mimic the HTML SVG
-  static Widget _buildDailyChallengeIcon(Color color) {
-    return Icon(Icons.assignment_outlined, color: color, size: 18);
   }
 }
 
@@ -749,13 +875,11 @@ class _TaskIcon extends StatelessWidget {
   final Color bgColor;
   final Color iconColor;
   final IconData? iconData;
-  final Widget Function(Color color)? iconPathBuilder;
 
   const _TaskIcon({
     required this.bgColor,
     required this.iconColor,
     this.iconData,
-    this.iconPathBuilder,
   });
 
   @override
@@ -768,9 +892,27 @@ class _TaskIcon extends StatelessWidget {
         borderRadius: BorderRadius.circular(9),
       ),
       child: Center(
-        child: iconPathBuilder != null
-            ? iconPathBuilder!(iconColor)
-            : Icon(iconData, color: iconColor, size: 18),
+        child: Icon(iconData, color: iconColor, size: 18),
+      ),
+    );
+  }
+}
+
+class _CompleteItButton extends StatelessWidget {
+  const _CompleteItButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        'Complete it',
+        style: AppTextStyles.buttonSm.copyWith(color: Colors.white),
       ),
     );
   }

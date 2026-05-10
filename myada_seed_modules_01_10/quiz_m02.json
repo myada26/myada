@@ -1,0 +1,195 @@
+{
+  "quiz_id": "quiz_m02",
+  "module_id": "module_02",
+  "ac_type": "lesson_quiz",
+  "title": "Module 2 Quiz",
+  "description": "Test your understanding of variables, naming rules, input, and primitive data types across all lessons in Module 2.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m02_q01",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 2: Variables and Primitive Data Types?",
+      "options_json": [
+        "To store, update, inspect, and display simple values using variables and primitive data types",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to store, update, inspect, and display simple values using variables and primitive data types.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q02",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the assignment:",
+      "content": {
+        "code_with_blank": "age ___ 18",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "=",
+      "explanation": "A single equals sign assigns a value to a variable.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q03",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this variable name:",
+      "content": {
+        "buggy_code": "2score = 90",
+        "bug_description": "Variable names cannot start with a number"
+      },
+      "correct_answer": "Variable names cannot start with a number",
+      "explanation": "Python variable names may contain numbers but cannot begin with one.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q04",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to store and print a student name.",
+      "content": {
+        "lines": [
+          "print(student_name)",
+          "student_name = \"Ana\""
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q05",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "Which variable name follows common Python style?",
+      "options_json": [
+        "student_name",
+        "student name",
+        "2student",
+        "student-name"
+      ],
+      "correct_answer": "0",
+      "explanation": "snake_case names are clear and valid in Python.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q06",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the code to check the data type:",
+      "content": {
+        "code_with_blank": "score = 95\nprint(___(score))",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "type",
+      "explanation": "type(score) returns the data type of score.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q07",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the final output?\npoints = 10\npoints = 15\nprint(points)",
+      "options_json": [
+        "15",
+        "10",
+        "25",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "The second assignment replaces the first value.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q08",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "name = Ada",
+        "bug_description": "Ada should be inside quotation marks"
+      },
+      "correct_answer": "Ada should be inside quotation marks",
+      "explanation": "Text data must be stored as a string using quotes.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q09",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A program needs to store whether a learner passed. Which data type is most appropriate?",
+      "options_json": [
+        "Boolean",
+        "String only",
+        "Float only",
+        "Comment"
+      ],
+      "correct_answer": "0",
+      "explanation": "Passed or not passed is a True/False situation.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m02_q10",
+      "quiz_id": "quiz_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create variables name and age, then print both values.",
+      "content": {
+        "starter_code": "# Create and print two variables\n",
+        "hint": "Store values first, then use print().",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 2,
+          "required_variables": [
+            "name",
+            "age"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

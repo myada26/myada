@@ -1,0 +1,82 @@
+{
+  "lesson_id": "m04_l02",
+  "module_id": "module_04",
+  "order_index": 2,
+  "title": "Comparison Operators",
+  "skill_tag": "Logic Flow",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m04_l02_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Comparison Operators",
+      "body": "Comparison Operators is part of Boolean Logic and Comparisons. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m04_l02_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Comparison Operators",
+      "body": "Comparison operators compare two values. Examples include >, <, >=, <=, ==, and !=."
+    },
+    {
+      "slide_id": "m04_l02_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Comparisons are like checking who is taller, older, or equal in a line of students."
+    },
+    {
+      "slide_id": "m04_l02_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Comparison Operators",
+      "code": "age = 18\nprint(age >= 18)",
+      "language": "python",
+      "expected_output": "True",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m04_l02_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Boolean expressions must produce True or False. Use comparisons and logical operators carefully."
+    },
+    {
+      "slide_id": "m04_l02_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Check if score is at least 75 and print the result.",
+      "starter_code": "score = 80\n",
+      "hint": "Use score >= 75.",
+      "expected_output_contains": "True",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m04_l02_cc",
+    "lesson_id": "m04_l02",
+    "prompt_text": "Create a variable temperature = 30 and print whether it is less than 25.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "False",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

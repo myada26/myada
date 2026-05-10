@@ -1,0 +1,56 @@
+{
+  "module_id": "module_06",
+  "order_index": 6,
+  "title": "Indefinite Iteration",
+  "description": "Learn while loops, loop conditions, counters, accumulators, break statements, and how to avoid infinite loops.",
+  "skill_category": "Logic Flow",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 7,
+  "lessons": [
+    {
+      "lesson_id": "m06_l01",
+      "title": "Why Loops Matter",
+      "order_index": 1,
+      "file": "lesson_m06_l01.json"
+    },
+    {
+      "lesson_id": "m06_l02",
+      "title": "while Loops",
+      "order_index": 2,
+      "file": "lesson_m06_l02.json"
+    },
+    {
+      "lesson_id": "m06_l03",
+      "title": "Loop Conditions",
+      "order_index": 3,
+      "file": "lesson_m06_l03.json"
+    },
+    {
+      "lesson_id": "m06_l04",
+      "title": "Counters",
+      "order_index": 4,
+      "file": "lesson_m06_l04.json"
+    },
+    {
+      "lesson_id": "m06_l05",
+      "title": "Accumulators",
+      "order_index": 5,
+      "file": "lesson_m06_l05.json"
+    },
+    {
+      "lesson_id": "m06_l06",
+      "title": "break Statements",
+      "order_index": 6,
+      "file": "lesson_m06_l06.json"
+    },
+    {
+      "lesson_id": "m06_l07",
+      "title": "Avoiding Infinite Loops",
+      "order_index": 7,
+      "file": "lesson_m06_l07.json"
+    }
+  ],
+  "quiz_file": "quiz_m06.json",
+  "exam_file": "exam_m06.json"
+}

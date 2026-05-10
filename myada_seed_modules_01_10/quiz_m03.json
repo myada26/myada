@@ -1,0 +1,198 @@
+{
+  "quiz_id": "quiz_m03",
+  "module_id": "module_03",
+  "ac_type": "lesson_quiz",
+  "title": "Module 3 Quiz",
+  "description": "Test your understanding of arithmetic operators, string operations, f-strings, and type conversion across all lessons in Module 3.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m03_q01",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 3: Mathematical and String Operations?",
+      "options_json": [
+        "To perform calculations and build readable output by combining operators, values, and strings",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to perform calculations and build readable output by combining operators, values, and strings.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q02",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the expression for multiplication:",
+      "content": {
+        "code_with_blank": "total = price ___ quantity",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "*",
+      "explanation": "The * operator multiplies values.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q03",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this concatenation:",
+      "content": {
+        "buggy_code": "age = 18\nprint(\"Age: \" + age)",
+        "bug_description": "age must be converted to a string or formatted with an f-string"
+      },
+      "correct_answer": "age must be converted to a string or formatted with an f-string",
+      "explanation": "Python cannot directly concatenate a string and integer.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q04",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to calculate and print total price.",
+      "content": {
+        "lines": [
+          "print(total)",
+          "total = price * quantity",
+          "price = 10",
+          "quantity = 3"
+        ],
+        "correct_order": [
+          2,
+          3,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,3,1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q05",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "Which expression gives the remainder when 17 is divided by 5?",
+      "options_json": [
+        "17 % 5",
+        "17 // 5",
+        "17 / 5",
+        "17 ** 5"
+      ],
+      "correct_answer": "0",
+      "explanation": "% gives the remainder after division.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q06",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the f-string:",
+      "content": {
+        "code_with_blank": "name = \"Ada\"\nprint(f\"Hello, {___}\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "name",
+      "explanation": "The variable name goes inside braces in an f-string.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q07",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What will this code output?\nprint(2 + 3 * 4)",
+      "options_json": [
+        "14",
+        "20",
+        "24",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "Multiplication happens before addition.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q08",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this f-string?",
+      "content": {
+        "buggy_code": "name = \"Ada\"\nprint(\"Hello, {name}\")",
+        "bug_description": "The string is missing the f prefix"
+      },
+      "correct_answer": "The string is missing the f prefix",
+      "explanation": "Without f, {name} is printed literally.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q09",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner wants to display Score: 95 using a variable. Which is clearest?",
+      "options_json": [
+        "print(f\"Score: {score}\")",
+        "print(\"Score: \" + score)",
+        "print(score: 95)",
+        "print(fScore)"
+      ],
+      "correct_answer": "0",
+      "explanation": "An f-string cleanly inserts the variable into text.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m03_q10",
+      "quiz_id": "quiz_m03",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write a program that stores price and quantity, then prints the total.",
+      "content": {
+        "starter_code": "# Use variables and multiplication\n",
+        "hint": "Multiply price by quantity and print the result.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "*"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

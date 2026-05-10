@@ -79,13 +79,20 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final auth = context.read<AuthController>();
-    await auth.login(
+    final success = await auth.login(
       email: _emailCtrl.text.trim(),
       password: _passwordCtrl.text,
     );
 
     // Guard: widget may have been unmounted while Firebase was responding.
     if (!mounted) return;
+
+    if (success) {
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
+      return;
+    }
 
     // Show the error SnackBar only on failure; success is handled by the
     // listener above.
@@ -148,8 +155,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
                     }
-                    if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
+                    if (!RegExp(
+                      r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(value)) {
                       return 'Invalid email';
                     }
                     return null;
@@ -178,7 +186,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    child: Text('Forgot password?', style: AppTextStyles.labelSm),
+                    child: Text(
+                      'Forgot password?',
+                      style: AppTextStyles.labelSm,
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl3),
@@ -205,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.pushReplacementNamed(
+                      onTap: () => Navigator.pushNamed(
                         context,
                         AppRoutes.register,
                       ),

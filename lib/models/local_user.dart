@@ -36,4 +36,7 @@ class LocalUser extends HiveObject {
 
   @HiveField(10)
   DateTime lastSeenAt = DateTime.now();
+
+  @HiveField(11)
+  String? avatarPath;
 }

@@ -112,7 +112,7 @@ class PermissionsScreen extends StatelessWidget {
               AppButton(
                 label: "Grant Access",
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, AppRoutes.entry);
+                  Navigator.pushNamed(context, AppRoutes.entry);
                 },
               ),
               const SizedBox(height: 16),

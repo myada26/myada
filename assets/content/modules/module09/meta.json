@@ -1,0 +1,27 @@
+[
+    {
+        "module_id": "module_09",
+        "number": 9,
+        "title": "Lists and Mutable Sequences",
+        "subtitle": "Create lists, read values by index, update items, append new data, find list …",
+        "skill_tag": "Computational Thinking",
+        "icon": "lightbulb_outline_rounded",
+        "lesson_count": 9,
+        "lessons": [
+            "m09_l01",
+            "m09_l02",
+            "m09_l03",
+            "m09_l04",
+            "m09_l05",
+            "m09_l06",
+            "m09_l07",
+            "m09_l08",
+            "m09_l09"
+        ],
+        "estimated_minutes": 45,
+        "prerequisite_module_id": "module_08",
+        "unlock_condition": "module_08_passed",
+        "badge_id": "badge_module_09",
+        "cert_eligible": false
+    }
+]

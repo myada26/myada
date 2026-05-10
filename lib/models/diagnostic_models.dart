@@ -303,13 +303,15 @@ class SkillScore {
 class EngineDiagnosticResult {
   final List<SkillScore> skillScores;
   final String overallLevel; // 'beginner' | 'novice' | 'intermediate'
-  final List<String> modulesToSkip;
-  final List<String> modulesRequired;
+  final List<String> modulesToSkip;       // confident — can skip
+  final List<String> modulesRecommended;  // building — optional review
+  final List<String> modulesRequired;     // developing — must complete
 
   const EngineDiagnosticResult({
     required this.skillScores,
     required this.overallLevel,
     required this.modulesToSkip,
+    required this.modulesRecommended,
     required this.modulesRequired,
   });
 }

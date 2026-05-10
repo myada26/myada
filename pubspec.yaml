@@ -59,6 +59,9 @@ dependencies:
   google_fonts: ^8.0.2
   flutter_markdown: ^0.7.7+1
   flutter_highlighter: ^0.1.1
+  image_picker: ^1.1.2
+  screenshot: ^3.0.0
+  image_gallery_saver_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -87,10 +90,20 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/content/modules/module01/
+    - assets/content/modules/module02/
+    - assets/content/modules/module03/
+    - assets/content/modules/module04/
+    - assets/content/modules/module05/
+    - assets/content/modules/module06/
+    - assets/content/modules/module07/
+    - assets/content/modules/module08/
+    - assets/content/modules/module09/
+    - assets/content/modules/module10/
     - assets/data/modules.json
     - assets/data/quiz_questions.json
     - assets/data/retry_questions.json
     - assets/data/diagnostic_questions.json
+    - assets/data/challenges.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

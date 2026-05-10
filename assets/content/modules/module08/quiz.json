@@ -1,0 +1,153 @@
+{
+  "quiz_id": "quiz_m08",
+  "module_id": "module_08",
+  "title": "Module 8 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m08_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 8: Functions and Modularity?",
+      "explanation": "This module focuses on how to organize code into reusable functions that receive input, return results, and solve smaller parts of a problem.",
+      "options": [
+        "To organize code into reusable functions that receive input, return results, and solve smaller parts of a problem",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m08_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the function definition:",
+      "explanation": "def begins a function definition.",
+      "answer": "def"
+    },
+    {
+      "id": "m08_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the function syntax bug:",
+      "explanation": "Function headers must end with a colon.",
+      "answer": "Missing colon after the function header"
+    },
+    {
+      "id": "m08_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to define and call a greeting function.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "greet()"
+        },
+        {
+          "id": "b1",
+          "code": "    print(\"Hello\")"
+        },
+        {
+          "id": "b2",
+          "code": "def greet():"
+        }
+      ],
+      "correct_order": [
+        "def greet():",
+        "    print(\"Hello\")",
+        "greet()"
+      ]
+    },
+    {
+      "id": "m08_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which keyword defines a function in Python?",
+      "explanation": "Python uses def to define a function.",
+      "options": [
+        "def",
+        "function",
+        "make",
+        "return only"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m08_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the return statement:",
+      "explanation": "return sends the result back from the function.",
+      "answer": "return"
+    },
+    {
+      "id": "m08_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the output?\ndef double(n):\n    return n * 2\nprint(double(4))",
+      "explanation": "double(4) returns 8, and print displays it.",
+      "options": [
+        "8",
+        "4",
+        "double",
+        "None"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m08_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this code?",
+      "explanation": "Indented lines belong to the function.",
+      "answer": "The function body must be indented"
+    },
+    {
+      "id": "m08_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A program repeats the same receipt line format many times. What should the learner use?",
+      "explanation": "Functions reduce repeated code by packaging reusable behavior.",
+      "options": [
+        "A reusable function",
+        "A new variable name only",
+        "A comment only",
+        "An infinite loop"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m08_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Define a function greet(name) that prints Hello, followed by the name, then call it.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_09",
+      "award_badge": "badge_module_08",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_08_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_09"
+    }
+  }
+}

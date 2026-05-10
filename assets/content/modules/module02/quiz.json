@@ -1,0 +1,148 @@
+{
+  "quiz_id": "quiz_m02",
+  "module_id": "module_02",
+  "title": "Module 2 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m02_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 2: Variables and Primitive Data Types?",
+      "explanation": "This module focuses on how to store, update, inspect, and display simple values using variables and primitive data types.",
+      "options": [
+        "To store, update, inspect, and display simple values using variables and primitive data types",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m02_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the assignment:",
+      "explanation": "A single equals sign assigns a value to a variable.",
+      "answer": "="
+    },
+    {
+      "id": "m02_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the bug in this variable name:",
+      "explanation": "Python variable names may contain numbers but cannot begin with one.",
+      "answer": "Variable names cannot start with a number"
+    },
+    {
+      "id": "m02_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to store and print a student name.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "print(student_name)"
+        },
+        {
+          "id": "b1",
+          "code": "student_name = \"Ana\""
+        }
+      ],
+      "correct_order": [
+        "student_name = \"Ana\"",
+        "print(student_name)"
+      ]
+    },
+    {
+      "id": "m02_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which variable name follows common Python style?",
+      "explanation": "snake_case names are clear and valid in Python.",
+      "options": [
+        "student_name",
+        "student name",
+        "2student",
+        "student-name"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m02_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the code to check the data type:",
+      "explanation": "type(score) returns the data type of score.",
+      "answer": "type"
+    },
+    {
+      "id": "m02_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the final output?\npoints = 10\npoints = 15\nprint(points)",
+      "explanation": "The second assignment replaces the first value.",
+      "options": [
+        "15",
+        "10",
+        "25",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m02_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this code?",
+      "explanation": "Text data must be stored as a string using quotes.",
+      "answer": "Ada should be inside quotation marks"
+    },
+    {
+      "id": "m02_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A program needs to store whether a learner passed. Which data type is most appropriate?",
+      "explanation": "Passed or not passed is a True/False situation.",
+      "options": [
+        "Boolean",
+        "String only",
+        "Float only",
+        "Comment"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m02_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Create variables name and age, then print both values.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_03",
+      "award_badge": "badge_module_02",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_02_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_03"
+    }
+  }
+}

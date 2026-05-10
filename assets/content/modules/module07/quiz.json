@@ -1,0 +1,148 @@
+{
+  "quiz_id": "quiz_m07",
+  "module_id": "module_07",
+  "title": "Module 7 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m07_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Sequencing",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 7: Definite Iteration?",
+      "explanation": "This module focuses on how to repeat code across known ranges, strings, and collections using definite iteration.",
+      "options": [
+        "To repeat code across known ranges, strings, and collections using definite iteration",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m07_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the for loop keyword:",
+      "explanation": "for starts a definite loop over a sequence.",
+      "answer": "for"
+    },
+    {
+      "id": "m07_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the indentation bug:",
+      "explanation": "The loop body must be indented under the for statement.",
+      "answer": "The print line must be indented"
+    },
+    {
+      "id": "m07_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to print 1 to 3 using range.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "    print(n)"
+        },
+        {
+          "id": "b1",
+          "code": "for n in range(1, 4):"
+        }
+      ],
+      "correct_order": [
+        "for n in range(1, 4):",
+        "    print(n)"
+      ]
+    },
+    {
+      "id": "m07_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "What numbers does range(1, 4) produce?",
+      "explanation": "The stop value is excluded, so range(1, 4) ends at 3.",
+      "options": [
+        "1, 2, 3",
+        "1, 2, 3, 4",
+        "0, 1, 2, 3",
+        "4 only"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m07_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the range to print 1 to 5:",
+      "explanation": "range(1, 6) produces 1 through 5.",
+      "answer": "range"
+    },
+    {
+      "id": "m07_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the output?\nfor letter in \"AB\":\n    print(letter)",
+      "explanation": "The loop visits each character in the string.",
+      "options": [
+        "A\nB",
+        "AB",
+        "B\nA",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m07_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong if the goal is to print 1 to 5?",
+      "explanation": "The stop value in range is excluded.",
+      "answer": "range stop should be 6 to include 5"
+    },
+    {
+      "id": "m07_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A task must repeat exactly 10 times. Which loop is usually clearer?",
+      "explanation": "for with range is clear when the number of repetitions is known.",
+      "options": [
+        "for loop with range(10)",
+        "while True without break",
+        "input()",
+        "remove()"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m07_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write a for loop that prints numbers 1 through 5.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_08",
+      "award_badge": "badge_module_07",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_07_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_08"
+    }
+  }
+}

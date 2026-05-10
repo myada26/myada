@@ -1,0 +1,86 @@
+{
+  "lesson_id": "m03_l05",
+  "module_id": "module_03",
+  "order_index": 5,
+  "title": "String Concatenation",
+  "skill_tag": "Syntax",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m03_l05_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "String Concatenation",
+      "body": "String Concatenation is part of Mathematical and String Operations. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m03_l05_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: String Concatenation",
+      "body": "String concatenation joins strings together using +. It is useful for building messages from separate text parts."
+    },
+    {
+      "slide_id": "m03_l05_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Concatenation is like attaching two paper strips to form one longer banner."
+    },
+    {
+      "slide_id": "m03_l05_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: String Concatenation",
+      "code": "first = \"Hello\"\nsecond = \"Ada\"\nprint(first + \" \" + second)",
+      "language": "python",
+      "expected_output": "Hello Ada",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m03_l05_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Python follows operator rules exactly. Use variables and parentheses to make calculations readable and predictable."
+    },
+    {
+      "slide_id": "m03_l05_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Join first_name and last_name with a space between them.",
+      "starter_code": "first_name = \"Ana\"\nlast_name = \"Cruz\"\n",
+      "hint": "Use print(first_name + \" \" + last_name).",
+      "expected_output_contains": "Ana Cruz",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m03_l05_cc",
+    "lesson_id": "m03_l05",
+    "prompt_text": "Join the words Code and Lab with a space and print the result.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Code Lab",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

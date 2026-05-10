@@ -1,0 +1,153 @@
+{
+  "quiz_id": "quiz_m09",
+  "module_id": "module_09",
+  "title": "Module 9 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m09_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 9: Lists and Mutable Sequences?",
+      "explanation": "This module focuses on how to store collections, access list items, modify values, and process list data.",
+      "options": [
+        "To store collections, access list items, modify values, and process list data",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m09_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the empty list:",
+      "explanation": "Square brackets create a list.",
+      "answer": "[]"
+    },
+    {
+      "id": "m09_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the index bug:",
+      "explanation": "The valid indexes are 0 and 1.",
+      "answer": "Index 2 is out of range"
+    },
+    {
+      "id": "m09_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to create a list, append an item, and print it.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "print(names)"
+        },
+        {
+          "id": "b1",
+          "code": "names.append(\"Ana\")"
+        },
+        {
+          "id": "b2",
+          "code": "names = []"
+        }
+      ],
+      "correct_order": [
+        "names = []",
+        "names.append(\"Ana\")",
+        "print(names)"
+      ]
+    },
+    {
+      "id": "m09_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "What is the first index of a Python list?",
+      "explanation": "Python list indexing starts at 0.",
+      "options": [
+        "0",
+        "1",
+        "-1",
+        "first"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m09_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the method that adds to the end:",
+      "explanation": "append() adds an item to the end of a list.",
+      "answer": "append"
+    },
+    {
+      "id": "m09_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the output?\ncolors = [\"red\", \"blue\"]\nprint(colors[0])",
+      "explanation": "Index 0 accesses the first item.",
+      "options": [
+        "red",
+        "blue",
+        "0",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m09_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong if the goal is to change the first item?",
+      "explanation": "Python starts counting at 0.",
+      "answer": "Index 0 should be used for the first item"
+    },
+    {
+      "id": "m09_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A learner needs to store many scores in one variable. Which structure fits best?",
+      "explanation": "A list can store multiple related values.",
+      "options": [
+        "List",
+        "Boolean",
+        "Single comment",
+        "One print only"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m09_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Create a list of three subjects and print each subject using a for loop.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_10",
+      "award_badge": "badge_module_09",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_09_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_10"
+    }
+  }
+}

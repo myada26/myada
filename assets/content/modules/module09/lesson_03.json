@@ -1,0 +1,77 @@
+{
+  "lesson_id": "m09_l03",
+  "module_id": "module_09",
+  "lesson_number": "03",
+  "title": "Indexing Lists",
+  "skill_tag": "Syntax",
+  "estimated_minutes": 6,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m09_l03_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Indexing Lists",
+      "body": "Indexing Lists is part of Lists and Mutable Sequences. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m09_l03_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Indexing Lists",
+      "body": "List indexing gets one item from a list using its position. Python starts counting at index 0."
+    },
+    {
+      "slide_id": "m09_l03_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Indexing is like seat numbering that starts from 0 instead of 1 in Python's classroom."
+    },
+    {
+      "slide_id": "m09_l03_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Indexing Lists",
+      "code": "colors = [\"red\", \"blue\"]\nprint(colors[0])",
+      "language": "python",
+      "expected_output": "red",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m09_l03_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Lists use square brackets, zero-based indexes, and can be changed after creation."
+    },
+    {
+      "slide_id": "m09_l03_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Print the first item from a list named names.",
+      "starter_code": "names = [\"Ana\", \"Ben\"]\n",
+      "hint": "Use names[0] to access the first item.",
+      "expected_output_contains": "Ana",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "["
+        ]
+      }
+    }
+  ],
+  "quiz": []
+}

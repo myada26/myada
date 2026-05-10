@@ -1,0 +1,293 @@
+{
+  "exam_id": "exam_m08",
+  "module_id": "module_08",
+  "ac_type": "module_exam",
+  "title": "Module 8 Final Exam",
+  "description": "Prove your mastery of functions, parameters, arguments, return values, scope, reuse, and decomposition. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m08_e01",
+      "exam_id": "exam_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about functions, parameters, arguments, return values, scope, reuse, and decomposition. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to organize code into reusable functions that receive input, return results, and solve smaller parts of a problem",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 8 develops the ability to organize code into reusable functions that receive input, return results, and solve smaller parts of a problem.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e02",
+      "exam_id": "exam_m08",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the function syntax bug:",
+      "content": {
+        "buggy_code": "def greet()\n    print(\"Hi\")",
+        "bug_description": "Missing colon after the function header"
+      },
+      "correct_answer": "Missing colon after the function header",
+      "explanation": "Function headers must end with a colon.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e03",
+      "exam_id": "exam_m08",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the function definition:",
+      "content": {
+        "code_with_blank": "___ greet():\n    print(\"Hello\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "def",
+      "explanation": "def begins a function definition.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e04",
+      "exam_id": "exam_m08",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to define and call a greeting function.",
+      "content": {
+        "lines": [
+          "greet()",
+          "    print(\"Hello\")",
+          "def greet():"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e05",
+      "exam_id": "exam_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\ndef double(n):\n    return n * 2\nprint(double(4))",
+      "options_json": [
+        "8",
+        "4",
+        "double",
+        "None"
+      ],
+      "correct_answer": "0",
+      "explanation": "double(4) returns 8, and print displays it.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e06",
+      "exam_id": "exam_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Define a function greet(name) that prints Hello, followed by the name, then call it.",
+      "content": {
+        "starter_code": "# Define and call greet(name)\n",
+        "hint": "Use a parameter and an f-string.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "def"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e07",
+      "exam_id": "exam_m08",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "def greet():\nprint(\"Hi\")",
+        "bug_description": "The function body must be indented"
+      },
+      "correct_answer": "The function body must be indented",
+      "explanation": "Indented lines belong to the function.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e08",
+      "exam_id": "exam_m08",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the return statement:",
+      "content": {
+        "code_with_blank": "def double(n):\n    ___ n * 2",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "return",
+      "explanation": "return sends the result back from the function.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e09",
+      "exam_id": "exam_m08",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A program repeats the same receipt line format many times. What should the learner use?",
+      "options_json": [
+        "A reusable function",
+        "A new variable name only",
+        "A comment only",
+        "An infinite loop"
+      ],
+      "correct_answer": "0",
+      "explanation": "Functions reduce repeated code by packaging reusable behavior.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e10",
+      "exam_id": "exam_m08",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines for a function that returns a square.",
+      "content": {
+        "lines": [
+          "print(square(4))",
+          "    return n * n",
+          "def square(n):"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e11",
+      "exam_id": "exam_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Define a function add(a, b) that returns the sum, then print add(3, 4).",
+      "content": {
+        "starter_code": "# Define add and print a call\n",
+        "hint": "Use return a + b.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "def",
+            "return"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e12",
+      "exam_id": "exam_m08",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in functions, parameters, arguments, return values, scope, reuse, and decomposition?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e13",
+      "exam_id": "exam_m08",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the function call:",
+      "content": {
+        "code_with_blank": "def greet():\n    print(\"Hi\")\n___",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "greet()",
+      "explanation": "A function is called by writing its name with parentheses.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e14",
+      "exam_id": "exam_m08",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the return-value problem:",
+      "content": {
+        "buggy_code": "def add(a, b):\n    print(a + b)\nresult = add(2, 3)\nprint(result)",
+        "bug_description": "add prints but does not return a value"
+      },
+      "correct_answer": "add prints but does not return a value",
+      "explanation": "Use return when the function result must be stored.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m08_e15",
+      "exam_id": "exam_m08",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 8 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with functions, parameters, arguments, return values, scope, reuse, and decomposition",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of functions, parameters, arguments, return values, scope, reuse, and decomposition.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

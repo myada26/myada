@@ -1,0 +1,56 @@
+{
+  "module_id": "module_05",
+  "order_index": 5,
+  "title": "Conditional Execution",
+  "description": "Use if, else, elif, and nested decisions to make Python programs respond differently based on conditions.",
+  "skill_category": "Logic Flow",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 7,
+  "lessons": [
+    {
+      "lesson_id": "m05_l01",
+      "title": "What is a Decision in Code?",
+      "order_index": 1,
+      "file": "lesson_m05_l01.json"
+    },
+    {
+      "lesson_id": "m05_l02",
+      "title": "if Statements",
+      "order_index": 2,
+      "file": "lesson_m05_l02.json"
+    },
+    {
+      "lesson_id": "m05_l03",
+      "title": "else Statements",
+      "order_index": 3,
+      "file": "lesson_m05_l03.json"
+    },
+    {
+      "lesson_id": "m05_l04",
+      "title": "elif Chains",
+      "order_index": 4,
+      "file": "lesson_m05_l04.json"
+    },
+    {
+      "lesson_id": "m05_l05",
+      "title": "Nested Conditionals",
+      "order_index": 5,
+      "file": "lesson_m05_l05.json"
+    },
+    {
+      "lesson_id": "m05_l06",
+      "title": "Conditionals with User Input",
+      "order_index": 6,
+      "file": "lesson_m05_l06.json"
+    },
+    {
+      "lesson_id": "m05_l07",
+      "title": "Building a Simple Grader",
+      "order_index": 7,
+      "file": "lesson_m05_l07.json"
+    }
+  ],
+  "quiz_file": "quiz_m05.json",
+  "exam_file": "exam_m05.json"
+}

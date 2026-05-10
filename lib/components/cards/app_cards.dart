@@ -340,31 +340,7 @@ class _MetaChip extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// 5. XP Chip — App.jsx "+50 XP" badge
-// ---------------------------------------------------------------------------
-class XpChip extends StatelessWidget {
-  const XpChip({super.key, required this.xp});
-  final int xp;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: 3,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.xpBackground,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: AppColors.xpBorder, width: 1.0),
-      ),
-      child: Text('+$xp XP', style: AppTextStyles.xpChip),
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// 6. Horizontal Scroll Card Row — wraps any card list
+// 5. Horizontal Scroll Card Row — wraps any card list
 // ---------------------------------------------------------------------------
 class HorizontalCardRow extends StatelessWidget {
   const HorizontalCardRow({

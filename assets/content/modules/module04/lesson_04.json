@@ -1,0 +1,78 @@
+﻿{
+  "lesson_id": "m04_l04",
+  "module_id": "module_04",
+  "lesson_number": "04",
+  "title": "Logical AND",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m04_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Logical AND",
+      "body": "Logical AND is part of Boolean Logic and Comparisons. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m04_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Logical AND",
+      "body": "The and operator is True only when both conditions are True. It is useful when all requirements must be satisfied."
+    },
+    {
+      "slide_id": "m04_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "and is like entering a library that requires both an ID and a library card. Missing one means you cannot enter."
+    },
+    {
+      "slide_id": "m04_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Logical AND",
+      "code": "age = 20\nhas_id = True\nprint(age >= 18 and has_id)",
+      "language": "python",
+      "expected_output": "True",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m04_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Boolean expressions must produce True or False. Use comparisons and logical operators carefully."
+    },
+    {
+      "slide_id": "m04_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Check if a student passed and submitted a project.",
+      "starter_code": "passed = True\nsubmitted = True\n",
+      "hint": "Use print(passed and submitted).",
+      "expected_output_contains": "True",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"When does the and operator return True?","content":{"options":["When at least one condition is True","When both conditions are True","When neither condition is True","When the first condition is False"],"correct_index":1},"correct_answer":"1","explanation":"Exactly right! The and operator requires both conditions to be True. If even one is False, the entire expression evaluates to False."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines to check if a person is at least 18 and has a valid ID.","content":{"lines":["age = 20","has_id = True","print(age >= 18 and has_id)"],"correct_order":[0,1,2]},"correct_answer":"[0,1,2]","explanation":"Both variables are assigned first, and only then can the and expression check both conditions together in print()."},{"question_id":"q3","question_type":"coding","prompt_text":"Check if a student passed their exam and submitted their project, then print the result.","content":{"starter_code":"passed = True\nsubmitted = True\n","hint":"Use print(passed and submitted).","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"print(passed and submitted) outputs True only when both are True. The and operator is perfect for enforcing that all requirements are met."}]
+}

@@ -1,0 +1,62 @@
+{
+  "module_id": "module_04",
+  "order_index": 4,
+  "title": "Boolean Logic and Comparisons",
+  "description": "Understand True and False values, comparison operators, and logical operators used to make decisions in programs.",
+  "skill_category": "Logic Flow",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 8,
+  "lessons": [
+    {
+      "lesson_id": "m04_l01",
+      "title": "What is a Boolean Expression?",
+      "order_index": 1,
+      "file": "lesson_m04_l01.json"
+    },
+    {
+      "lesson_id": "m04_l02",
+      "title": "Comparison Operators",
+      "order_index": 2,
+      "file": "lesson_m04_l02.json"
+    },
+    {
+      "lesson_id": "m04_l03",
+      "title": "Equal vs Assignment",
+      "order_index": 3,
+      "file": "lesson_m04_l03.json"
+    },
+    {
+      "lesson_id": "m04_l04",
+      "title": "Logical AND",
+      "order_index": 4,
+      "file": "lesson_m04_l04.json"
+    },
+    {
+      "lesson_id": "m04_l05",
+      "title": "Logical OR",
+      "order_index": 5,
+      "file": "lesson_m04_l05.json"
+    },
+    {
+      "lesson_id": "m04_l06",
+      "title": "Logical NOT",
+      "order_index": 6,
+      "file": "lesson_m04_l06.json"
+    },
+    {
+      "lesson_id": "m04_l07",
+      "title": "Combining Comparisons",
+      "order_index": 7,
+      "file": "lesson_m04_l07.json"
+    },
+    {
+      "lesson_id": "m04_l08",
+      "title": "Truth Tables in Code",
+      "order_index": 8,
+      "file": "lesson_m04_l08.json"
+    }
+  ],
+  "quiz_file": "quiz_m04.json",
+  "exam_file": "exam_m04.json"
+}

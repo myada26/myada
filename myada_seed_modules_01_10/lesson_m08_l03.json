@@ -1,0 +1,89 @@
+{
+  "lesson_id": "m08_l03",
+  "module_id": "module_08",
+  "order_index": 3,
+  "title": "Calling Functions",
+  "skill_tag": "Sequencing",
+  "estimated_duration_min": 6,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m08_l03_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Calling Functions",
+      "body": "Calling Functions is part of Functions and Modularity. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m08_l03_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Calling Functions",
+      "body": "Calling a function means running it by writing its name followed by parentheses. A function does nothing until it is called."
+    },
+    {
+      "slide_id": "m08_l03_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Calling a function is like pressing the start button after setting up a machine."
+    },
+    {
+      "slide_id": "m08_l03_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Calling Functions",
+      "code": "def welcome():\n    print(\"Welcome\")\nwelcome()",
+      "language": "python",
+      "expected_output": "Welcome",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line defines a reusable function and begins its indented body."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 3,
+          "note": "This line performs the main Python action shown in the example."
+        }
+      ]
+    },
+    {
+      "slide_id": "m08_l03_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A good function should do one clear task and have a name that explains that task."
+    },
+    {
+      "slide_id": "m08_l03_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Call a function named greet after defining it.",
+      "starter_code": "def greet():\n    print(\"Hi\")\n",
+      "hint": "Write greet() after the function definition.",
+      "expected_output_contains": "Hi",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "def"
+        ]
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m08_l03_cc",
+    "lesson_id": "m08_l03",
+    "prompt_text": "Define a function named alarm that prints Wake up, then call it twice.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Wake up\nWake up",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

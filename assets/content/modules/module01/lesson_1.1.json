@@ -1,0 +1,80 @@
+{
+    "lesson_id": "m01_l1_1",
+    "module_id": "module_01",
+    "lesson_number": "1.1",
+    "title": "What is Python?",
+    "skill_tag": "Sequencing",
+    "estimated_minutes": 8,
+    "slides": [
+        {
+            "slide_id": "s1",
+            "slide_type": "concept",
+            "heading": "How Python runs your code",
+            "body": "Python executes your code exactly the way you read a book — from the very first line, straight down to the last. It never skips, never jumps, and never reads the bottom before the top."
+        },
+        {
+            "slide_id": "s2",
+            "slide_type": "analogy",
+            "heading": "Think of it this way",
+            "body": "Imagine giving step-by-step cooking instructions. If step 1 says 'add salt' and step 2 says 'boil water', Python will add salt first. The order you write your code is the order it runs."
+        },
+        {
+            "slide_id": "s3",
+            "slide_type": "code_example",
+            "language": "python",
+            "code": "greeting = \"Good morning\"\nprint(greeting)",
+            "annotations": [
+                {
+                    "line": 1,
+                    "note": "Python stores 'Good morning' in the box called greeting."
+                },
+                {
+                    "line": 2,
+                    "note": "Python prints what is currently in greeting."
+                }
+            ]
+        }
+    ],
+    "quiz": [
+        {
+            "question_id": "q1",
+            "question_type": "multiple_choice",
+            "prompt_text": "How does Python read and execute your code?",
+            "content": {
+                "options": [
+                    "Bottom to top",
+                    "Top to bottom, sequentially",
+                    "It runs all lines at the exact same time",
+                    "It randomly picks lines to run"
+                ],
+                "correct_index": 1
+            },
+            "correct_answer": "1",
+            "explanation": "Python uses sequential execution, meaning it reads your code top to bottom, one line at a time."
+        },
+        {
+            "question_id": "q2",
+            "question_type": "fill_in_blank",
+            "prompt_text": "Complete the code to output the word Hello.",
+            "content": {
+                "code_with_blank": "____('Hello')",
+                "hint": "The command used to display output."
+            },
+            "correct_answer": "print",
+            "explanation": "The print() function is used to send text to the console."
+        },
+        {
+            "question_id": "q3",
+            "question_type": "spot_bug",
+            "prompt_text": "Find the bug in this code that tries to print a greeting.",
+            "content": {
+                "buggy_code": "print(Hello)",
+                "bug_description": "Missing quotes around the word Hello"
+            },
+            "correct_answer": "Missing quotes",
+            "explanation": "Text (strings) must always be wrapped in quotation marks, like print('Hello')."
+        }
+    ],
+    "completion_xp": 25,
+    "is_module_closer": false
+}

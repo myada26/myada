@@ -1,0 +1,74 @@
+﻿{
+  "lesson_id": "m02_l04",
+  "module_id": "module_02",
+  "lesson_number": "04",
+  "title": "Floats",
+  "skill_tag": "Syntax",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m02_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Floats",
+      "body": "Floats is part of Variables and Primitive Data Types. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m02_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Floats",
+      "body": "A float is a number with a decimal point. It is useful for prices, measurements, averages, and values that are not always whole numbers."
+    },
+    {
+      "slide_id": "m02_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A float is like measuring water in liters. You may need 1.5 liters, not just 1 or 2."
+    },
+    {
+      "slide_id": "m02_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Floats",
+      "code": "price = 12.50\nprint(price)",
+      "language": "python",
+      "expected_output": "12.5",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m02_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Use clear variable names and match the data type to the kind of value you need to store."
+    },
+    {
+      "slide_id": "m02_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Store a decimal price in a variable named price and print it.",
+      "starter_code": "price = 0.0\n",
+      "hint": "Use a number with a decimal point, such as 19.99.",
+      "expected_output_contains": "price",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What type of number is a float in Python?","content":{"options":["A whole number with no decimal point","A number with a decimal point","Any number written inside quotation marks","A negative integer only"],"correct_index":1},"correct_answer":"1","explanation":"Exactly right! A float is a number that contains a decimal point, such as 3.14 or 12.50 — perfect for prices, measurements, and averages."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines in the correct order to store a price as a float and print it.","content":{"lines":["# Store a decimal price","print(price)","price = 12.50"],"correct_order":[0,2,1]},"correct_answer":"[0,2,1]","explanation":"The comment goes first, then the float variable is assigned, and finally print() outputs the decimal value."},{"question_id":"q3","question_type":"coding","prompt_text":"Store a decimal price in a variable named price and print it.","content":{"starter_code":"price = 0.0\n","hint":"Use a number with a decimal point such as 19.99, then print(price).","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"Write price = 19.99, then print(price). The decimal point is what makes it a float."}]
+}

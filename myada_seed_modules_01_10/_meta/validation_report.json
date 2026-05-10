@@ -1,0 +1,81 @@
+{
+  "generated_at_utc": "2026-05-07T15:29:27.733377Z",
+  "module_range": "01-10",
+  "total_seed_json_files": 113,
+  "total_modules": 10,
+  "total_lessons": 83,
+  "total_quizzes": 10,
+  "total_exams": 10,
+  "validation_summary": {
+    "json_parse_valid": true,
+    "module_indexes_valid": true,
+    "lesson_slide_order_valid": true,
+    "code_example_annotations_valid": true,
+    "quiz_question_counts_valid": true,
+    "exam_question_counts_valid": true,
+    "exam_tiers_valid": true,
+    "exam_retry_rules_valid": true
+  },
+  "modules": [
+    {
+      "module_id": "module_01",
+      "title": "Introduction to Python and Output",
+      "lesson_count": 6,
+      "skill_category": "Sequencing"
+    },
+    {
+      "module_id": "module_02",
+      "title": "Variables and Primitive Data Types",
+      "lesson_count": 9,
+      "skill_category": "Syntax"
+    },
+    {
+      "module_id": "module_03",
+      "title": "Mathematical and String Operations",
+      "lesson_count": 10,
+      "skill_category": "Computational Thinking"
+    },
+    {
+      "module_id": "module_04",
+      "title": "Boolean Logic and Comparisons",
+      "lesson_count": 8,
+      "skill_category": "Logic Flow"
+    },
+    {
+      "module_id": "module_05",
+      "title": "Conditional Execution",
+      "lesson_count": 7,
+      "skill_category": "Logic Flow"
+    },
+    {
+      "module_id": "module_06",
+      "title": "Indefinite Iteration",
+      "lesson_count": 7,
+      "skill_category": "Logic Flow"
+    },
+    {
+      "module_id": "module_07",
+      "title": "Definite Iteration",
+      "lesson_count": 7,
+      "skill_category": "Sequencing"
+    },
+    {
+      "module_id": "module_08",
+      "title": "Functions and Modularity",
+      "lesson_count": 11,
+      "skill_category": "Computational Thinking"
+    },
+    {
+      "module_id": "module_09",
+      "title": "Lists and Mutable Sequences",
+      "lesson_count": 9,
+      "skill_category": "Computational Thinking"
+    },
+    {
+      "module_id": "module_10",
+      "title": "List Operations and Methods",
+      "lesson_count": 9,
+      "skill_category": "Computational Thinking"
+    }
+  ]
+}

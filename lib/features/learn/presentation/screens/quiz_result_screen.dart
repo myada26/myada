@@ -220,15 +220,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: AppColors.xpBackground,
+                          color: AppColors.successLight,
                           borderRadius: BorderRadius.circular(
                               AppConstants.radiusFull),
-                          border: Border.all(color: AppColors.xpBorder),
+                          border: Border.all(
+                              color: AppColors.success.withAlpha(120)),
                         ),
                         child: Text(
-                          '+$_pointsAwarded leaderboard points earned',
+                          '+$_pointsAwarded pts earned',
                           style: AppTextStyles.caption.copyWith(
-                            color: AppColors.accent,
+                            color: AppColors.success,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

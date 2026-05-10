@@ -1,0 +1,158 @@
+{
+  "quiz_id": "quiz_m03",
+  "module_id": "module_03",
+  "title": "Module 3 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m03_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 3: Mathematical and String Operations?",
+      "explanation": "This module focuses on how to perform calculations and build readable output by combining operators, values, and strings.",
+      "options": [
+        "To perform calculations and build readable output by combining operators, values, and strings",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m03_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the expression for multiplication:",
+      "explanation": "The * operator multiplies values.",
+      "answer": "*"
+    },
+    {
+      "id": "m03_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the bug in this concatenation:",
+      "explanation": "Python cannot directly concatenate a string and integer.",
+      "answer": "age must be converted to a string or formatted with an f-string"
+    },
+    {
+      "id": "m03_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to calculate and print total price.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "print(total)"
+        },
+        {
+          "id": "b1",
+          "code": "total = price * quantity"
+        },
+        {
+          "id": "b2",
+          "code": "price = 10"
+        },
+        {
+          "id": "b3",
+          "code": "quantity = 3"
+        }
+      ],
+      "correct_order": [
+        "price = 10",
+        "quantity = 3",
+        "total = price * quantity",
+        "print(total)"
+      ]
+    },
+    {
+      "id": "m03_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which expression gives the remainder when 17 is divided by 5?",
+      "explanation": "% gives the remainder after division.",
+      "options": [
+        "17 % 5",
+        "17 // 5",
+        "17 / 5",
+        "17 ** 5"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m03_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the f-string:",
+      "explanation": "The variable name goes inside braces in an f-string.",
+      "answer": "name"
+    },
+    {
+      "id": "m03_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What will this code output?\nprint(2 + 3 * 4)",
+      "explanation": "Multiplication happens before addition.",
+      "options": [
+        "14",
+        "20",
+        "24",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m03_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this f-string?",
+      "explanation": "Without f, {name} is printed literally.",
+      "answer": "The string is missing the f prefix"
+    },
+    {
+      "id": "m03_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A learner wants to display Score: 95 using a variable. Which is clearest?",
+      "explanation": "An f-string cleanly inserts the variable into text.",
+      "options": [
+        "print(f\"Score: {score}\")",
+        "print(\"Score: \" + score)",
+        "print(score: 95)",
+        "print(fScore)"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m03_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write a program that stores price and quantity, then prints the total.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_04",
+      "award_badge": "badge_module_03",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_03_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_04"
+    }
+  }
+}

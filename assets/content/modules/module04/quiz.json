@@ -1,0 +1,148 @@
+{
+  "quiz_id": "quiz_m04",
+  "module_id": "module_04",
+  "title": "Module 4 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m04_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 4: Boolean Logic and Comparisons?",
+      "explanation": "This module focuses on how to evaluate True or False conditions using comparison and logical operators.",
+      "options": [
+        "To evaluate True or False conditions using comparison and logical operators",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m04_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the comparison for at least 75:",
+      "explanation": ">= means greater than or equal to.",
+      "answer": ">="
+    },
+    {
+      "id": "m04_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the bug in this comparison:",
+      "explanation": "= assigns a value and cannot be used as the condition shown.",
+      "answer": "Use == or >= for comparison, not ="
+    },
+    {
+      "id": "m04_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to check if score is in the passing range.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "print(score >= 75 and score <= 100)"
+        },
+        {
+          "id": "b1",
+          "code": "score = 88"
+        }
+      ],
+      "correct_order": [
+        "score = 88",
+        "print(score >= 75 and score <= 100)"
+      ]
+    },
+    {
+      "id": "m04_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which operator checks equality in Python?",
+      "explanation": "== compares values, while = assigns values.",
+      "options": [
+        "==",
+        "=",
+        "!=",
+        "=>"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m04_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the logical expression:",
+      "explanation": "and requires both conditions to be True.",
+      "answer": "and"
+    },
+    {
+      "id": "m04_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the output?\nprint(5 > 3 and 2 > 4)",
+      "explanation": "and is True only when both comparisons are True.",
+      "options": [
+        "False",
+        "True",
+        "5",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m04_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this boolean value?",
+      "explanation": "Python booleans are True and False.",
+      "answer": "true should be True with a capital T"
+    },
+    {
+      "id": "m04_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A learner must be at least 18 and have an ID. Which operator connects the conditions?",
+      "explanation": "Both requirements must be satisfied, so and is correct.",
+      "options": [
+        "and",
+        "or",
+        "not",
+        "+"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m04_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write code that prints True if score is between 75 and 100 inclusive.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_05",
+      "award_badge": "badge_module_04",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_04_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_05"
+    }
+  }
+}

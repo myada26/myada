@@ -5,17 +5,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/local_user.dart';
 import '../services/hive_service.dart';
 import '../core/data/local_database.dart';
+import '../core/database/app_database.dart';
 import '../core/services/connectivity_service.dart';
+import '../core/services/certificate_service.dart';
 import '../core/services/points_service.dart';
+import '../core/services/skill_profile_service.dart';
 import '../core/services/streak_service.dart';
 import '../core/engine/badge_engine.dart';
+import '../features/progress/data/services/challenge_service.dart';
 import '../features/learn/data/services/module_unlock_service.dart';
 import '../features/learn/data/services/progress_service.dart';
 
 // ── Auth state ────────────────────────────────────────────────────────────────
 
 enum AuthStatus {
-  unknown,       // App just opened — checking local cache
+  unknown, // App just opened — checking local cache
   authenticated, // Valid session (local or fresh)
   unauthenticated,
   loading,
@@ -33,25 +37,27 @@ class AuthController extends ChangeNotifier {
   AuthStatus _status = AuthStatus.unknown;
   LocalUser? _currentUser;
   String? _errorMessage;
-  bool _hasEverLoggedIn = false; // true once this device has completed first login
+  bool _hasEverLoggedIn =
+      false; // true once this device has completed first login
 
   // Secure storage keys
-  static const _kUid       = 'myada_uid';
-  static const _kIdToken   = 'myada_id_token';
+  static const _kUid = 'myada_uid';
+  static const _kIdToken = 'myada_id_token';
   static const _kTokenTime = 'myada_token_time';
   // Tracks whether this device has previously logged in (enables offline fallback)
-  static const _kHasLoggedIn  = 'myada_has_logged_in';
+  static const _kHasLoggedIn = 'myada_has_logged_in';
   // Set to 'true' after logout so that session restore skips auto-login,
   // while still preserving _kUid / _kTokenTime for offline re-login.
-  static const _kIsLoggedOut  = 'myada_is_logged_out';
+  static const _kIsLoggedOut = 'myada_is_logged_out';
 
-  AuthStatus  get status       => _status;
-  LocalUser?  get currentUser  => _currentUser;
-  String?     get errorMessage => _errorMessage;
-  bool        get isLoggedIn   => _status == AuthStatus.authenticated;
+  AuthStatus get status => _status;
+  LocalUser? get currentUser => _currentUser;
+  String? get errorMessage => _errorMessage;
+  bool get isLoggedIn => _status == AuthStatus.authenticated;
+
   /// True if this device has ever completed a successful login/register.
   /// Used by AuthGate to skip onboarding for returning users.
-  bool        get hasEverLoggedIn => _hasEverLoggedIn;
+  bool get hasEverLoggedIn => _hasEverLoggedIn;
 
   // ── Init ─────────────────────────────────────────────────────────────────
 
@@ -89,12 +95,7 @@ class AuthController extends ChangeNotifier {
     }
 
     // UID is known — scope all local DB reads/writes to this user.
-    LocalDatabase.setUserId(cachedUid);
-    ProgressService.instance.setUserId(cachedUid);
-    PointsService.instance.setUserId(cachedUid);
-    StreakService.instance.setUserId(cachedUid);
-    BadgeEngine.instance.setUserId(cachedUid);
-    ModuleUnlockService.instance.setUserId(cachedUid);
+    await _bindUserContext(localUser);
 
     // Try silent Firebase token refresh.
     try {
@@ -171,19 +172,20 @@ class AuthController extends ChangeNotifier {
 
       await _hiveService.saveUser(localUser);
       await _cacheToken(fbUser.uid, idToken!);
+      await _secureStorage.delete(key: _kIsLoggedOut);
       // Flag that this device has completed first login.
       await _secureStorage.write(key: _kHasLoggedIn, value: 'true');
       _hasEverLoggedIn = true;
 
-      // Scope DB to this user immediately.
-      LocalDatabase.setUserId(fbUser.uid);
-      ProgressService.instance.setUserId(fbUser.uid);
+      await _bindUserContext(localUser);
 
       _currentUser = localUser;
       _setStatus(AuthStatus.authenticated);
       return true;
     } on FirebaseAuthException catch (e) {
-      debugPrint('Firebase Auth Exception (Register): ${e.code} - ${e.message}');
+      debugPrint(
+        'Firebase Auth Exception (Register): ${e.code} - ${e.message}',
+      );
       _errorMessage = _mapFirebaseError(e.code);
       _setStatus(AuthStatus.error);
       return false;
@@ -234,19 +236,23 @@ class AuthController extends ChangeNotifier {
       final tokenTimeStr = await _secureStorage.read(key: _kTokenTime);
       if (tokenTimeStr != null) {
         final tokenTime = DateTime.tryParse(tokenTimeStr);
-        if (tokenTime != null && DateTime.now().difference(tokenTime).inDays < 30) {
+        if (tokenTime != null &&
+            DateTime.now().difference(tokenTime).inDays < 30) {
           // Clear the logged-out flag so session restore works on next launch.
           await _secureStorage.delete(key: _kIsLoggedOut);
-          LocalDatabase.setUserId(cachedUid);
+          await _bindUserContext(localUser);
           _currentUser = localUser;
           _hasEverLoggedIn = true;
           _setStatus(AuthStatus.authenticated);
-          debugPrint('AuthController: Offline re-login accepted (cached session).');
+          debugPrint(
+            'AuthController: Offline re-login accepted (cached session).',
+          );
           return true;
         }
       }
 
-      _errorMessage = 'Session expired. Please connect to the internet to log back in.';
+      _errorMessage =
+          'Session expired. Please connect to the internet to log back in.';
       _setStatus(AuthStatus.error);
       return false;
     }
@@ -284,9 +290,7 @@ class AuthController extends ChangeNotifier {
       // Clear the soft-logout flag so offline session restore works on next launch.
       await _secureStorage.delete(key: _kIsLoggedOut);
 
-      // Scope all local DB reads/writes to this user.
-      LocalDatabase.setUserId(fbUser.uid);
-      ProgressService.instance.setUserId(fbUser.uid);
+      await _bindUserContext(localUser);
 
       _currentUser = localUser;
       // Sync the in-memory flag with what we just wrote to secure storage so
@@ -328,12 +332,7 @@ class AuthController extends ChangeNotifier {
     // LocalUser profile (hasCompletedDiagnostic, startingLevel) stays in Hive.
     _currentUser = null;
     _hasEverLoggedIn = true;
-    LocalDatabase.setUserId('anonymous');
-    ProgressService.instance.setUserId('anonymous');
-    PointsService.instance.setUserId('anonymous');
-    StreakService.instance.setUserId('anonymous');
-    BadgeEngine.instance.setUserId('anonymous');
-    ModuleUnlockService.instance.setUserId('anonymous');
+    _scopeServicesToUser('anonymous');
     _setStatus(AuthStatus.unauthenticated);
   }
 
@@ -367,32 +366,34 @@ class AuthController extends ChangeNotifier {
       reason: 'diagnostic_completed',
     );
 
-    // Award points and badges for completing the diagnostic
-    await PointsService.instance.addPoints(
-      PointsService.diagnosticCompleted, 'diagnostic_completed',
-    );
-    await BadgeEngine.instance.checkAndAward('diagnostic_completed');
-    await BadgeEngine.instance.checkAndAward('learning_path_generated');
-
     notifyListeners();
   }
 
   /// Maps a starting skill level to its first module ID.
   String _firstModuleForLevel(String level) {
     switch (level) {
-      case 'Intermediate': return 'module_03';
-      case 'Novice':       return 'module_02';
-      default:             return 'module_01'; // Beginner
+      case 'Intermediate':
+        return 'module_03';
+      case 'Novice':
+        return 'module_02';
+      default:
+        return 'module_01'; // Beginner
     }
   }
 
   // ── Profile Updates ───────────────────────────────────────────────────────
 
-  Future<void> updateProfile(String firstName, String lastName) async {
+  Future<void> updateProfile(
+    String firstName,
+    String lastName, {
+    String? avatarPath,
+  }) async {
     if (_currentUser == null) return;
     _currentUser!.firstName = firstName;
     _currentUser!.lastName = lastName;
+    if (avatarPath != null) _currentUser!.avatarPath = avatarPath;
     await _hiveService.saveUser(_currentUser!);
+    await _upsertLearnerProfile(_currentUser!);
     notifyListeners();
   }
 
@@ -417,6 +418,71 @@ class AuthController extends ChangeNotifier {
     // Keep _kHasLoggedIn so returning users still go to LoginScreen, not onboarding.
   }
 
+  Future<void> _bindUserContext(LocalUser user) async {
+    _scopeServicesToUser(user.uid);
+    await _upsertLearnerProfile(user);
+    await _ensureLeaderboardRow(user.uid);
+  }
+
+  void _scopeServicesToUser(String uid) {
+    LocalDatabase.setUserId(uid);
+    ProgressService.instance.setUserId(uid);
+    PointsService.instance.setUserId(uid);
+    StreakService.instance.setUserId(uid);
+    BadgeEngine.instance.setUserId(uid);
+    ModuleUnlockService.instance.setUserId(uid);
+    ChallengeService.instance.setUserId(uid);
+    SkillProfileService.instance.setUserId(uid);
+    CertificateService.instance.setUserId(uid);
+  }
+
+  Future<void> _upsertLearnerProfile(LocalUser user) async {
+    final db = await AppDatabase.instance.database;
+    final createdAt = user.createdAt.toIso8601String();
+    final lastSeenAt = user.lastSeenAt.toIso8601String();
+    await db.rawInsert(
+      '''
+      INSERT INTO learners (id, first_name, last_name, email, created_at, last_active)
+      VALUES (?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET
+        first_name = excluded.first_name,
+        last_name = excluded.last_name,
+        email = excluded.email,
+        last_active = excluded.last_active
+    ''',
+      [
+        user.uid,
+        user.firstName,
+        user.lastName,
+        user.email,
+        createdAt,
+        lastSeenAt,
+      ],
+    );
+  }
+
+  Future<void> _ensureLeaderboardRow(String uid) async {
+    final db = await AppDatabase.instance.database;
+    final now = DateTime.now().toIso8601String();
+    await db.rawInsert(
+      '''
+      INSERT INTO leaderboard_scores (
+        id,
+        learner_id,
+        total_points,
+        modules_completed,
+        first_attempt_passes,
+        current_streak,
+        longest_streak,
+        last_updated
+      )
+      VALUES (?, ?, 0, 0, 0, 0, 0, ?)
+      ON CONFLICT(learner_id) DO NOTHING
+    ''',
+      [uid, uid, now],
+    );
+  }
+
   void _setStatus(AuthStatus status) {
     _status = status;
     notifyListeners();
@@ -424,16 +490,26 @@ class AuthController extends ChangeNotifier {
 
   String _mapFirebaseError(String code) {
     switch (code) {
-      case 'user-not-found':       return 'No account found with this email.';
-      case 'wrong-password':       return 'Incorrect password.';
-      case 'invalid-credential':   return 'Invalid email or password.';
-      case 'email-already-in-use': return 'An account with this email already exists.';
-      case 'weak-password':        return 'Password is too weak. Use at least 6 characters.';
-      case 'invalid-email':        return 'Please enter a valid email address.';
-      case 'network-request-failed': return 'No internet connection. Please try again.';
-      case 'too-many-requests':    return 'Too many attempts. Please wait and try again.';
-      case 'operation-not-allowed': return 'Email/Password accounts are not enabled.';
-      default: return 'Authentication error: $code. Please try again.';
+      case 'user-not-found':
+        return 'No account found with this email.';
+      case 'wrong-password':
+        return 'Incorrect password.';
+      case 'invalid-credential':
+        return 'Invalid email or password.';
+      case 'email-already-in-use':
+        return 'An account with this email already exists.';
+      case 'weak-password':
+        return 'Password is too weak. Use at least 6 characters.';
+      case 'invalid-email':
+        return 'Please enter a valid email address.';
+      case 'network-request-failed':
+        return 'No internet connection. Please try again.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please wait and try again.';
+      case 'operation-not-allowed':
+        return 'Email/Password accounts are not enabled.';
+      default:
+        return 'Authentication error: $code. Please try again.';
     }
   }
 }

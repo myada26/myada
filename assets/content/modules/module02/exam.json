@@ -1,0 +1,289 @@
+{
+  "exam_id": "exam_m02",
+  "module_id": "module_02",
+  "ac_type": "module_exam",
+  "title": "Module 2 Final Exam",
+  "description": "Prove your mastery of variables, naming rules, input, and primitive data types. Pass this exam to unlock the next module.",
+  "passing_score": 8,
+  "time_limit_sec": 600,
+  "xp_reward": 50,
+  "questions": [
+    {
+      "question_id": "m02_e01",
+      "exam_id": "exam_m02",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "A learner is building a program about variables, naming rules, input, and primitive data types. What should the learner focus on most?",
+      "options_json": [
+        "Using Python to store, update, inspect, and display simple values using variables and primitive data types",
+        "Avoiding all code examples",
+        "Writing random lines without testing",
+        "Using only comments instead of code"
+      ],
+      "correct_answer": "0",
+      "explanation": "Module 2 develops the ability to store, update, inspect, and display simple values using variables and primitive data types.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e02",
+      "exam_id": "exam_m02",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the bug in this variable name:",
+      "content": {
+        "buggy_code": "2score = 90",
+        "bug_description": "Variable names cannot start with a number"
+      },
+      "correct_answer": "Variable names cannot start with a number",
+      "explanation": "Python variable names may contain numbers but cannot begin with one.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e03",
+      "exam_id": "exam_m02",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the assignment:",
+      "content": {
+        "code_with_blank": "age ___ 18",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "=",
+      "explanation": "A single equals sign assigns a value to a variable.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e04",
+      "exam_id": "exam_m02",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to store and print a student name.",
+      "content": {
+        "lines": [
+          "print(student_name)",
+          "student_name = \"Ana\""
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "Correct ordering matters because Python uses earlier values and statements later in the program.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e05",
+      "exam_id": "exam_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the final output?\npoints = 10\npoints = 15\nprint(points)",
+      "options_json": [
+        "15",
+        "10",
+        "25",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "The second assignment replaces the first value.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e06",
+      "exam_id": "exam_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create variables name and age, then print both values.",
+      "content": {
+        "starter_code": "# Create and print two variables\n",
+        "hint": "Store values first, then use print().",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 2,
+          "required_variables": [
+            "name",
+            "age"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e07",
+      "exam_id": "exam_m02",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong with this code?",
+      "content": {
+        "buggy_code": "name = Ada",
+        "bug_description": "Ada should be inside quotation marks"
+      },
+      "correct_answer": "Ada should be inside quotation marks",
+      "explanation": "Text data must be stored as a string using quotes.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e08",
+      "exam_id": "exam_m02",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the code to check the data type:",
+      "content": {
+        "code_with_blank": "score = 95\nprint(___(score))",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "type",
+      "explanation": "type(score) returns the data type of score.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e09",
+      "exam_id": "exam_m02",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A program needs to store whether a learner passed. Which data type is most appropriate?",
+      "options_json": [
+        "Boolean",
+        "String only",
+        "Float only",
+        "Comment"
+      ],
+      "correct_answer": "0",
+      "explanation": "Passed or not passed is a True/False situation.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e10",
+      "exam_id": "exam_m02",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 3,
+      "prompt_text": "Arrange the lines to ask for a name and greet the user.",
+      "content": {
+        "lines": [
+          "print(name)",
+          "name = input(\"Name: \")"
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The program must prepare data, perform the operation, and then display the result in the proper order.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e11",
+      "exam_id": "exam_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Ask the user for a favorite color and print it back.",
+      "content": {
+        "starter_code": "# Use input() and print()\n",
+        "hint": "Store input in a variable before printing.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "input"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e12",
+      "exam_id": "exam_m02",
+      "skill_tag": "Debugging",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Which habit best prevents common mistakes in variables, naming rules, input, and primitive data types?",
+      "options_json": [
+        "Write a tiny example, run it, and check the output",
+        "Write many lines before testing anything",
+        "Ignore indentation and spelling",
+        "Use random syntax until the program works"
+      ],
+      "correct_answer": "0",
+      "explanation": "Small tests and careful output checking make errors easier to find.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e13",
+      "exam_id": "exam_m02",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 3,
+      "prompt_text": "Complete the boolean value:",
+      "content": {
+        "code_with_blank": "is_ready = ___",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "True",
+      "explanation": "Python boolean values are True and False with capital first letters.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e14",
+      "exam_id": "exam_m02",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 3,
+      "prompt_text": "Find the data type mistake:",
+      "content": {
+        "buggy_code": "age = \"18\"\nprint(age + 1)",
+        "bug_description": "age is a string, so it must be converted to int before adding"
+      },
+      "correct_answer": "age is a string, so it must be converted to int before adding",
+      "explanation": "Quoted 18 is text, not a number.",
+      "points": 1,
+      "is_retry_eligible": false
+    },
+    {
+      "question_id": "m02_e15",
+      "exam_id": "exam_m02",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "Why is Module 2 important before moving to the next Python topic?",
+      "options_json": [
+        "It builds reliable practice with variables, naming rules, input, and primitive data types",
+        "It removes the need to understand syntax",
+        "It teaches only memorization without coding",
+        "It replaces all future modules"
+      ],
+      "correct_answer": "0",
+      "explanation": "The next modules depend on accurate use of variables, naming rules, input, and primitive data types.",
+      "points": 1,
+      "is_retry_eligible": false
+    }
+  ]
+}

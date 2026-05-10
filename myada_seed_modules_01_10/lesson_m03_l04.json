@@ -1,0 +1,86 @@
+{
+  "lesson_id": "m03_l04",
+  "module_id": "module_03",
+  "order_index": 4,
+  "title": "Combining Numbers and Variables",
+  "skill_tag": "Computational Thinking",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m03_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Combining Numbers and Variables",
+      "body": "Combining Numbers and Variables is part of Mathematical and String Operations. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m03_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Combining Numbers and Variables",
+      "body": "Variables can hold numbers and be used in calculations. This makes formulas easier to read and change."
+    },
+    {
+      "slide_id": "m03_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Using variables in formulas is like writing a price tag and quantity on a receipt before calculating the total."
+    },
+    {
+      "slide_id": "m03_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Combining Numbers and Variables",
+      "code": "apples = 6\nprice = 10\nprint(apples * price)",
+      "language": "python",
+      "expected_output": "60",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m03_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Python follows operator rules exactly. Use variables and parentheses to make calculations readable and predictable."
+    },
+    {
+      "slide_id": "m03_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Create quantity and price variables, then print their product.",
+      "starter_code": "quantity = 0\nprice = 0\n",
+      "hint": "Use print(quantity * price).",
+      "expected_output_contains": "product",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m03_l04_cc",
+    "lesson_id": "m03_l04",
+    "prompt_text": "Set notebooks to 3 and cost to 25, then print the total cost.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "75",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

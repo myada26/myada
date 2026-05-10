@@ -1,0 +1,25 @@
+[
+    {
+        "module_id": "module_05",
+        "number": 5,
+        "title": "Conditional Execution",
+        "subtitle": "Use if, else, elif, and nested decisions to make Python programs respond diff…",
+        "skill_tag": "Logic Flow",
+        "icon": "alt_route_rounded",
+        "lesson_count": 7,
+        "lessons": [
+            "m05_l01",
+            "m05_l02",
+            "m05_l03",
+            "m05_l04",
+            "m05_l05",
+            "m05_l06",
+            "m05_l07"
+        ],
+        "estimated_minutes": 35,
+        "prerequisite_module_id": "module_04",
+        "unlock_condition": "module_04_passed",
+        "badge_id": "badge_module_05",
+        "cert_eligible": false
+    }
+]

@@ -1,11 +1,20 @@
 // lib/features/progress/presentation/screens/progress_screen.dart
 import 'package:flutter/material.dart';
-import '../../../../components/navigation/global_sync_header.dart';
+import 'package:provider/provider.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import '../../../../components/navigation/global_stat_bar.dart';
+import '../../../../controllers/learning_path_controller.dart';
+import '../../../../core/services/points_service.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-
-// ── Data models ───────────────────────────────────────────────────────────────
+import '../../../../models/learning_path_model.dart';
+import '../../../learn/data/services/module_unlock_service.dart';
+import '../../../learn/data/services/progress_service.dart';
+import '../../../learn/presentation/screens/module_quiz_screen.dart';
+import '../../data/services/challenge_service.dart';
 
 class _ChallengeData {
   final String title;
@@ -18,6 +27,8 @@ class _ChallengeData {
   final Color pillBg;
   final Color pillFg;
   final String pointsLabel;
+  final IconData icon;
+
   const _ChallengeData({
     required this.title,
     required this.subtitle,
@@ -29,6 +40,7 @@ class _ChallengeData {
     required this.pillBg,
     required this.pillFg,
     required this.pointsLabel,
+    required this.icon,
   });
 }
 
@@ -38,6 +50,7 @@ class _RetakeData {
   final Color scoreColor;
   final String reason;
   final String buttonLabel;
+
   const _RetakeData({
     required this.title,
     required this.score,
@@ -48,13 +61,14 @@ class _RetakeData {
 }
 
 class _NextExamData {
-  final String comingUpLabel;
+  final String sectionLabel;
   final String title;
   final String subtitle;
   final double readinessPercent;
   final String ctaLabel;
+
   const _NextExamData({
-    required this.comingUpLabel,
+    required this.sectionLabel,
     required this.title,
     required this.subtitle,
     required this.readinessPercent,
@@ -62,74 +76,253 @@ class _NextExamData {
   });
 }
 
-// ── Screen ────────────────────────────────────────────────────────────────────
-
-class ProgressScreen extends StatelessWidget {
+class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
 
-  static const _challenges = [
-    _ChallengeData(
-      title: 'Functions & Scope',
-      subtitle: 'Module 2 · Timed · 15 min',
-      progress: 0.6,
-      status: 'In Progress',
-      accentColor: AppColors.success,
-      iconBg: AppColors.successLight,
-      iconFg: AppColors.success,
-      pillBg: AppColors.successLight,
-      pillFg: AppColors.success,
-      pointsLabel: '+120 pts',
-    ),
-    _ChallengeData(
-      title: 'Logic Flow',
-      subtitle: 'Module 1 · Timed · 10 min',
-      progress: 0.0,
-      status: 'Pending',
-      accentColor: AppColors.primary,
-      iconBg: AppColors.primaryLight,
-      iconFg: AppColors.primary,
-      pillBg: AppColors.primaryLight,
-      pillFg: AppColors.primary,
-      pointsLabel: '+80 pts',
-    ),
-    _ChallengeData(
-      title: 'Debugging',
-      subtitle: 'Module 2 · Timed · 20 min',
-      progress: 0.0,
-      status: 'Pending',
-      accentColor: AppColors.error,
-      iconBg: AppColors.errorLight,
-      iconFg: AppColors.error,
-      pillBg: AppColors.errorLight,
-      pillFg: AppColors.error,
-      pointsLabel: '+100 pts',
-    ),
-  ];
+  @override
+  State<ProgressScreen> createState() => _ProgressScreenState();
+}
 
-  static const _retakes = [
-    _RetakeData(
-      title: 'Conditionals Quiz',
-      score: '42%',
-      scoreColor: AppColors.error,
-      reason: 'You scored below 50% — a retake is recommended.',
-      buttonLabel: 'Retake Quiz',
-    ),
-    _RetakeData(
-      title: 'Variables & Types',
-      score: '61%',
-      scoreColor: AppColors.warning,
-      reason: 'Improve your score to unlock the next module.',
-      buttonLabel: 'Retake Quiz',
-    ),
-  ];
+class _ProgressScreenState extends State<ProgressScreen> {
+  bool _isLoading = true;
+  int _activeCount = 0;
+  int _retakeCount = 0;
+  int _points = 0;
+  List<ChallengeModel> _activeChallenges = [];
+  List<RetakeItem> _retakes = [];
+  _NextExamData? _nextExam;
+  String _pathSignature = '';
+  List<LearningModule> _unlockedExams = [];
 
-  static const _nextExam = _NextExamData(
-    comingUpLabel: 'Coming up',
-    title: 'Module 3 Exam',
-    subtitle: 'Branching Realities · 30 questions',
-    readinessPercent: 0.72,
-    ctaLabel: 'Start Early',
-  );
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final learningPath =
+        context.watch<LearningPathController>().result?.learningPath ??
+        const [];
+    final signature = learningPath.map((m) => m.moduleId).join('|');
+    if (_pathSignature != signature) {
+      _pathSignature = signature;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
+    }
+  }
+
+  Future<void> _loadData() async {
+    final pathCtrl = context.read<LearningPathController>();
+    final learningPath =
+        pathCtrl.result?.learningPath ?? const <LearningModule>[];
+    final preferredTags = _preferredSkillTags(learningPath);
+
+    setState(() => _isLoading = true);
+
+    await PointsService.instance.loadTotal();
+    final activeChallenges = await ChallengeService.instance
+        .getAvailableChallenges(preferredSkillTags: preferredTags);
+    final retakes = await ChallengeService.instance.getRetakeSuggestions();
+    final nextExam = await _buildNextExamData(learningPath);
+
+    // Find modules with unlocked exams
+    final unlockedExams = <LearningModule>[];
+    for (final module in learningPath) {
+      if (await ModuleUnlockService.instance.isExamUnlocked(module.moduleId)) {
+        unlockedExams.add(module);
+      }
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _points = PointsService.instance.totalPoints;
+      _activeChallenges = activeChallenges;
+      _retakes = retakes;
+      _activeCount = activeChallenges.length;
+      _retakeCount = retakes.length;
+      _nextExam = nextExam;
+      _unlockedExams = unlockedExams;
+      _isLoading = false;
+    });
+  }
+
+  Set<String> _preferredSkillTags(List<LearningModule> learningPath) {
+    LearningModule? activeModule;
+    for (final module in learningPath) {
+      if (module.isStartHere) {
+        activeModule = module;
+        break;
+      }
+    }
+    if (activeModule == null) return const {};
+    return {_skillTagFor(activeModule.skill)};
+  }
+
+  String _skillTagFor(SkillCategory skill) => switch (skill) {
+    SkillCategory.sequencing => 'sequencing',
+    SkillCategory.logicFlow => 'logic_flow',
+    SkillCategory.debugging => 'debugging',
+    SkillCategory.syntax => 'syntax',
+    SkillCategory.computationalThinking => 'computational_thinking',
+  };
+
+  Future<_NextExamData> _buildNextExamData(
+    List<LearningModule> learningPath,
+  ) async {
+    if (learningPath.isEmpty) {
+      return const _NextExamData(
+        sectionLabel: 'No path yet',
+        title: 'Diagnostic needed',
+        subtitle: 'Finish the diagnostic to unlock your first module exam.',
+        readinessPercent: 0,
+        ctaLabel: 'Start diagnostic',
+      );
+    }
+
+    LearningModule? target;
+    for (final module in learningPath) {
+      final unlocked = await ModuleUnlockService.instance.isModuleUnlocked(
+        module.moduleId,
+      );
+      final passed = await _isModulePassed(module.moduleId);
+      if (unlocked && !passed) {
+        target = module;
+        break;
+      }
+    }
+
+    for (final module in learningPath) {
+      if (target != null) break;
+      final passed = await _isModulePassed(module.moduleId);
+      if (!passed) {
+        target = module;
+        break;
+      }
+    }
+
+    if (target == null) {
+      return const _NextExamData(
+        sectionLabel: 'Completed',
+        title: 'All module exams complete',
+        subtitle: 'You are caught up. Review any module whenever you want.',
+        readinessPercent: 1,
+        ctaLabel: 'Review modules',
+      );
+    }
+
+    final completedLessons = await ProgressService.instance
+        .getCompletedLessonCount(target.moduleId);
+    final lessonGoal = target.estimatedLessons == 0
+        ? 1
+        : target.estimatedLessons;
+    final readiness = (completedLessons / lessonGoal).clamp(0.0, 1.0);
+    final lessonsRemaining = (lessonGoal - completedLessons).clamp(
+      0,
+      lessonGoal,
+    );
+    final examReady = lessonsRemaining == 0;
+
+    return _NextExamData(
+      sectionLabel: 'Module ${target.number}',
+      title: 'Module ${target.number} Exam',
+      subtitle: examReady
+          ? '${target.name} is ready whenever you are.'
+          : 'Finish $lessonsRemaining more lesson${lessonsRemaining == 1 ? '' : 's'} in ${target.name} to unlock this exam.',
+      readinessPercent: readiness,
+      ctaLabel: examReady ? 'Take exam' : 'Continue module',
+    );
+  }
+
+  Future<bool> _isModulePassed(String moduleId) async {
+    return ModuleUnlockService.instance.isQuizPassed(moduleId);
+  }
+
+  Future<void> _openExam(BuildContext context, LearningModule module) async {
+    final moduleId   = module.moduleId;
+    final folderName = moduleId.replaceAll('_', '');
+    List<Map<String, dynamic>> questions = [];
+
+    try {
+      final raw = await rootBundle
+          .loadString('assets/content/modules/$folderName/exam.json');
+      final decoded    = jsonDecode(raw) as Map<String, dynamic>;
+      final rawQuestions = decoded['questions'] as List<dynamic>? ?? [];
+      questions = rawQuestions.map<Map<String, dynamic>>((q) {
+        final m = Map<String, dynamic>.from(q as Map);
+        return {
+          'id':            m['id'] ?? '',
+          'prompt_text':   m['prompt'] ?? m['prompt_text'] ?? '',
+          'question_type': m['type'] ?? m['question_type'] ?? 'multiple_choice',
+          'content':       m,
+          'correct_answer': m['correct_index']?.toString() ?? m['answer'] ?? '',
+          'explanation':   m['explanation'] ?? '',
+        };
+      }).toList();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not load exam: $e')),
+        );
+      }
+      return;
+    }
+
+    if (!context.mounted) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ModuleQuizScreen(
+          moduleId:       moduleId,
+          learnerId:      ModuleUnlockService.instance.currentUserId,
+          questions:      questions,
+          isFirstAttempt: true,
+          hasStreak:      false,
+          isRetryQuiz:    false,
+          nextModuleId:   '',
+        ),
+      ),
+    );
+  }
+
+  List<_ChallengeData> get _challengeCards => _activeChallenges.map((
+    challenge,
+  ) {
+    final isTimed = challenge.isTimed;
+    final accentColor = isTimed ? AppColors.success : AppColors.primary;
+    final iconColor = isTimed ? AppColors.success : AppColors.primary;
+    final iconBg = isTimed ? AppColors.successLight : AppColors.primaryLight;
+    final status = isTimed ? 'Timed' : 'Practice';
+
+    return _ChallengeData(
+      title: challenge.title,
+      subtitle: isTimed
+          ? '${challenge.description.split('.').first} • ${challenge.timeLimitSeconds ~/ 60} min'
+          : challenge.description.split('.').first,
+      progress: 0,
+      status: status,
+      accentColor: accentColor,
+      iconBg: iconBg,
+      iconFg: iconColor,
+      pillBg: iconBg,
+      pillFg: iconColor,
+      pointsLabel: '+${challenge.pointsReward} pts',
+      icon: isTimed ? Icons.timer_rounded : Icons.psychology_alt_rounded,
+    );
+  }).toList();
+
+  List<_RetakeData> get _retakeCards => _retakes
+      .map(
+        (item) => _RetakeData(
+          title: item.moduleTitle,
+          score: '${item.lastScore.round()}%',
+          scoreColor: AppColors.error,
+          reason:
+              'Latest quiz attempt is below passing. Retake it when you are ready.',
+          buttonLabel: 'Retake quiz',
+        ),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -139,31 +332,101 @@ class ProgressScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: _ChallengeHeader()),
-            SliverToBoxAdapter(child: _StatsRow()),
+            SliverToBoxAdapter(
+              child: _StatsRow(
+                activeCount: _activeCount,
+                retakeCount: _retakeCount,
+                points: _points,
+              ),
+            ),
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.screenPadding),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenPadding,
+              ),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   const SizedBox(height: AppSpacing.lg),
-                  _SectionHeader(title: 'Timed challenges', count: '3 pending'),
+                  _SectionHeader(
+                    title: 'Active challenges',
+                    count: '$_activeCount available',
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  ..._challenges.map((c) => Padding(
+                  if (_isLoading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (_challengeCards.isEmpty)
+                    const _EmptyStateCard(
+                      title: 'No active challenges yet',
+                      subtitle:
+                          'Complete lessons and quizzes to unlock practice challenges here.',
+                    )
+                  else
+                    ..._challengeCards.map(
+                      (data) => Padding(
                         padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: _ChallengeCard(data: c),
-                      )),
+                        child: _ChallengeCard(data: data),
+                      ),
+                    ),
                   const _HorizontalDivider(),
                   const SizedBox(height: AppSpacing.md),
-                  _SectionHeader(title: 'Retake suggestions', count: '2 quizzes'),
+                  _SectionHeader(
+                    title: 'Retake suggestions',
+                    count:
+                        '$_retakeCount module${_retakeCount == 1 ? '' : 's'}',
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  ..._retakes.map((r) => Padding(
+                  if (_isLoading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (_retakeCards.isEmpty)
+                    const _EmptyStateCard(
+                      title: 'No retakes needed right now!',
+                      subtitle:
+                          'When a module quiz needs another try, it will show up here.',
+                    )
+                  else
+                    ..._retakeCards.map(
+                      (data) => Padding(
                         padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                        child: _RetakeCard(data: r),
-                      )),
+                        child: _RetakeCard(data: data),
+                      ),
+                    ),
                   const _HorizontalDivider(),
                   const SizedBox(height: AppSpacing.md),
-                  _SectionHeader(title: 'Next exam', count: 'Module 3'),
+                  _SectionHeader(
+                    title: 'Next exam',
+                    count: _nextExam?.sectionLabel ?? 'Loading',
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  _NextExamCard(data: _nextExam),
+                  if (_nextExam != null)
+                    _NextExamCard(data: _nextExam!)
+                  else
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  if (_unlockedExams.isNotEmpty) ...[
+                    const _HorizontalDivider(),
+                    const SizedBox(height: AppSpacing.md),
+                    _SectionHeader(
+                      title: 'Module exams',
+                      count: '${_unlockedExams.length} unlocked',
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    ..._unlockedExams.map(
+                      (module) => Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                        child: _ModuleExamCard(
+                          module: module,
+                          onTap: () => _openExam(context, module),
+                        ),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: AppSpacing.xl2),
                 ]),
               ),
@@ -174,8 +437,6 @@ class ProgressScreen extends StatelessWidget {
     );
   }
 }
-
-// ── Header ────────────────────────────────────────────────────────────────────
 
 class _ChallengeHeader extends StatelessWidget {
   @override
@@ -190,12 +451,12 @@ class _ChallengeHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const GlobalSyncHeader(),
+          const GlobalStatBar(),
           const SizedBox(height: AppSpacing.md),
           Text('Challenges', style: AppTextStyles.displayMedium),
           const SizedBox(height: 4),
           Text(
-            'Track your timed challenges and exam readiness',
+            'Track live practice opportunities and your next module exam.',
             style: AppTextStyles.bodyMedium,
           ),
         ],
@@ -204,93 +465,55 @@ class _ChallengeHeader extends StatelessWidget {
   }
 }
 
-// ── Stats Row ─────────────────────────────────────────────────────────────────
-
 class _StatsRow extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: AppSpacing.md),
-      decoration: const BoxDecoration(
-        color: AppColors.popover,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFFEEEEEE), width: 0.5),
-        ),
-      ),
-      child: Row(
-        children: const [
-          Expanded(
-            child: _StatBox(
-              label: 'Completed',
-              value: '4',
-              valueColor: AppColors.success,
-              subLabel: 'challenges',
-            ),
-          ),
-          Expanded(
-            child: _StatBox(
-              label: 'Retakes',
-              value: '2',
-              valueColor: AppColors.error,
-              subLabel: 'suggested',
-            ),
-          ),
-          Expanded(
-            child: _StatBox(
-              label: 'Points',
-              value: '360',
-              valueColor: AppColors.primary,
-              subLabel: 'earned',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+  final int activeCount;
+  final int retakeCount;
+  final int points;
 
-class _StatBox extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color valueColor;
-  final String subLabel;
-
-  const _StatBox({
-    required this.label,
-    required this.value,
-    required this.valueColor,
-    required this.subLabel,
+  const _StatsRow({
+    required this.activeCount,
+    required this.retakeCount,
+    required this.points,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.md,
-        horizontal: AppSpacing.sm,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.screenPadding,
+        AppSpacing.md,
+        AppSpacing.screenPadding,
+        0,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Row(
         children: [
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.mutedForeground,
+          Expanded(
+            child: _SolidStatCard(
+              icon: Icons.check_circle_rounded,
+              label: 'Active',
+              value: '$activeCount',
+              subLabel: 'available',
+              backgroundColor: AppColors.success,
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: AppTextStyles.h2.copyWith(
-              color: valueColor,
-              fontWeight: FontWeight.w700,
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: _SolidStatCard(
+              icon: Icons.replay_rounded,
+              label: 'Retakes',
+              value: '$retakeCount',
+              subLabel: 'eligible',
+              backgroundColor: AppColors.error,
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            subLabel,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.subtleForeground,
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: _SolidStatCard(
+              icon: Icons.star_rounded,
+              label: 'Points',
+              value: '$points',
+              subLabel: 'earned',
+              backgroundColor: AppColors.primary,
             ),
           ),
         ],
@@ -299,7 +522,61 @@ class _StatBox extends StatelessWidget {
   }
 }
 
-// ── Section Header ────────────────────────────────────────────────────────────
+class _SolidStatCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final String subLabel;
+  final Color backgroundColor;
+
+  const _SolidStatCard({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.subLabel,
+    required this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: Colors.white),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: AppTextStyles.h2.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              height: 1,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: Colors.white.withAlpha(210),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            subLabel,
+            style: AppTextStyles.caption.copyWith(
+              color: Colors.white.withAlpha(160),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _SectionHeader extends StatelessWidget {
   final String title;
@@ -323,8 +600,6 @@ class _SectionHeader extends StatelessWidget {
     );
   }
 }
-
-// ── Challenge Card ────────────────────────────────────────────────────────────
 
 class _ChallengeCard extends StatelessWidget {
   final _ChallengeData data;
@@ -350,7 +625,7 @@ class _ChallengeCard extends StatelessWidget {
               color: data.iconBg,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.timer_rounded, color: data.iconFg, size: 20),
+            child: Icon(data.icon, color: data.iconFg, size: 20),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -366,10 +641,7 @@ class _ChallengeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                _ProgressBar(
-                  value: data.progress,
-                  color: data.accentColor,
-                ),
+                _ProgressBar(value: data.progress, color: data.accentColor),
               ],
             ),
           ),
@@ -377,11 +649,7 @@ class _ChallengeCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _StatusPill(
-                label: data.status,
-                bg: data.pillBg,
-                fg: data.pillFg,
-              ),
+              _StatusPill(label: data.status, bg: data.pillBg, fg: data.pillFg),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 data.pointsLabel,
@@ -397,8 +665,6 @@ class _ChallengeCard extends StatelessWidget {
     );
   }
 }
-
-// ── Status Pill ───────────────────────────────────────────────────────────────
 
 class _StatusPill extends StatelessWidget {
   final String label;
@@ -425,8 +691,6 @@ class _StatusPill extends StatelessWidget {
     );
   }
 }
-
-// ── Progress Bar ──────────────────────────────────────────────────────────────
 
 class _ProgressBar extends StatelessWidget {
   final double value;
@@ -462,8 +726,6 @@ class _ProgressBar extends StatelessWidget {
     );
   }
 }
-
-// ── Retake Card ───────────────────────────────────────────────────────────────
 
 class _RetakeCard extends StatelessWidget {
   final _RetakeData data;
@@ -525,8 +787,6 @@ class _RetakeCard extends StatelessWidget {
   }
 }
 
-// ── Next Exam Card ────────────────────────────────────────────────────────────
-
 class _NextExamCard extends StatelessWidget {
   final _NextExamData data;
 
@@ -544,7 +804,7 @@ class _NextExamCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data.comingUpLabel.toUpperCase(),
+            data.sectionLabel.toUpperCase(),
             style: AppTextStyles.caption.copyWith(
               color: AppColors.primaryForeground.withAlpha(180),
               fontWeight: FontWeight.w700,
@@ -610,7 +870,37 @@ class _NextExamCard extends StatelessWidget {
   }
 }
 
-// ── Horizontal Divider ────────────────────────────────────────────────────────
+class _EmptyStateCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _EmptyStateCard({required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.popover,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: AppTextStyles.headingSmall),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            subtitle,
+            style: AppTextStyles.bodySm.copyWith(
+              color: AppColors.mutedForeground,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _HorizontalDivider extends StatelessWidget {
   const _HorizontalDivider();
@@ -620,6 +910,82 @@ class _HorizontalDivider extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Divider(thickness: 0.5, color: Color(0xFFEEEEEE)),
+    );
+  }
+}
+
+class _ModuleExamCard extends StatelessWidget {
+  final LearningModule module;
+  final VoidCallback onTap;
+
+  const _ModuleExamCard({required this.module, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLight,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(
+              Icons.assignment_rounded,
+              color: AppColors.primary,
+              size: 22,
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Module ${module.number} Exam',
+                  style: AppTextStyles.labelSm.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.foreground,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  module.name,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.mutedForeground,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              elevation: 0,
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.w700, fontSize: 13),
+            ),
+            child: const Text('Take Exam'),
+          ),
+        ],
+      ),
     );
   }
 }

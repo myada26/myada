@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     final auth = context.read<AuthController>();
-    await auth.register(
+    final success = await auth.register(
       email: _emailCtrl.text.trim(),
       password: _passwordCtrl.text,
       firstName: _firstNameCtrl.text.trim(),
@@ -141,6 +141,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     // Guard: widget may have been unmounted while Firebase was responding.
     if (!mounted) return;
+
+    if (success) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Account created successfully. Let\'s set up your learning path.',
+            ),
+          ),
+        );
+
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+      if (!mounted) return;
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
+      return;
+    }
 
     // Show the error SnackBar only on failure; success navigation is handled
     // by the listener above.
@@ -218,8 +237,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
                     }
-                    if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
+                    if (!RegExp(
+                      r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(value)) {
                       return 'Invalid email address';
                     }
                     return null;
@@ -242,8 +262,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   placeholder: 'Confirm Password',
                   isPassword: true,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'Please confirm password';
-                    if (value != _passwordCtrl.text) return 'Passwords do not match';
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm password';
+                    }
+                    if (value != _passwordCtrl.text) {
+                      return 'Passwords do not match';
+                    }
                     return null;
                   },
                 ),
@@ -297,7 +321,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.pushReplacementNamed(
+                      onTap: () => Navigator.pushNamed(
                         context,
                         AppRoutes.login,
                       ),

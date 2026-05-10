@@ -1,0 +1,197 @@
+{
+  "quiz_id": "quiz_m09",
+  "module_id": "module_09",
+  "ac_type": "lesson_quiz",
+  "title": "Module 9 Quiz",
+  "description": "Test your understanding of lists, indexing, updating, append(), len(), loops, and numeric list calculations across all lessons in Module 9.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m09_q01",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 9: Lists and Mutable Sequences?",
+      "options_json": [
+        "To store collections, access list items, modify values, and process list data",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to store collections, access list items, modify values, and process list data.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q02",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the empty list:",
+      "content": {
+        "code_with_blank": "items = ___",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "[]",
+      "explanation": "Square brackets create a list.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q03",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the index bug:",
+      "content": {
+        "buggy_code": "colors = [\"red\", \"blue\"]\nprint(colors[2])",
+        "bug_description": "Index 2 is out of range"
+      },
+      "correct_answer": "Index 2 is out of range",
+      "explanation": "The valid indexes are 0 and 1.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q04",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to create a list, append an item, and print it.",
+      "content": {
+        "lines": [
+          "print(names)",
+          "names.append(\"Ana\")",
+          "names = []"
+        ],
+        "correct_order": [
+          2,
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[2,1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q05",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the first index of a Python list?",
+      "options_json": [
+        "0",
+        "1",
+        "-1",
+        "first"
+      ],
+      "correct_answer": "0",
+      "explanation": "Python list indexing starts at 0.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q06",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the method that adds to the end:",
+      "content": {
+        "code_with_blank": "names.___(\"Ana\")",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "append",
+      "explanation": "append() adds an item to the end of a list.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q07",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\ncolors = [\"red\", \"blue\"]\nprint(colors[0])",
+      "options_json": [
+        "red",
+        "blue",
+        "0",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "Index 0 accesses the first item.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q08",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong if the goal is to change the first item?",
+      "content": {
+        "buggy_code": "items = [\"old\", \"new\"]\nitems[1] = \"updated\"",
+        "bug_description": "Index 0 should be used for the first item"
+      },
+      "correct_answer": "Index 0 should be used for the first item",
+      "explanation": "Python starts counting at 0.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q09",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A learner needs to store many scores in one variable. Which structure fits best?",
+      "options_json": [
+        "List",
+        "Boolean",
+        "Single comment",
+        "One print only"
+      ],
+      "correct_answer": "0",
+      "explanation": "A list can store multiple related values.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m09_q10",
+      "quiz_id": "quiz_m09",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Create a list of three subjects and print each subject using a for loop.",
+      "content": {
+        "starter_code": "# Create list and loop through it\n",
+        "hint": "Use square brackets and a for loop.",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "for",
+            "["
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

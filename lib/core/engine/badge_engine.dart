@@ -130,6 +130,32 @@ class BadgeEngine {
         final total = ctx['totalModules'] as int? ?? 1;
         return total > 0 && done >= total;
 
+      // ── Rare Mastery ──────────────────────────────────────────────────────
+      case 'clean_sweep':
+        return event == 'module_completed' &&
+            (ctx['totalHintsUsed'] as int? ?? 1) == 0;
+
+      case 'comeback_kid':
+        return (ctx['isRetake'] == true) &&
+            (ctx['previouslyFailed'] == true) &&
+            (ctx['scorePct'] as double? ?? 0) >= 0.90;
+
+      case 'night_owl':
+        return (ctx['nightLessonsCompleted'] as int? ?? 0) >= 5;
+
+      case 'early_bird':
+        return (ctx['earlyLessonsCompleted'] as int? ?? 0) >= 5;
+
+      case 'speed_demon':
+        return event == 'timed_challenge_completed' &&
+            (ctx['timeRemainingPct'] as double? ?? 0) > 0.5;
+
+      case 'silent_solver':
+        return (ctx['noHintExerciseCount'] as int? ?? 0) >= 10;
+
+      case 'perfectionist':
+        return (ctx['perfectQuizCount'] as int? ?? 0) >= 3;
+
       default:
         return false;
     }

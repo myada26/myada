@@ -1,0 +1,82 @@
+{
+  "lesson_id": "m02_l07",
+  "module_id": "module_02",
+  "order_index": 7,
+  "title": "Using type()",
+  "skill_tag": "Debugging",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m02_l07_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Using type()",
+      "body": "Using type() is part of Variables and Primitive Data Types. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m02_l07_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Using type()",
+      "body": "The type() function tells you what kind of data a value has. It helps beginners check whether a value is an integer, float, string, or boolean."
+    },
+    {
+      "slide_id": "m02_l07_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "type() is like asking a librarian what category a book belongs to before you borrow it."
+    },
+    {
+      "slide_id": "m02_l07_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Using type()",
+      "code": "score = 95\nprint(type(score))",
+      "language": "python",
+      "expected_output": "<class 'int'>",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m02_l07_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Use clear variable names and match the data type to the kind of value you need to store."
+    },
+    {
+      "slide_id": "m02_l07_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use type() to check the data type of a variable named score.",
+      "starter_code": "score = 100\n",
+      "hint": "Write print(type(score)).",
+      "expected_output_contains": "<class",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m02_l07_cc",
+    "lesson_id": "m02_l07",
+    "prompt_text": "Create a variable named amount with the value 25.5 and print its type.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "<class 'float'>",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

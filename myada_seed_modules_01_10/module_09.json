@@ -1,0 +1,68 @@
+{
+  "module_id": "module_09",
+  "order_index": 9,
+  "title": "Lists and Mutable Sequences",
+  "description": "Create lists, read values by index, update items, append new data, find list length, and loop through list contents.",
+  "skill_category": "Computational Thinking",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 9,
+  "lessons": [
+    {
+      "lesson_id": "m09_l01",
+      "title": "What is a List?",
+      "order_index": 1,
+      "file": "lesson_m09_l01.json"
+    },
+    {
+      "lesson_id": "m09_l02",
+      "title": "Creating Lists",
+      "order_index": 2,
+      "file": "lesson_m09_l02.json"
+    },
+    {
+      "lesson_id": "m09_l03",
+      "title": "Indexing Lists",
+      "order_index": 3,
+      "file": "lesson_m09_l03.json"
+    },
+    {
+      "lesson_id": "m09_l04",
+      "title": "Updating List Items",
+      "order_index": 4,
+      "file": "lesson_m09_l04.json"
+    },
+    {
+      "lesson_id": "m09_l05",
+      "title": "append()",
+      "order_index": 5,
+      "file": "lesson_m09_l05.json"
+    },
+    {
+      "lesson_id": "m09_l06",
+      "title": "len() with Lists",
+      "order_index": 6,
+      "file": "lesson_m09_l06.json"
+    },
+    {
+      "lesson_id": "m09_l07",
+      "title": "Looping Through Lists",
+      "order_index": 7,
+      "file": "lesson_m09_l07.json"
+    },
+    {
+      "lesson_id": "m09_l08",
+      "title": "Lists of Numbers",
+      "order_index": 8,
+      "file": "lesson_m09_l08.json"
+    },
+    {
+      "lesson_id": "m09_l09",
+      "title": "Simple List Project",
+      "order_index": 9,
+      "file": "lesson_m09_l09.json"
+    }
+  ],
+  "quiz_file": "quiz_m09.json",
+  "exam_file": "exam_m09.json"
+}

@@ -23,14 +23,22 @@ class LessonController extends ChangeNotifier {
   String? _error;
   String? get error => _error;
 
-  String _userCode = '';
-  String get userCode => _userCode;
+  // ── Slide & Quiz State ──────────────────────────────────────────────────
 
-  String _userOutput = '';
-  String get userOutput => _userOutput;
+  int _currentSlideIndex = 0;
+  int get currentSlideIndex => _currentSlideIndex;
 
-  bool _isSuccess = false;
-  bool get isSuccess => _isSuccess;
+  bool _isQuizMode = false;
+  bool get isQuizMode => _isQuizMode;
+
+  int _currentQuizIndex = 0;
+  int get currentQuizIndex => _currentQuizIndex;
+
+  final List<bool> _quizResults = [];
+  List<bool> get quizResults => _quizResults;
+
+  bool _isLessonComplete = false;
+  bool get isLessonComplete => _isLessonComplete;
 
   /// The lesson id that is currently displayed.
   String? _currentLessonId;
@@ -49,12 +57,16 @@ class LessonController extends ChangeNotifier {
   int get _currentLessonNumber {
     if (_currentLessonId == null) return 1;
     final parts = _currentLessonId!.split('_l');
-    return int.tryParse(parts.last) ?? 1;
+    if (parts.length > 1) {
+      final numPart = parts.last.replaceAll('_', '.');
+      return int.tryParse(numPart.split('.').first) ?? 1;
+    }
+    return 1;
   }
 
   bool get hasPreviousLesson => _currentLessonNumber > 1;
-  bool get hasNextLesson     => _currentLessonNumber < _totalLessons;
-  bool get isLastLesson      => _currentLessonNumber >= _totalLessons;
+  bool get hasNextLesson => _currentLessonNumber < _totalLessons;
+  bool get isLastLesson => _currentLessonNumber >= _totalLessons;
 
   /// True when the loaded lesson's JSON contains "is_module_closer": true.
   /// Used by LessonScreen and TryItYourselfCta to trigger quiz navigation
@@ -76,21 +88,25 @@ class LessonController extends ChangeNotifier {
   Future<void> loadLesson(String moduleId, String lessonId) async {
     _isLoading = true;
     _error = null;
-    _isSuccess = false;
-    _userOutput = '';
     _currentModuleId = moduleId;
     _currentLessonId = lessonId;
+    _currentSlideIndex = 0;
+    _isQuizMode = false;
+    _currentQuizIndex = 0;
+    _quizResults.clear();
+    _isLessonComplete = false;
     notifyListeners();
 
     try {
       // Load lesson content
-      final folderName  = moduleId.replaceAll('_', '');
-      final lessonNum   = lessonId.split('_l').last.padLeft(2, '0');
-      final jsonString  = await rootBundle.loadString(
-          'assets/content/modules/$folderName/lesson_$lessonNum.json');
-      final jsonMap     = jsonDecode(jsonString) as Map<String, dynamic>;
+      final folderName = moduleId.replaceAll('_', '');
+      final lessonNum = lessonId.split('_l').last;
+      final formattedNum = lessonNum.replaceAll('_', '.');
+      final jsonString = await rootBundle.loadString(
+        'assets/content/modules/$folderName/lesson_$formattedNum.json',
+      );
+      final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
       _lessonData = LessonData.fromJson(jsonMap);
-      _userCode   = _lessonData!.tryItYourself.starterCode;
 
       // Load module lesson count from meta.json
       await _loadTotalLessons(folderName, moduleId);
@@ -105,7 +121,8 @@ class LessonController extends ChangeNotifier {
   Future<void> _loadTotalLessons(String folderName, String moduleId) async {
     try {
       final metaString = await rootBundle.loadString(
-          'assets/content/modules/$folderName/meta.json');
+        'assets/content/modules/$folderName/meta.json',
+      );
       final List<dynamic> metaList = jsonDecode(metaString);
       // meta.json is a list; find the entry for this moduleId
       final entry = metaList.firstWhere(
@@ -120,90 +137,114 @@ class LessonController extends ChangeNotifier {
     }
   }
 
-  // ── Code editor ───────────────────────────────────────────────────────────
+  // ── Derived slide/quiz helpers ────────────────────────────────────────────
 
-  void updateUserCode(String code) {
-    _userCode = code;
-    notifyListeners();
-  }
+  bool get isLastSlide =>
+      _lessonData != null &&
+      _currentSlideIndex >= _lessonData!.slides.length - 1;
 
-  // Very basic simulation of running Python for UI purposes.
-  void runCodeSimulation() {
-    if (_lessonData == null) return;
-    final regex = RegExp(r"""print\(['"]?(.*?)['"]?\)""");
-    final matches = regex.allMatches(_userCode);
-    _userOutput = matches.isEmpty
-        ? ''
-        : matches.map((m) => m.group(1) ?? '').join('\n');
-    notifyListeners();
-  }
+  bool get isLastQuizQuestion =>
+      _lessonData != null &&
+      _currentQuizIndex >= _lessonData!.quiz.length - 1;
 
-  Future<LessonCompletionResult?> submitCode() async {
-    if (_lessonData == null) return null;
-    final rules = _lessonData!.tryItYourself;
-    bool isValid = false;
+  bool get allQuizAnswered =>
+      _lessonData != null &&
+      _quizResults.length >= _lessonData!.quiz.length;
 
-    runCodeSimulation();
+  /// True/false if current question has been answered; null if not yet.
+  bool? get lastAnswerCorrect =>
+      _quizResults.length > _currentQuizIndex
+          ? _quizResults[_currentQuizIndex]
+          : null;
 
-    switch (rules.validationType) {
-      case 'output_contains':
-        final minPrints = rules.validationRules['min_print_calls'] ?? 1;
-        final printCount = RegExp(r'print\(').allMatches(_userCode).length;
-        if (printCount >= minPrints) {
-          isValid = true;
-        } else {
-          _error = 'Code must contain at least $minPrints print() statements.';
-        }
-      case 'exact_output':
-        final expected = rules.validationRules['expected_output'] ?? '';
-        if (_userOutput.trim() == expected.toString().trim()) {
-          isValid = true;
-        } else {
-          _error = 'Output does not match exactly.';
-        }
-      default:
-        // code_structure and others: accept for now
-        isValid = true;
-    }
+  // ── Slide & Quiz Actions ──────────────────────────────────────────────────
 
-    if (isValid) {
-      _isSuccess = true;
-      _error = null;
-      notifyListeners();
-
-      // Both ProgressService.markLessonComplete and completeLesson must use the
-      // same canonical IDs (_currentModuleId / _currentLessonId) — not the
-      // JSON-internal lessonId (e.g. "m01_l05") which has a different prefix.
-      final canonicalModuleId = _currentModuleId ?? _lessonData!.moduleId;
-      final canonicalLessonId = _currentLessonId ?? _lessonData!.lessonId;
-
-      // Persist completion via ProgressService (sqflite)
-      await ProgressService.instance.markLessonComplete(
-        canonicalModuleId,
-        canonicalLessonId,
-      );
-
-      final result = await _completionService.completeLesson(
-        canonicalModuleId,
-        canonicalLessonId,
-        totalLessons: _totalLessons,
-      );
-
-      // ── Bug 3 fix: honour the is_module_closer JSON flag ───────────────────
-      // If this lesson declares itself the last in the module, always direct
-      // the user to the quiz — regardless of what the DB completion count
-      // returns. This makes end-of-module detection authoritatively data-driven
-      // and immune to UID scope mismatches in the sqflite progress table.
-      if (_lessonData?.isModuleCloser == true) {
-        return LessonCompletionResult.triggerQuiz;
+  void previousSlide() {
+    if (_isQuizMode) {
+      if (_currentQuizIndex > 0) {
+        _currentQuizIndex--;
+      } else {
+        _isQuizMode = false;
+        _quizResults.clear();
       }
+    } else if (_currentSlideIndex > 0) {
+      _currentSlideIndex--;
+    }
+    notifyListeners();
+  }
 
-      return result;
+  void nextSlide() {
+    if (_lessonData == null) return;
+    // Safe navigation to next slide, or launch quiz mode if slides are finished.
+    if (_currentSlideIndex < (_lessonData!.slides.length) - 1) {
+      _currentSlideIndex++;
+      notifyListeners();
+    } else if (_lessonData!.quiz.isEmpty) {
+      // No embedded quiz — show completion view immediately and persist in background.
+      _isQuizMode = true;
+      _isLessonComplete = true;
+      notifyListeners();
+      completeLesson();
     } else {
-      if (_error == null) _error = 'Validation failed. Please check the hint.';
-      _isSuccess = false;
+      _isQuizMode = true;
+      _currentQuizIndex = 0;
+      _quizResults.clear();
+      notifyListeners();
+    }
+  }
+
+  void submitQuizAnswer(bool isCorrect) {
+    if (_lessonData == null || _currentQuizIndex >= (_lessonData!.quiz.length))
+      return;
+
+    if (_quizResults.length == _currentQuizIndex) {
+      _quizResults.add(isCorrect);
+    } else {
+      _quizResults[_currentQuizIndex] = isCorrect;
+    }
+    notifyListeners();
+  }
+
+  Future<LessonCompletionResult?> advanceQuiz() async {
+    if (_lessonData == null) return null;
+
+    if (_currentQuizIndex < (_lessonData!.quiz.length) - 1) {
+      _currentQuizIndex++;
       notifyListeners();
       return null;
+    } else {
+      return await completeLesson();
     }
+  }
+
+  Future<LessonCompletionResult?> completeLesson() async {
+    _isLessonComplete = true;
+    notifyListeners();
+
+    final canonicalModuleId = _currentModuleId ?? _lessonData!.moduleId;
+    final canonicalLessonId = _currentLessonId ?? _lessonData!.lessonId;
+
+    // Persist completion via ProgressService (sqflite)
+    await ProgressService.instance.markLessonComplete(
+      canonicalModuleId,
+      canonicalLessonId,
+    );
+
+    final result = await _completionService.completeLesson(
+      canonicalModuleId,
+      canonicalLessonId,
+      totalLessons: _totalLessons,
+    );
+
+    // ── Bug 3 fix: honour the is_module_closer JSON flag ───────────────────
+    // If this lesson declares itself the last in the module, always direct
+    // the user to the quiz — regardless of what the DB completion count
+    // returns. This makes end-of-module detection authoritatively data-driven
+    // and immune to UID scope mismatches in the sqflite progress table.
+    if (_lessonData?.isModuleCloser == true) {
+      return LessonCompletionResult.triggerQuiz;
+    }
+
+    return result;
   }
 }

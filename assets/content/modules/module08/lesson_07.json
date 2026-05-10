@@ -1,0 +1,85 @@
+{
+  "lesson_id": "m08_l07",
+  "module_id": "module_08",
+  "lesson_number": "07",
+  "title": "Local Variables",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 6,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m08_l07_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Local Variables",
+      "body": "Local Variables is part of Functions and Modularity. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m08_l07_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Local Variables",
+      "body": "A local variable is created inside a function and mainly belongs to that function. This helps keep different parts of a program separate."
+    },
+    {
+      "slide_id": "m08_l07_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A local variable is like a note kept inside one classroom. It is useful there, but it is not automatically posted everywhere."
+    },
+    {
+      "slide_id": "m08_l07_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Local Variables",
+      "code": "def show_score():\n    score = 10\n    print(score)\nshow_score()",
+      "language": "python",
+      "expected_output": "10",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line defines a reusable function and begins its indented body."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 4,
+          "note": "This line performs the main Python action shown in the example."
+        }
+      ]
+    },
+    {
+      "slide_id": "m08_l07_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A good function should do one clear task and have a name that explains that task."
+    },
+    {
+      "slide_id": "m08_l07_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Create a function with a local variable message and print it inside the function.",
+      "starter_code": "def show_message():\n",
+      "hint": "Assign message inside the function body, then print it.",
+      "expected_output_contains": "message",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "def"
+        ]
+      }
+    }
+  ],
+  "quiz": []
+}

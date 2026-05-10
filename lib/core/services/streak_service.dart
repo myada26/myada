@@ -59,7 +59,8 @@ class StreakService extends ChangeNotifier {
 
     for (int i = 6; i >= 0; i--) {
       final day = now.subtract(Duration(days: i));
-      final key = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
+      final key =
+          '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
       days.add(activeDaySet.contains(key));
     }
     return days;
@@ -78,6 +79,25 @@ class StreakService extends ChangeNotifier {
     }
 
     final pts = PointsService.instance;
+
+    // Fresh accounts start at 0 points; the streak begins, but day-one
+    // onboarding should not mint leaderboard points before any real activity.
+    if (_lastActiveDate == null) {
+      _currentStreak = 1;
+      if (_currentStreak > _longestStreak) {
+        _longestStreak = _currentStreak;
+      }
+      await pts.updateStreakColumns(_currentStreak, _longestStreak);
+      _lastActiveDate = now;
+      _checkedInToday = true;
+      await _box.put(_k('current_streak'), _currentStreak);
+      await _box.put(_k('longest_streak'), _longestStreak);
+      await _box.put(_k('last_active_date'), now.toIso8601String());
+      await _saveActiveDay(now);
+      notifyListeners();
+      debugPrint('StreakService: initialized streak without day-one points');
+      return;
+    }
 
     // Award +2 daily login points
     await pts.addPoints(PointsService.dailyLogin, 'daily_login');
@@ -112,18 +132,12 @@ class StreakService extends ChangeNotifier {
     await _box.put(_k('last_active_date'), now.toIso8601String());
 
     // Track active days (keep last 30 days worth)
-    final dayKey = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    final storedDays = _box.get(_k('active_days'), defaultValue: <String>[]);
-    final activeDays = List<String>.from(storedDays as List);
-    if (!activeDays.contains(dayKey)) {
-      activeDays.add(dayKey);
-      // Keep only last 30 entries
-      if (activeDays.length > 30) activeDays.removeAt(0);
-      await _box.put(_k('active_days'), activeDays);
-    }
+    await _saveActiveDay(now);
 
     notifyListeners();
-    debugPrint('StreakService: checkIn — streak=$_currentStreak longest=$_longestStreak');
+    debugPrint(
+      'StreakService: checkIn — streak=$_currentStreak longest=$_longestStreak',
+    );
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────
@@ -138,5 +152,17 @@ class StreakService extends ChangeNotifier {
     return prev.year == yesterday.year &&
         prev.month == yesterday.month &&
         prev.day == yesterday.day;
+  }
+
+  Future<void> _saveActiveDay(DateTime day) async {
+    final dayKey =
+        '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
+    final storedDays = _box.get(_k('active_days'), defaultValue: <String>[]);
+    final activeDays = List<String>.from(storedDays as List);
+    if (!activeDays.contains(dayKey)) {
+      activeDays.add(dayKey);
+      if (activeDays.length > 30) activeDays.removeAt(0);
+      await _box.put(_k('active_days'), activeDays);
+    }
   }
 }

@@ -1,4 +1,6 @@
 // lib/features/ranks/presentation/screens/ranks_screen.dart
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -10,7 +12,8 @@ import '../../../../core/services/leaderboard_service.dart';
 import '../../../../core/services/leaderboard_models.dart';
 import '../../../../core/engine/badge_engine.dart';
 import '../../../../core/engine/badge_definitions.dart';
-import '../../../../components/navigation/global_sync_header.dart';
+import '../../../../core/services/certificate_service.dart';
+import '../../../../components/navigation/global_stat_bar.dart';
 
 class RanksScreen extends StatefulWidget {
   const RanksScreen({super.key});
@@ -43,48 +46,57 @@ class _RanksScreenState extends State<RanksScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Stat bar
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.screenPadding,
                 AppConstants.spacingMD,
                 AppSpacing.screenPadding,
-                AppConstants.spacingMD,
+                AppConstants.spacingSM,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const GlobalSyncHeader(),
-                  const SizedBox(height: AppConstants.spacingMD),
-                  Text('Recognition', style: AppTextStyles.displayMedium),
-                ],
-              ),
+              child: const GlobalStatBar(),
             ),
 
-            // Tab bar
-            Container(
-              margin: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.screenPadding),
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius:
-                    BorderRadius.circular(AppConstants.radiusLG),
+            // Page title
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.screenPadding,
+                0,
+                AppSpacing.screenPadding,
+                AppConstants.spacingMD,
+              ),
+              child: Text('Recognition', style: AppTextStyles.displayMedium),
+            ),
+
+            // Underline tab bar
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenPadding,
               ),
               child: TabBar(
                 controller: _tabController,
-                indicator: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(AppConstants.radiusFull),
+                indicator: const UnderlineTabIndicator(
+                  borderSide: BorderSide(width: 2, color: AppColors.primary),
+                  insets: EdgeInsets.zero,
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
-                dividerColor: Colors.transparent,
-                labelPadding: const EdgeInsets.symmetric(vertical: 4),
-                labelStyle: AppTextStyles.label.copyWith(color: Colors.white),
-                unselectedLabelStyle: AppTextStyles.label.copyWith(color: AppColors.textSecondary),
+                dividerColor: AppColors.border,
+                labelColor: AppColors.primary,
+                unselectedLabelColor: AppColors.mutedForeground,
+                labelPadding: EdgeInsets.zero,
                 tabs: const [
-                  Tab(text: 'Leaderboard'),
-                  Tab(text: 'Badges'),
-                  Tab(text: 'Certificates'),
+                  Tab(
+                    icon: Icon(Icons.leaderboard_rounded, size: 16),
+                    text: 'Ranks',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.shield_rounded, size: 16),
+                    text: 'Badges',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.description_rounded, size: 16),
+                    text: 'Certs',
+                  ),
                 ],
               ),
             ),
@@ -124,18 +136,22 @@ class _LeaderboardTab extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final students = snap.data!;
+        final students =
+            snap.data!.where((s) => !s.id.startsWith('demo_')).toList();
         if (students.isEmpty) {
           return _emptyLeaderboard();
         }
 
         final currentUser = students.where((s) => s.isCurrentUser).firstOrNull;
         final top3 = students.take(3).toList();
-        final rest = students.length > 3 ? students.sublist(3) : <RankedStudent>[];
+        final rest = students.length > 3
+            ? students.sublist(3)
+            : <RankedStudent>[];
 
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.screenPadding),
+            horizontal: AppSpacing.screenPadding,
+          ),
           child: Column(
             children: [
               // Your card — pinned at top
@@ -157,8 +173,9 @@ class _LeaderboardTab extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   'Updated just now',
-                  style: AppTextStyles.caption
-                      .copyWith(color: AppColors.mutedForeground),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.mutedForeground,
+                  ),
                 ),
               ),
 
@@ -175,8 +192,11 @@ class _LeaderboardTab extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.emoji_events_rounded,
-              color: AppColors.textMuted.withAlpha(60), size: 48),
+          Icon(
+            Icons.emoji_events_rounded,
+            color: AppColors.textMuted.withAlpha(60),
+            size: 48,
+          ),
           const SizedBox(height: AppConstants.spacingSM),
           Text('No rankings yet', style: AppTextStyles.headingSmall),
           const SizedBox(height: 4),
@@ -222,21 +242,11 @@ class _YourCard extends StatelessWidget {
       child: Row(
         children: [
           // Avatar
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(30),
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              student.initials,
-              style: AppTextStyles.label.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+          _StudentAvatar(
+            student: student,
+            size: 44,
+            backgroundColor: Colors.white.withAlpha(30),
+            fallbackTextColor: Colors.white,
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -245,8 +255,9 @@ class _YourCard extends StatelessWidget {
               children: [
                 Text(
                   'Your Rank',
-                  style: AppTextStyles.caption
-                      .copyWith(color: Colors.white.withAlpha(180)),
+                  style: AppTextStyles.caption.copyWith(
+                    color: Colors.white.withAlpha(180),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Row(
@@ -271,8 +282,9 @@ class _YourCard extends StatelessWidget {
                 if (gap > 0)
                   Text(
                     '$gap pts behind rank ${student.rank - 1}',
-                    style: AppTextStyles.caption
-                        .copyWith(color: Colors.white.withAlpha(140)),
+                    style: AppTextStyles.caption.copyWith(
+                      color: Colors.white.withAlpha(140),
+                    ),
                   ),
               ],
             ),
@@ -283,8 +295,10 @@ class _YourCard extends StatelessWidget {
               const Text('🔥', style: TextStyle(fontSize: 18)),
               Text(
                 '${student.currentStreak}',
-                style: AppTextStyles.caption
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                style: AppTextStyles.caption.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -356,9 +370,15 @@ class _PodiumSpot extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color baseColor;
     switch (rank) {
-      case 1:  baseColor = AppColors.accent; break;
-      case 2:  baseColor = AppColors.primary; break;
-      default: baseColor = AppColors.success; break;
+      case 1:
+        baseColor = AppColors.accent;
+        break;
+      case 2:
+        baseColor = AppColors.primary;
+        break;
+      default:
+        baseColor = AppColors.success;
+        break;
     }
 
     return Expanded(
@@ -367,22 +387,13 @@ class _PodiumSpot extends StatelessWidget {
         children: [
           Text(medal, style: const TextStyle(fontSize: 22)),
           const SizedBox(height: 6),
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: baseColor.withAlpha(30),
-              shape: BoxShape.circle,
-              border: Border.all(color: baseColor.withAlpha(80), width: 2),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              student.initials,
-              style: AppTextStyles.label.copyWith(
-                color: baseColor,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+          _StudentAvatar(
+            student: student,
+            size: 44,
+            backgroundColor: baseColor.withAlpha(30),
+            fallbackTextColor: baseColor,
+            borderColor: baseColor.withAlpha(80),
+            borderWidth: 2,
           ),
           const SizedBox(height: 6),
           Text(
@@ -393,8 +404,10 @@ class _PodiumSpot extends StatelessWidget {
           ),
           Text(
             '${student.totalPoints} pts',
-            style: AppTextStyles.caption
-                .copyWith(color: AppColors.mutedForeground, fontSize: 11),
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.mutedForeground,
+              fontSize: 11,
+            ),
           ),
           const SizedBox(height: 8),
           // Podium bar
@@ -446,7 +459,8 @@ class _RankRow extends StatelessWidget {
       padding: const EdgeInsets.all(AppConstants.spacingMD),
       decoration: BoxDecoration(
         color: student.isCurrentUser
-            ? AppColors.primaryLight // Keeps current user row distinct but consistent
+            ? AppColors
+                  .primaryLight // Keeps current user row distinct but consistent
             : AppColors.surface,
         borderRadius: BorderRadius.circular(AppConstants.radiusLG),
         border: Border.all(
@@ -468,21 +482,15 @@ class _RankRow extends StatelessWidget {
             ),
           ),
           // Avatar
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withAlpha(20),
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              student.initials,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w600,
-                fontSize: 11,
-              ),
+          _StudentAvatar(
+            student: student,
+            size: 32,
+            backgroundColor: AppColors.primary.withAlpha(20),
+            fallbackTextColor: AppColors.primary,
+            textStyle: AppTextStyles.caption.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w600,
+              fontSize: 11,
             ),
           ),
           const SizedBox(width: AppConstants.spacingSM),
@@ -515,6 +523,62 @@ class _RankRow extends StatelessWidget {
 
 // ─── Badges Tab ────────────────────────────────────────────────────────────
 
+class _StudentAvatar extends StatelessWidget {
+  final RankedStudent student;
+  final double size;
+  final Color backgroundColor;
+  final Color fallbackTextColor;
+  final Color? borderColor;
+  final double borderWidth;
+  final TextStyle? textStyle;
+
+  const _StudentAvatar({
+    required this.student,
+    required this.size,
+    required this.backgroundColor,
+    required this.fallbackTextColor,
+    this.borderColor,
+    this.borderWidth = 0,
+    this.textStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final avatarPath = student.avatarPath;
+    final hasAvatar = avatarPath != null && File(avatarPath).existsSync();
+
+    return Container(
+      width: size,
+      height: size,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        shape: BoxShape.circle,
+        border: borderColor != null
+            ? Border.all(color: borderColor!, width: borderWidth)
+            : null,
+      ),
+      alignment: Alignment.center,
+      child: hasAvatar
+          ? Image.file(
+              File(avatarPath),
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+            )
+          : Text(
+              student.initials,
+              style:
+                  textStyle ??
+                  AppTextStyles.label.copyWith(
+                    color: fallbackTextColor,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+    );
+  }
+}
+
 class _BadgesTab extends StatelessWidget {
   const _BadgesTab();
 
@@ -533,7 +597,8 @@ class _BadgesTab extends StatelessWidget {
 
         return SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.screenPadding),
+            horizontal: AppSpacing.screenPadding,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -542,8 +607,7 @@ class _BadgesTab extends StatelessWidget {
                 padding: const EdgeInsets.all(AppConstants.spacingMD),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius:
-                      BorderRadius.circular(AppConstants.radiusLG),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusLG),
                   border: Border.all(color: AppColors.border),
                 ),
                 child: Row(
@@ -552,8 +616,9 @@ class _BadgesTab extends StatelessWidget {
                     _SummaryStat(value: '$earnedCount', label: 'Earned'),
                     _VertDivider(),
                     _SummaryStat(
-                        value: '${totalCount - earnedCount}',
-                        label: 'Locked'),
+                      value: '${totalCount - earnedCount}',
+                      label: 'Locked',
+                    ),
                     _VertDivider(),
                     _SummaryStat(value: '$pct%', label: 'Collected'),
                   ],
@@ -568,8 +633,7 @@ class _BadgesTab extends StatelessWidget {
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: AppConstants.spacingSM,
                   mainAxisSpacing: AppConstants.spacingSM,
@@ -631,13 +695,13 @@ class _BadgeTile extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: isEarned
-                    ? badge.categoryBgColor
-                    : AppColors.locked,
+                color: isEarned ? badge.categoryBgColor : AppColors.locked,
                 shape: BoxShape.circle,
                 border: isEarned
                     ? Border.all(
-                        color: badge.categoryColor.withAlpha(60), width: 2)
+                        color: badge.categoryColor.withAlpha(60),
+                        width: 2,
+                      )
                     : null,
               ),
               child: Icon(
@@ -718,11 +782,13 @@ class _BadgeTile extends StatelessWidget {
                 color: isEarned ? badge.categoryBgColor : AppColors.locked,
                 shape: BoxShape.circle,
               ),
-              child: Icon(badge.icon,
-                  size: 30,
-                  color: isEarned
-                      ? badge.categoryColor
-                      : AppColors.mutedForeground),
+              child: Icon(
+                badge.icon,
+                size: 30,
+                color: isEarned
+                    ? badge.categoryColor
+                    : AppColors.mutedForeground,
+              ),
             ),
             const SizedBox(height: 14),
             Text(badge.name, style: AppTextStyles.h2),
@@ -731,12 +797,15 @@ class _BadgeTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: badge.categoryBgColor,
-                    borderRadius:
-                        BorderRadius.circular(AppConstants.radiusFull),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.radiusFull,
+                    ),
                   ),
                   child: Text(
                     badge.categoryLabel,
@@ -749,12 +818,15 @@ class _BadgeTile extends StatelessWidget {
                 if (badge.isRare) ...[
                   const SizedBox(width: 6),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFFAECE7),
-                      borderRadius:
-                          BorderRadius.circular(AppConstants.radiusFull),
+                      borderRadius: BorderRadius.circular(
+                        AppConstants.radiusFull,
+                      ),
                     ),
                     child: Text(
                       'Rare',
@@ -770,19 +842,21 @@ class _BadgeTile extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               badge.description,
-              style: AppTextStyles.bodySm
-                  .copyWith(color: AppColors.mutedForeground),
+              style: AppTextStyles.bodySm.copyWith(
+                color: AppColors.mutedForeground,
+              ),
               textAlign: TextAlign.center,
             ),
             if (isEarned && earnedDate != null) ...[
               const SizedBox(height: 14),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.successLight,
-                  borderRadius:
-                      BorderRadius.circular(AppConstants.radiusFull),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusFull),
                 ),
                 child: Text(
                   'Earned on ${earnedDate!.day}/${earnedDate!.month}/${earnedDate!.year}',
@@ -796,12 +870,13 @@ class _BadgeTile extends StatelessWidget {
             if (!isEarned) ...[
               const SizedBox(height: 14),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceVariant,
-                  borderRadius:
-                      BorderRadius.circular(AppConstants.radiusFull),
+                  borderRadius: BorderRadius.circular(AppConstants.radiusFull),
                 ),
                 child: Text(
                   '🔒 Not yet earned',
@@ -838,11 +913,7 @@ class _SummaryStat extends StatelessWidget {
 class _VertDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: 32,
-      color: AppColors.border,
-    );
+    return Container(width: 1, height: 32, color: AppColors.border);
   }
 }
 
@@ -851,38 +922,127 @@ class _VertDivider extends StatelessWidget {
 class _CertificatesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppConstants.spacingXL),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 80,
-              height: 80,
+    return FutureBuilder<List<CertificateModel>>(
+      future: CertificateService.instance.getEarnedCertificates(),
+      builder: (context, snap) {
+        if (!snap.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final certs = snap.data!;
+        if (certs.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppConstants.spacingXL),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withAlpha(20),
+                      borderRadius: BorderRadius.circular(
+                        AppConstants.radiusXL,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.workspace_premium_rounded,
+                      size: 40,
+                      color: AppColors.primary.withAlpha(120),
+                    ),
+                  ),
+                  const SizedBox(height: AppConstants.spacingLG),
+                  Text(
+                    'No certificates yet',
+                    style: AppTextStyles.headingMedium,
+                  ),
+                  const SizedBox(height: AppConstants.spacingSM),
+                  Text(
+                    'Complete a module to earn your first certificate',
+                    style: AppTextStyles.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(AppSpacing.screenPadding),
+          itemCount: certs.length,
+          separatorBuilder: (context, index) =>
+              const SizedBox(height: AppSpacing.md),
+          itemBuilder: (context, index) {
+            final cert = certs[index];
+            return Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color: AppColors.primary.withAlpha(20),
-                borderRadius:
-                    BorderRadius.circular(AppConstants.radiusXL),
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppRadius.lg),
+                border: Border.all(color: AppColors.border),
               ),
-              child: Icon(
-                Icons.workspace_premium_rounded,
-                size: 40,
-                color: AppColors.primary.withAlpha(120),
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryLight.withAlpha(50),
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                    ),
+                    child: const Icon(
+                      Icons.workspace_premium_rounded,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          CertificateService.instance.typeLabel(cert.type),
+                          style: AppTextStyles.labelSm.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        Text(
+                          cert.moduleTitle,
+                          style: AppTextStyles.headingMedium,
+                        ),
+                        Text(
+                          'Issued: ${cert.issuedAt.day}/${cert.issuedAt.month}/${cert.issuedAt.year}',
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: AppColors.mutedForeground,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.download_rounded,
+                      color: AppColors.primary,
+                    ),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Saving ${cert.moduleTitle} certificate to gallery...',
+                          ),
+                        ),
+                      );
+                      // In a real implementation we'd route to a Certificate viewing page that binds the model and allows export.
+                    },
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: AppConstants.spacingLG),
-            Text('No certificates yet',
-                style: AppTextStyles.headingMedium),
-            const SizedBox(height: AppConstants.spacingSM),
-            Text(
-              'Complete a module to earn your first certificate',
-              style: AppTextStyles.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }

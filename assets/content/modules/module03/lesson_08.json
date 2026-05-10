@@ -1,0 +1,78 @@
+﻿{
+  "lesson_id": "m03_l08",
+  "module_id": "module_03",
+  "lesson_number": "08",
+  "title": "Type Conversion",
+  "skill_tag": "Debugging",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m03_l08_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Type Conversion",
+      "body": "Type Conversion is part of Mathematical and String Operations. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m03_l08_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Type Conversion",
+      "body": "Type conversion changes a value from one data type to another. For example, int(\"25\") changes text into a number."
+    },
+    {
+      "slide_id": "m03_l08_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Type conversion is like converting pesos to centavos. The value is related, but the form changes."
+    },
+    {
+      "slide_id": "m03_l08_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Type Conversion",
+      "code": "text = \"25\"\nnumber = int(text)\nprint(number + 5)",
+      "language": "python",
+      "expected_output": "30",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m03_l08_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Python follows operator rules exactly. Use variables and parentheses to make calculations readable and predictable."
+    },
+    {
+      "slide_id": "m03_l08_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Convert the string \"10\" into an integer, add 2, and print the result.",
+      "starter_code": "text = \"10\"\n",
+      "hint": "Use int(text) before adding.",
+      "expected_output_contains": "12",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What does int(\"25\") do in Python?","content":{"options":["Stores the string \"25\" without any change","Converts the text \"25\" into the integer 25","Converts the number 25 into the string \"25\"","Checks whether \"25\" is equal to 25"],"correct_index":1},"correct_answer":"1","explanation":"Correct! int() converts a value to an integer. int(\"25\") changes the text \"25\" into the number 25 so you can use it in calculations."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines in the correct order to convert a string to an integer and add 5 to it.","content":{"lines":["print(number + 5)","text = \"25\"","number = int(text)"],"correct_order":[1,2,0]},"correct_answer":"[1,2,0]","explanation":"The string is defined first, then int() converts it to an integer stored in number, and finally the addition is calculated and printed as 30."},{"question_id":"q3","question_type":"coding","prompt_text":"Convert the string \"10\" into an integer, add 2 to it, and print the result.","content":{"starter_code":"text = \"10\"\n","hint":"Use int(text) before adding. Then print the result.","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"number = int(text) converts the string to integer, then print(number + 2) outputs 12. Type conversion is needed before doing math on text input."}]
+}

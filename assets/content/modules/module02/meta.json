@@ -1,0 +1,27 @@
+[
+    {
+        "module_id": "module_02",
+        "number": 2,
+        "title": "Variables and Primitive Data Types",
+        "subtitle": "Learn how programs remember values using variables and basic data types such …",
+        "skill_tag": "Syntax",
+        "icon": "code_rounded",
+        "lesson_count": 9,
+        "lessons": [
+            "m02_l01",
+            "m02_l02",
+            "m02_l03",
+            "m02_l04",
+            "m02_l05",
+            "m02_l06",
+            "m02_l07",
+            "m02_l08",
+            "m02_l09"
+        ],
+        "estimated_minutes": 45,
+        "prerequisite_module_id": "module_01",
+        "unlock_condition": "module_01_passed",
+        "badge_id": "badge_module_02",
+        "cert_eligible": false
+    }
+]

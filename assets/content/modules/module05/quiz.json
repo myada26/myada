@@ -1,0 +1,163 @@
+{
+  "quiz_id": "quiz_m05",
+  "module_id": "module_05",
+  "title": "Module 5 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m05_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 5: Conditional Execution?",
+      "explanation": "This module focuses on how to control which code runs by checking conditions and branching into clear decision paths.",
+      "options": [
+        "To control which code runs by checking conditions and branching into clear decision paths",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m05_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the conditional keyword:",
+      "explanation": "An if statement starts a conditional decision.",
+      "answer": "if"
+    },
+    {
+      "id": "m05_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the bug in this if statement:",
+      "explanation": "Python requires a colon before the indented block.",
+      "answer": "Missing colon after the if condition"
+    },
+    {
+      "id": "m05_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to print Passed or Try again.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "else:"
+        },
+        {
+          "id": "b1",
+          "code": "    print(\"Passed\")"
+        },
+        {
+          "id": "b2",
+          "code": "if score >= 75:"
+        },
+        {
+          "id": "b3",
+          "code": "    print(\"Try again\")"
+        },
+        {
+          "id": "b4",
+          "code": "score = 60"
+        }
+      ],
+      "correct_order": [
+        "score = 60",
+        "if score >= 75:",
+        "    print(\"Passed\")",
+        "else:",
+        "    print(\"Try again\")"
+      ]
+    },
+    {
+      "id": "m05_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "What symbol must end an if condition line?",
+      "explanation": "Python uses a colon before the indented block.",
+      "options": [
+        "Colon (:)",
+        "Semicolon (;)",
+        "Comma (,)",
+        "Period (.)"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m05_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the backup branch:",
+      "explanation": "else runs when the if condition is false.",
+      "answer": "else"
+    },
+    {
+      "id": "m05_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What will print?\nscore = 60\nif score >= 75:\n    print(\"Passed\")\nelse:\n    print(\"Try again\")",
+      "explanation": "The condition is false, so the else block runs.",
+      "options": [
+        "Try again",
+        "Passed",
+        "Both lines",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m05_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this code?",
+      "explanation": "Indented lines belong to the conditional block.",
+      "answer": "The print line must be indented"
+    },
+    {
+      "id": "m05_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A grader has Excellent, Passed, and Failed. Which structure fits best?",
+      "explanation": "Multiple exclusive score ranges are best handled by if-elif-else.",
+      "options": [
+        "if-elif-else",
+        "print only",
+        "while only",
+        "comment only"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m05_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write an if-else program that prints Passed for scores 75 and above, otherwise Failed.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_06",
+      "award_badge": "badge_module_05",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_05_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_06"
+    }
+  }
+}

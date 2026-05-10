@@ -1,0 +1,78 @@
+﻿{
+  "lesson_id": "m03_l10",
+  "module_id": "module_03",
+  "lesson_number": "10",
+  "title": "Building a Formatted Output",
+  "skill_tag": "Computational Thinking",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m03_l10_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Building a Formatted Output",
+      "body": "Building a Formatted Output is part of Mathematical and String Operations. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m03_l10_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Building a Formatted Output",
+      "body": "Formatted output arranges text and values clearly. It helps users understand results, receipts, and short reports."
+    },
+    {
+      "slide_id": "m03_l10_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Formatted output is like designing a clean menu board where each item and price is easy to read."
+    },
+    {
+      "slide_id": "m03_l10_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Building a Formatted Output",
+      "code": "item = \"Pen\"\nprice = 10\nprint(f\"{item}: {price} pesos\")",
+      "language": "python",
+      "expected_output": "Pen: 10 pesos",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m03_l10_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Python follows operator rules exactly. Use variables and parentheses to make calculations readable and predictable."
+    },
+    {
+      "slide_id": "m03_l10_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use an f-string to show an item and its price in one line.",
+      "starter_code": "item = \"Notebook\"\nprice = 35\n",
+      "hint": "Use print(f\"{item}: {price} pesos\").",
+      "expected_output_contains": "Notebook: 35 pesos",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What does an f-string (formatted string) allow you to do in Python?","content":{"options":["Convert a number to a boolean","Join two lists together","Embed variable values directly inside a string using curly braces {}","Remove whitespace from a string"],"correct_index":2},"correct_answer":"2","explanation":"Excellent! An f-string lets you insert variable values directly into text using {} placeholders. For example, f\"{item}: {price} pesos\" combines text and values neatly."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines in the correct order to format and print a store item with its price.","content":{"lines":["item = \"Pen\"","price = 10","print(f\"{item}: {price} pesos\")"],"correct_order":[0,1,2]},"correct_answer":"[0,1,2]","explanation":"Both variables must be assigned before the f-string can reference them. The f-string then combines them into a formatted output in one clean line."},{"question_id":"q3","question_type":"coding","prompt_text":"Use an f-string to print an item name and its price on one line in the format: Notebook: 35 pesos","content":{"starter_code":"item = \"Notebook\"\nprice = 35\n","hint":"Use print(f\"{item}: {price} pesos\").","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"print(f\"{item}: {price} pesos\") inserts the values of item and price directly into the string. f-strings start with f before the opening quote."}]
+}

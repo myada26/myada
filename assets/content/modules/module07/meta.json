@@ -1,0 +1,25 @@
+[
+    {
+        "module_id": "module_07",
+        "number": 7,
+        "title": "Definite Iteration",
+        "subtitle": "Use for loops and range() to repeat a known number of times, process strings,…",
+        "skill_tag": "Sequencing",
+        "icon": "low_priority_rounded",
+        "lesson_count": 7,
+        "lessons": [
+            "m07_l01",
+            "m07_l02",
+            "m07_l03",
+            "m07_l04",
+            "m07_l05",
+            "m07_l06",
+            "m07_l07"
+        ],
+        "estimated_minutes": 35,
+        "prerequisite_module_id": "module_06",
+        "unlock_condition": "module_06_passed",
+        "badge_id": "badge_module_07",
+        "cert_eligible": false
+    }
+]

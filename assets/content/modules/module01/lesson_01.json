@@ -1,47 +1,117 @@
 {
-    "lesson_id": "m01_l01",
-    "module_id": "module_01",
-    "lesson_number": 1,
-    "title": "Your First Line of Code",
-    "skill_tag": "Sequencing",
-    "estimated_minutes": 4,
-    "concept": {
-        "heading": "What is print()?",
-        "body": "Every Python program communicates with you through the console. The print() function is how you make Python speak — it takes anything you give it and displays it on the screen."
+  "lesson_id": "m01_l01",
+  "module_id": "module_01",
+  "lesson_number": "01",
+  "title": "What is Python?",
+  "skill_tag": "Sequencing",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m01_l01_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "What is Python?",
+      "body": "What is Python? is part of Introduction to Python and Output. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
     },
-    "analogy": {
-        "heading": "Think of it this way",
-        "body": "print() is like texting someone. You type a message, hit send, and it appears on their screen. Python's console is just your screen — and print() is the send button."
+    {
+      "slide_id": "m01_l01_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: What is Python?",
+      "body": "Python is a beginner-friendly programming language used to give instructions to a computer. In this lesson, you will see how a simple line of Python can produce visible output on the screen."
     },
-    "code_example": {
-        "language": "python",
-        "code": "print(\"Hello, world!\")\nprint(\"My name is Ada\")\nprint(42)",
-        "annotations": [
-            {
-                "line": 1,
-                "note": "print() displays text. Wrap text in quotes — these are called strings."
-            },
-            {
-                "line": 2,
-                "note": "You can print any text you want inside the quotes."
-            },
-            {
-                "line": 3,
-                "note": "Numbers don't need quotes. Python knows 42 is already a number."
-            }
-        ]
+    {
+      "slide_id": "m01_l01_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Think of Python like a clear recipe card. Each line is an instruction, and the computer follows the recipe exactly as written."
     },
-    "expected_output": "Hello, world!\nMy name is Ada\n42",
-    "key_rule": "Always wrap text in quotes inside print(). Forgetting quotes is the #1 beginner mistake.",
-    "try_it_yourself": {
-        "prompt": "Print your name and your favorite number on two separate lines.",
-        "starter_code": "# Write your two print() lines below\n",
-        "hint": "Use print() twice — once for your name (in quotes), once for your number.",
+    {
+      "slide_id": "m01_l01_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: What is Python?",
+      "code": "print(\"Hello, World!\")",
+      "language": "python",
+      "expected_output": "Hello, World!",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m01_l01_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Write one clear instruction at a time. Python reads your code from top to bottom, so order and spelling matter."
+    },
+    {
+      "slide_id": "m01_l01_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use print() to display your own name on the screen.",
+      "starter_code": "# Write your code below\n",
+      "hint": "Type print(\"Your Name\") and replace the words inside the quotes.",
+      "expected_output_contains": "your name",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "question_id": "q1",
+      "question_type": "multiple_choice",
+      "prompt_text": "What is Python best described as?",
+      "content": {
+        "options": [
+          "A type of computer hardware",
+          "A beginner-friendly programming language used to give instructions to a computer",
+          "A web browser for viewing websites",
+          "A database for storing large files"
+        ],
+        "correct_index": 1
+      },
+      "correct_answer": "1",
+      "explanation": "Correct! Python is a beginner-friendly programming language. You use it to write instructions that tell the computer what to do."
+    },
+    {
+      "question_id": "q2",
+      "question_type": "parsons",
+      "prompt_text": "Arrange the following lines of code in the correct order to display 'Hello, World!' on the screen.",
+      "content": {
+        "lines": [
+          "print(\"Hello, World!\")",
+          "# This program prints a greeting",
+          "# End of program"
+        ],
+        "correct_order": [1, 0, 2]
+      },
+      "correct_answer": "[1,0,2]",
+      "explanation": "The comment comes first to explain the code, then the print() call runs to show the message, and the closing comment goes last."
+    },
+    {
+      "question_id": "q3",
+      "question_type": "coding",
+      "prompt_text": "Write a short program that prints your own name on the screen using print().",
+      "content": {
+        "starter_code": "# Write your code below\n",
+        "hint": "Type print(\"Your Name\") and replace the words inside the quotes with your actual name.",
         "validation_type": "output_contains",
         "validation_rules": {
-            "min_print_calls": 2
+          "min_print_calls": 1
         }
-    },
-    "completion_xp": 10,
-    "is_bookmarkable": true
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt.",
+      "explanation": "Use print(\"Your Name\") — replace 'Your Name' with any text. Python will display whatever is inside the quotation marks."
+    }
+  ]
 }

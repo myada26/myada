@@ -1,0 +1,97 @@
+{
+  "lesson_id": "m05_l05",
+  "module_id": "module_05",
+  "order_index": 5,
+  "title": "Nested Conditionals",
+  "skill_tag": "Logic Flow",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m05_l05_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Nested Conditionals",
+      "body": "Nested Conditionals is part of Conditional Execution. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m05_l05_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Nested Conditionals",
+      "body": "A nested conditional places one if statement inside another. It is useful when one decision depends on another decision first."
+    },
+    {
+      "slide_id": "m05_l05_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "Nested conditionals are like entering a building, then checking the room number after you are already inside."
+    },
+    {
+      "slide_id": "m05_l05_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Nested Conditionals",
+      "code": "age = 18\nhas_id = True\nif age >= 18:\n    if has_id:\n        print(\"Enter\")",
+      "language": "python",
+      "expected_output": "Enter",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 3,
+          "note": "This line checks a condition before running the indented code."
+        },
+        {
+          "line": 4,
+          "note": "This line checks a condition before running the indented code."
+        },
+        {
+          "line": 5,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m05_l05_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A conditional needs a colon, correct indentation, and a condition that clearly evaluates to True or False."
+    },
+    {
+      "slide_id": "m05_l05_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Use nested if statements to print Verified only if email_ok and password_ok are both True.",
+      "starter_code": "email_ok = True\npassword_ok = True\n",
+      "hint": "Write the password check inside the email check.",
+      "expected_output_contains": "Verified",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "if"
+        ]
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m05_l05_cc",
+    "lesson_id": "m05_l05",
+    "prompt_text": "Use nested if to print Discount when member is True and points are at least 100.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Discount",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

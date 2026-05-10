@@ -1,70 +1,153 @@
 {
-    "quiz_id": "m01_quiz",
-    "module_id": "module_01",
-    "title": "Module 1 Check",
-    "time_limit_seconds": 300,
-    "passing_score_percent": 70,
-    "questions": [
+  "quiz_id": "quiz_m01",
+  "module_id": "module_01",
+  "title": "Module 1 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m01_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Sequencing",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 1: Introduction to Python and Output?",
+      "explanation": "This module focuses on how to display clear text output and arrange simple Python statements in the correct order.",
+      "options": [
+        "To display clear text output and arrange simple Python statements in the correct order",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m01_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the code to display Hello:",
+      "explanation": "print() displays output in Python.",
+      "answer": "print"
+    },
+    {
+      "id": "m01_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the bug in this code:",
+      "explanation": "Python is case-sensitive, so Print is not the same as print.",
+      "answer": "Print should be print with a lowercase p"
+    },
+    {
+      "id": "m01_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to print Start, Work, Finish in order.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
         {
-            "id": "m01_q01",
-            "type": "multiple_choice",
-            "skill_tag": "Sequencing",
-            "difficulty": 1,
-            "prompt": "What will this code print?\n\nprint(\"Ada\")\nprint(10)",
-            "options": [
-                "Ada10",
-                "Ada\n10",
-                "10\nAda",
-                "Error"
-            ],
-            "correct_index": 1,
-            "explanation": "Each print() goes to a new line automatically. So 'Ada' prints first, then 10 on the next line."
+          "id": "b0",
+          "code": "print(\"Work\")"
         },
         {
-            "id": "m01_q02",
-            "type": "parsons",
-            "skill_tag": "Sequencing",
-            "difficulty": 1,
-            "prompt": "Drag the lines into the correct order to print your name then your age.",
-            "blocks": [
-                {
-                    "id": "b1",
-                    "code": "print(\"My age is 20\")"
-                },
-                {
-                    "id": "b2",
-                    "code": "print(\"My name is Ada\")"
-                }
-            ],
-            "correct_order": [
-                "b2",
-                "b1"
-            ],
-            "explanation": "The name should print first, then the age — top to bottom."
+          "id": "b1",
+          "code": "print(\"Finish\")"
         },
         {
-            "id": "m01_q03",
-            "type": "fill_blank",
-            "skill_tag": "Syntax",
-            "difficulty": 1,
-            "prompt": "Complete the line to print the word Hello:\n\n_____(\"Hello\")",
-            "answer": "print",
-            "explanation": "print() is the function that displays output to the console."
+          "id": "b2",
+          "code": "print(\"Start\")"
         }
-    ],
-    "adaptive_remediation": {
-        "on_fail": {
-            "action": "remediation_path",
-            "description": "If score < 70%, the user is NOT sent back through Module 1. Instead a short 3-lesson remediation mini-path is unlocked.",
-            "remediation_module_id": "module_01_remediation",
-            "retry_allowed": true,
-            "retry_after_remediation": true
-        },
-        "on_pass": {
-            "action": "unlock_next",
-            "next_module_id": "module_02",
-            "award_badge": "badge_genesis",
-            "xp_reward": 50
-        }
+      ],
+      "correct_order": [
+        "print(\"Start\")",
+        "print(\"Work\")",
+        "print(\"Finish\")"
+      ]
+    },
+    {
+      "id": "m01_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which line correctly prints the word Python?",
+      "explanation": "Python uses lowercase print() and text must be inside quotation marks.",
+      "options": [
+        "print(\"Python\")",
+        "Print(\"Python\")",
+        "print(Python)",
+        "show(\"Python\")"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m01_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the comment line:",
+      "explanation": "Python comments begin with #.",
+      "answer": "#"
+    },
+    {
+      "id": "m01_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What will this code output?\nprint(\"A\")\nprint(\"B\")",
+      "explanation": "Each print() call displays on a new line in written order.",
+      "options": [
+        "A\nB",
+        "B\nA",
+        "AB",
+        "Error"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m01_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this code?",
+      "explanation": "Text strings must be written inside quotation marks.",
+      "answer": "Hello must be placed inside quotes"
+    },
+    {
+      "id": "m01_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A learner wants each receipt detail on a separate line. Which solution is best?",
+      "explanation": "Separate print statements create separate output lines.",
+      "options": [
+        "Use one print() call for each receipt line",
+        "Put all text in one comment",
+        "Use Print() with a capital P",
+        "Remove quotation marks"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m01_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write a program that prints your name on line 1 and MyADA on line 2.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
     }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_02",
+      "award_badge": "badge_module_01",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_01_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_02"
+    }
+  }
 }

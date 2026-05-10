@@ -1,0 +1,89 @@
+{
+  "lesson_id": "m08_l11",
+  "module_id": "module_08",
+  "order_index": 11,
+  "title": "Mini Project with Functions",
+  "skill_tag": "Computational Thinking",
+  "estimated_duration_min": 6,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m08_l11_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Mini Project with Functions",
+      "body": "Mini Project with Functions is part of Functions and Modularity. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m08_l11_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Mini Project with Functions",
+      "body": "A mini project with functions combines several smaller tasks into one organized program. This makes the program easier to understand and improve."
+    },
+    {
+      "slide_id": "m08_l11_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A function-based project is like a school program with separate committees: each group has a role, but all contribute to the event."
+    },
+    {
+      "slide_id": "m08_l11_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Mini Project with Functions",
+      "code": "def receipt(item, price):\n    print(f\"{item}: {price}\")\nreceipt(\"Pen\", 10)",
+      "language": "python",
+      "expected_output": "Pen: 10",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line defines a reusable function and begins its indented body."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        },
+        {
+          "line": 3,
+          "note": "This line performs the main Python action shown in the example."
+        }
+      ]
+    },
+    {
+      "slide_id": "m08_l11_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "A good function should do one clear task and have a name that explains that task."
+    },
+    {
+      "slide_id": "m08_l11_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Create a function that prints an item and price using an f-string.",
+      "starter_code": "def receipt(item, price):\n",
+      "hint": "Inside the function, print f\"{item}: {price}\".",
+      "expected_output_contains": "Pen",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1,
+        "required_syntax": [
+          "def"
+        ]
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m08_l11_cc",
+    "lesson_id": "m08_l11",
+    "prompt_text": "Create receipt_line(item, price) and call it for Notebook, 35.",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Notebook: 35",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}

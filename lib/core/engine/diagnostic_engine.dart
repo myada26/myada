@@ -58,27 +58,32 @@ class DiagnosticEngine {
       return SkillScore(skillTag: tag, rawScore: raw, level: _level(raw));
     }).toList();
 
-    final toSkip     = <String>[];
-    final toRequired = <String>[];
+    final toSkip        = <String>[];  // confident
+    final toRecommended = <String>[];  // building
+    final toRequired    = <String>[];  // developing
 
     for (final score in scores) {
       final gated = _skillModuleMap[score.skillTag] ?? [];
-      if (score.level == SkillLevel.developing) {
-        toRequired.addAll(gated);
-      } else {
+      if (score.level == SkillLevel.confident) {
         toSkip.addAll(gated);
+      } else if (score.level == SkillLevel.building) {
+        toRecommended.addAll(gated);
+      } else {
+        toRequired.addAll(gated);
       }
     }
 
-    // Required wins over skip
-    final reqSet      = toRequired.toSet();
-    final uniqueSkip  = toSkip.toSet().difference(reqSet).toList();
+    // Required wins over recommended wins over skip
+    final reqSet  = toRequired.toSet();
+    final recSet  = toRecommended.toSet().difference(reqSet);
+    final skipSet = toSkip.toSet().difference(reqSet).difference(recSet);
 
     return EngineDiagnosticResult(
-      skillScores:     scores,
-      overallLevel:    _overallLevel(scores),
-      modulesToSkip:   uniqueSkip,
-      modulesRequired: reqSet.toList(),
+      skillScores:        scores,
+      overallLevel:       _overallLevel(scores),
+      modulesToSkip:      skipSet.toList(),
+      modulesRecommended: recSet.toList(),
+      modulesRequired:    reqSet.toList(),
     );
   }
 

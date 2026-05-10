@@ -7,13 +7,11 @@
 /// Returned by LessonCompletionService.completeLesson()
 class LessonCompletionResult {
   final LessonCompletionAction action;
-  final String? nextLessonId; // Set when action == nextLesson
-  final String? quizId;       // Set when action == triggerQuiz
+  final String? nextLessonId;
 
   const LessonCompletionResult._({
     required this.action,
     this.nextLessonId,
-    this.quizId,
   });
 
   /// The user completed the last lesson — push them to the quiz now.

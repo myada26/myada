@@ -6,10 +6,9 @@ import '../../../../components/buttons/app_button.dart';
 import '../../../../controllers/diagnostic_controller.dart';
 import '../../../../models/diagnostic_models.dart';
 import 'package:provider/provider.dart';
-import '../../../../main.dart'; // For AppRoutes
 
-import '../../../../controllers/auth_controller.dart';
 import '../../../../controllers/learning_path_controller.dart';
+import 'diagnostic_results_review_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
@@ -144,14 +143,14 @@ class ResultScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
               AppButton(
-                label: "Start learning ↗",
-                onPressed: () async {
-                  final auth = context.read<AuthController>();
-                  final level = context
-                      .read<DiagnosticController>()
-                      .getOverallLevel();
-                  await auth.markDiagnosticComplete(level);
-                  // AuthGate handles navigation automatically — no pushNamed needed
+                label: "Review My Path →",
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          const DiagnosticResultsReviewScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 24),

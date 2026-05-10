@@ -1,0 +1,195 @@
+{
+  "quiz_id": "quiz_m07",
+  "module_id": "module_07",
+  "ac_type": "lesson_quiz",
+  "title": "Module 7 Quiz",
+  "description": "Test your understanding of for loops, range(), nested loops, and sequence processing across all lessons in Module 7.",
+  "difficulty_tier": 1,
+  "passing_score": 5,
+  "time_limit_sec": 300,
+  "xp_reward": 10,
+  "questions": [
+    {
+      "question_id": "m07_q01",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Sequencing",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What is the main purpose of Module 7: Definite Iteration?",
+      "options_json": [
+        "To repeat code across known ranges, strings, and collections using definite iteration",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_answer": "0",
+      "explanation": "This module focuses on how to repeat code across known ranges, strings, and collections using definite iteration.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q02",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 1,
+      "prompt_text": "Complete the for loop keyword:",
+      "content": {
+        "code_with_blank": "___ number in range(3):\n    print(number)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "for",
+      "explanation": "for starts a definite loop over a sequence.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q03",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "Find the indentation bug:",
+      "content": {
+        "buggy_code": "for n in range(3):\nprint(n)",
+        "bug_description": "The print line must be indented"
+      },
+      "correct_answer": "The print line must be indented",
+      "explanation": "The loop body must be indented under the for statement.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q04",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Sequencing",
+      "question_type": "parsons",
+      "difficulty_tier": 2,
+      "prompt_text": "Arrange the lines to print 1 to 3 using range.",
+      "content": {
+        "lines": [
+          "    print(n)",
+          "for n in range(1, 4):"
+        ],
+        "correct_order": [
+          1,
+          0
+        ]
+      },
+      "correct_answer": "[1,0]",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q05",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Syntax",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 1,
+      "prompt_text": "What numbers does range(1, 4) produce?",
+      "options_json": [
+        "1, 2, 3",
+        "1, 2, 3, 4",
+        "0, 1, 2, 3",
+        "4 only"
+      ],
+      "correct_answer": "0",
+      "explanation": "The stop value is excluded, so range(1, 4) ends at 3.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q06",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Syntax",
+      "question_type": "fill_in_blank",
+      "difficulty_tier": 2,
+      "prompt_text": "Complete the range to print 1 to 5:",
+      "content": {
+        "code_with_blank": "for n in ___(1, 6):\n    print(n)",
+        "hint": "Fill in the missing Python syntax."
+      },
+      "correct_answer": "range",
+      "explanation": "range(1, 6) produces 1 through 5.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q07",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Computational Thinking",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 2,
+      "prompt_text": "What is the output?\nfor letter in \"AB\":\n    print(letter)",
+      "options_json": [
+        "A\nB",
+        "AB",
+        "B\nA",
+        "Error"
+      ],
+      "correct_answer": "0",
+      "explanation": "The loop visits each character in the string.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q08",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Debugging",
+      "question_type": "spot_bug",
+      "difficulty_tier": 2,
+      "prompt_text": "What is wrong if the goal is to print 1 to 5?",
+      "content": {
+        "buggy_code": "for n in range(1, 5):\n    print(n)",
+        "bug_description": "range stop should be 6 to include 5"
+      },
+      "correct_answer": "range stop should be 6 to include 5",
+      "explanation": "The stop value in range is excluded.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q09",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Logic Flow",
+      "question_type": "multiple_choice",
+      "difficulty_tier": 3,
+      "prompt_text": "A task must repeat exactly 10 times. Which loop is usually clearer?",
+      "options_json": [
+        "for loop with range(10)",
+        "while True without break",
+        "input()",
+        "remove()"
+      ],
+      "correct_answer": "0",
+      "explanation": "for with range is clear when the number of repetitions is known.",
+      "points": 1,
+      "is_retry_eligible": true
+    },
+    {
+      "question_id": "m07_q10",
+      "quiz_id": "quiz_m07",
+      "skill_tag": "Computational Thinking",
+      "question_type": "coding",
+      "difficulty_tier": 3,
+      "prompt_text": "Write a for loop that prints numbers 1 through 5.",
+      "content": {
+        "starter_code": "# Write the loop\n",
+        "hint": "Use range(1, 6).",
+        "validation_type": "output_style",
+        "validation_rules": {
+          "min_print_calls": 1,
+          "required_syntax": [
+            "for",
+            "range"
+          ]
+        }
+      },
+      "correct_answer": "Any valid Python code that satisfies the prompt and validation rules.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "points": 1,
+      "is_retry_eligible": true
+    }
+  ]
+}

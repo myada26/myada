@@ -1,0 +1,74 @@
+{
+  "module_id": "module_03",
+  "order_index": 3,
+  "title": "Mathematical and String Operations",
+  "description": "Practice arithmetic, precedence, modulo, string joining, repetition, f-strings, and simple conversions for useful Python calculations.",
+  "skill_category": "Computational Thinking",
+  "xp_reward": 50,
+  "passing_score_percent": 50,
+  "total_lessons": 10,
+  "lessons": [
+    {
+      "lesson_id": "m03_l01",
+      "title": "Arithmetic Operators",
+      "order_index": 1,
+      "file": "lesson_m03_l01.json"
+    },
+    {
+      "lesson_id": "m03_l02",
+      "title": "Operator Precedence",
+      "order_index": 2,
+      "file": "lesson_m03_l02.json"
+    },
+    {
+      "lesson_id": "m03_l03",
+      "title": "Integer Division and Modulo",
+      "order_index": 3,
+      "file": "lesson_m03_l03.json"
+    },
+    {
+      "lesson_id": "m03_l04",
+      "title": "Combining Numbers and Variables",
+      "order_index": 4,
+      "file": "lesson_m03_l04.json"
+    },
+    {
+      "lesson_id": "m03_l05",
+      "title": "String Concatenation",
+      "order_index": 5,
+      "file": "lesson_m03_l05.json"
+    },
+    {
+      "lesson_id": "m03_l06",
+      "title": "String Repetition",
+      "order_index": 6,
+      "file": "lesson_m03_l06.json"
+    },
+    {
+      "lesson_id": "m03_l07",
+      "title": "f-Strings",
+      "order_index": 7,
+      "file": "lesson_m03_l07.json"
+    },
+    {
+      "lesson_id": "m03_l08",
+      "title": "Type Conversion",
+      "order_index": 8,
+      "file": "lesson_m03_l08.json"
+    },
+    {
+      "lesson_id": "m03_l09",
+      "title": "Simple Calculations",
+      "order_index": 9,
+      "file": "lesson_m03_l09.json"
+    },
+    {
+      "lesson_id": "m03_l10",
+      "title": "Building a Formatted Output",
+      "order_index": 10,
+      "file": "lesson_m03_l10.json"
+    }
+  ],
+  "quiz_file": "quiz_m03.json",
+  "exam_file": "exam_m03.json"
+}

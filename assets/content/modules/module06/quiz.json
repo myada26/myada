@@ -1,0 +1,158 @@
+{
+  "quiz_id": "quiz_m06",
+  "module_id": "module_06",
+  "title": "Module 6 Quiz",
+  "time_limit_seconds": 300,
+  "passing_score_percent": 50,
+  "questions": [
+    {
+      "id": "m06_q01",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 1,
+      "prompt": "What is the main purpose of Module 6: Indefinite Iteration?",
+      "explanation": "This module focuses on how to repeat instructions while a condition remains true and stop safely when the task is complete.",
+      "options": [
+        "To repeat instructions while a condition remains true and stop safely when the task is complete",
+        "To design phone hardware",
+        "To replace Python with another language",
+        "To remove the need for practice"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m06_q02",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Complete the loop keyword:",
+      "explanation": "while starts an indefinite loop controlled by a condition.",
+      "answer": "while"
+    },
+    {
+      "id": "m06_q03",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "Find the infinite-loop risk:",
+      "explanation": "Without changing count, the condition may remain true forever.",
+      "answer": "count is never updated inside the loop"
+    },
+    {
+      "id": "m06_q04",
+      "type": "parsons",
+      "skill_tag": "Sequencing",
+      "difficulty": 2,
+      "prompt": "Arrange the lines to print 1 to 3 safely.",
+      "explanation": "The lines must be ordered so values are prepared before they are used.",
+      "blocks": [
+        {
+          "id": "b0",
+          "code": "    print(count)"
+        },
+        {
+          "id": "b1",
+          "code": "count = 1"
+        },
+        {
+          "id": "b2",
+          "code": "    count += 1"
+        },
+        {
+          "id": "b3",
+          "code": "while count <= 3:"
+        }
+      ],
+      "correct_order": [
+        "count = 1",
+        "while count <= 3:",
+        "    print(count)",
+        "    count += 1"
+      ]
+    },
+    {
+      "id": "m06_q05",
+      "type": "multiple_choice",
+      "skill_tag": "Syntax",
+      "difficulty": 1,
+      "prompt": "Which statement best describes a while loop?",
+      "explanation": "A while loop continues as long as its condition evaluates to True.",
+      "options": [
+        "It repeats while its condition is True",
+        "It always runs exactly once",
+        "It only stores strings",
+        "It sorts a list"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m06_q06",
+      "type": "fill_blank",
+      "skill_tag": "Syntax",
+      "difficulty": 2,
+      "prompt": "Complete the counter update:",
+      "explanation": "Adding 1 moves the counter forward.",
+      "answer": "+"
+    },
+    {
+      "id": "m06_q07",
+      "type": "multiple_choice",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 2,
+      "prompt": "What is the output?\ncount = 1\nwhile count <= 2:\n    print(count)\n    count += 1",
+      "explanation": "The counter starts at 1 and increases until the condition becomes false.",
+      "options": [
+        "1\n2",
+        "2\n1",
+        "1 only",
+        "Infinite loop"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m06_q08",
+      "type": "fill_blank",
+      "skill_tag": "Debugging",
+      "difficulty": 2,
+      "prompt": "What is wrong with this loop?",
+      "explanation": "The print and update lines should be inside the while block.",
+      "answer": "The loop body must be indented"
+    },
+    {
+      "id": "m06_q09",
+      "type": "multiple_choice",
+      "skill_tag": "Logic Flow",
+      "difficulty": 3,
+      "prompt": "A learner does not know how many guesses will be needed. Which loop type fits best?",
+      "explanation": "while loops are useful when repetition depends on a condition.",
+      "options": [
+        "while loop",
+        "for loop with range(3) only",
+        "print only",
+        "sort()"
+      ],
+      "correct_index": 0
+    },
+    {
+      "id": "m06_q10",
+      "type": "fill_blank",
+      "skill_tag": "Computational Thinking",
+      "difficulty": 3,
+      "prompt": "Write a while loop that prints 1 through 5.",
+      "explanation": "The solution must use the required syntax and produce the requested output or structure.",
+      "answer": "Any valid Python code that satisfies the prompt and validation rules."
+    }
+  ],
+  "adaptive_remediation": {
+    "on_pass": {
+      "next_module_id": "module_07",
+      "award_badge": "badge_module_06",
+      "xp_reward": 10
+    },
+    "on_fail": {
+      "remediation_module_id": "module_06_remediation",
+      "max_retries": 2,
+      "force_unlock_after_retries": "module_07"
+    }
+  }
+}

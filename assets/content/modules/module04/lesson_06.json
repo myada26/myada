@@ -1,0 +1,74 @@
+﻿{
+  "lesson_id": "m04_l06",
+  "module_id": "module_04",
+  "lesson_number": "06",
+  "title": "Logical NOT",
+  "skill_tag": "Logic Flow",
+  "estimated_minutes": 5,
+  "completion_xp": 10,
+  "is_module_closer": false,
+  "slides": [
+    {
+      "slide_id": "m04_l06_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Logical NOT",
+      "body": "Logical NOT is part of Boolean Logic and Comparisons. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m04_l06_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Logical NOT",
+      "body": "The not operator reverses a boolean value. True becomes False, and False becomes True."
+    },
+    {
+      "slide_id": "m04_l06_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "not is like flipping a yes/no answer to its opposite."
+    },
+    {
+      "slide_id": "m04_l06_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Logical NOT",
+      "code": "is_raining = False\nprint(not is_raining)",
+      "language": "python",
+      "expected_output": "True",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This line stores or updates a value using a variable."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m04_l06_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Boolean expressions must produce True or False. Use comparisons and logical operators carefully."
+    },
+    {
+      "slide_id": "m04_l06_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Create a variable is_locked = False and print not is_locked.",
+      "starter_code": "is_locked = False\n",
+      "hint": "Use print(not is_locked).",
+      "expected_output_contains": "True",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "quiz": [{"question_id":"q1","question_type":"multiple_choice","prompt_text":"What does the \"not\" operator do in Python?","content":{"options":["Combines two conditions","Returns the opposite boolean value","Checks if two values are not equal","Skips a line of code"],"correct_index":1},"correct_answer":"1","explanation":"Exactly! The not operator flips a boolean. not True becomes False, and not False becomes True — it reverses the logical state."},{"question_id":"q2","question_type":"parsons","prompt_text":"Arrange the following lines to create a variable and print its opposite boolean value.","content":{"lines":["# Flip a boolean value","is_raining = False","print(not is_raining)"],"correct_order":[0,1,2]},"correct_answer":"[0,1,2]","explanation":"The comment goes first, then the variable is set to False, and finally not reverses it to True inside print()."},{"question_id":"q3","question_type":"coding","prompt_text":"Create a variable is_locked set to False and print the result of not is_locked.","content":{"starter_code":"is_locked = False\n","hint":"Use print(not is_locked).","validation_type":"output_contains","validation_rules":{"min_print_calls":1}},"correct_answer":"Any valid Python code that satisfies the prompt.","explanation":"print(not is_locked) outputs True because not False is True. The not operator is useful for checking the absence of a condition."}]
+}

@@ -1,0 +1,82 @@
+{
+  "lesson_id": "m01_l04",
+  "module_id": "module_01",
+  "order_index": 4,
+  "title": "Comments and Readable Code",
+  "skill_tag": "Debugging",
+  "estimated_duration_min": 5,
+  "xp_reward": 10,
+  "is_bookmarkable": true,
+  "slides": [
+    {
+      "slide_id": "m01_l04_s01",
+      "order_index": 1,
+      "slide_type": "title",
+      "heading": "Comments and Readable Code",
+      "body": "Comments and Readable Code is part of Introduction to Python and Output. This short lesson gives you a practical Python idea you can understand, try, and reuse in simple programs."
+    },
+    {
+      "slide_id": "m01_l04_s02",
+      "order_index": 2,
+      "slide_type": "concept",
+      "heading": "Core Idea: Comments and Readable Code",
+      "body": "Comments are notes written for humans. Python ignores comments, but they help explain what the code is supposed to do."
+    },
+    {
+      "slide_id": "m01_l04_s03",
+      "order_index": 3,
+      "slide_type": "analogy",
+      "heading": "Real-World Analogy",
+      "body": "A comment is like a sticky note beside a task. It does not perform the task, but it helps the reader understand the task."
+    },
+    {
+      "slide_id": "m01_l04_s04",
+      "order_index": 4,
+      "slide_type": "code_example",
+      "heading": "Example: Comments and Readable Code",
+      "code": "# Display a morning greeting\nprint(\"Good morning\")",
+      "language": "python",
+      "expected_output": "Good morning",
+      "annotations": [
+        {
+          "line": 1,
+          "note": "This is a comment for human readers. Python ignores it during execution."
+        },
+        {
+          "line": 2,
+          "note": "This line displays a value or message on the screen."
+        }
+      ]
+    },
+    {
+      "slide_id": "m01_l04_s05",
+      "order_index": 5,
+      "slide_type": "key_rule",
+      "heading": "Key Rule",
+      "body": "Write one clear instruction at a time. Python reads your code from top to bottom, so order and spelling matter."
+    },
+    {
+      "slide_id": "m01_l04_s06",
+      "order_index": 6,
+      "slide_type": "try_it",
+      "heading": "Try It Yourself!",
+      "prompt": "Add a comment, then print the word Done.",
+      "starter_code": "# Explain your code here\n",
+      "hint": "Comments start with #. After the comment, write print(\"Done\").",
+      "expected_output_contains": "Done",
+      "validation_type": "output_contains",
+      "validation_rules": {
+        "min_print_calls": 1
+      }
+    }
+  ],
+  "coding_challenge": {
+    "challenge_id": "m01_l04_cc",
+    "lesson_id": "m01_l04",
+    "prompt_text": "Write a program with one comment and one print statement that displays: Clean code matters",
+    "starter_code": "# Your code here\n",
+    "expected_output": "Clean code matters",
+    "hint_text": "Use the idea from the lesson. Keep the code short, readable, and correctly indented.",
+    "validation_type": "output_exact"
+  }
+}
